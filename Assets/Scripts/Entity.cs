@@ -6,7 +6,8 @@ public class Entity : MonoBehaviour,IDamagable {
     protected float health;
     float speed;
     bool dead;
-    public event System.Action OnDeath;
+    public delegate void DeathOccurence(Transform t);
+    public event DeathOccurence OnDeath;
 	// Use this for initialization
 	protected virtual void Start () {
         dead = false;
@@ -27,7 +28,7 @@ public class Entity : MonoBehaviour,IDamagable {
         dead = true;
         if (OnDeath != null)
         {
-            OnDeath();
+            OnDeath(this.transform);
         }
         GameObject.Destroy(gameObject);
     }

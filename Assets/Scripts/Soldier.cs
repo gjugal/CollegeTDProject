@@ -58,7 +58,7 @@ public class Soldier : Entity
        // this.gameObject.GetComponent<Renderer>().material.color = originalColor;
     }
 
-    public void ChangeTarget()
+    public void ChangeTarget(Transform t)
     {
         currentTargetIndex++;
         bool targetFound = false;

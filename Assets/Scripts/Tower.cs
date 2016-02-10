@@ -4,20 +4,22 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(TowerController))]
 public class Tower : Entity {
+
+    //Add the states for tower
+
     TowerController towerController;
-   // Queue<Transform> soldierQueue;
     LinkedList<Transform> soldierLL;
     Transform currentTarget;
     public float timeBetweenShoot = 0.5f;
     float lastShootTime = 0;
     public float towerHealth;
 
+
     protected override void Start()
     {
         base.Start();
         health = towerHealth;
         towerController = GetComponent<TowerController>();
-        //soldierQueue = new Queue<Transform>();
         soldierLL = new LinkedList<Transform>();
     }
 
@@ -38,24 +40,13 @@ public class Tower : Entity {
     {
         if (col.CompareTag("Soldier") || col.CompareTag("King"))
         {
-            Entity soldierEntity = col.gameObject.GetComponent<Entity>();
-            
-            soldierEntity.OnDeath += SetTarget;
-            /*
-            if (soldierQueue.Count == 0)
-            {
-                currentTarget = col.gameObject.transform;
-            }
-            else
-            {
-                soldierQueue.Enqueue(col.gameObject.transform);
-            }
-            */
+            Entity soldierEntity = col.gameObject.GetComponent<Entity>(); 
+            soldierEntity.OnDeath += RemoveEntity;
             soldierLL.AddLast(col.gameObject.transform);
             if(currentTarget == null)
             {
-                LinkedListNode<Transform> firstSoldier = soldierLL.First;
-                currentTarget = firstSoldier.Value;
+                LinkedListNode<Transform> next = soldierLL.First;
+                SetTarget(next.Value);
             }
         }
     }
@@ -63,29 +54,35 @@ public class Tower : Entity {
     void OnTriggerExit(Collider col)
     {
         Transform exitingTransform = col.gameObject.transform;
-        LinkedListNode<Transform> exitingEntity = soldierLL.Find(col.gameObject.transform);
-        soldierLL.Remove(exitingEntity);
-        if(currentTarget == exitingTransform)
-        {
-            SetTarget();
-        }
+        RemoveEntity(exitingTransform);
     }
 
    
-    void SetTarget()
+    void SetTarget(Transform target)
     {
-        //if (soldierQueue.Count > 0)
-        //{
-        //    currentTarget = soldierQueue.Dequeue();
-        //}
-        
-        soldierLL.RemoveFirst();
-        if(soldierLL.Count > 0)
-        { 
-            LinkedListNode<Transform> firstSoldier = soldierLL.First;
-            currentTarget = firstSoldier.Value;
+            currentTarget = target;
+    }
+
+    void RemoveEntity(Transform entity)
+    {
+        LinkedListNode<Transform> exitingEntity = soldierLL.Find(entity);
+        soldierLL.Remove(exitingEntity);
+        if (soldierLL.Count > 0)
+        {
+            if (currentTarget == entity)
+            {
+                LinkedListNode<Transform> next = soldierLL.First;
+                SetTarget(next.Value);
+            }
+        }
+        else
+        {
+            currentTarget = null;
+            //Change the currentState of tower to idle  
         }
     }
 
-
 }
+
+
+
