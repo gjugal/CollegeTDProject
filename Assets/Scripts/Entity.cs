@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Entity : MonoBehaviour,IDamagable {
 
-    float health;
+    protected float health;
     float speed;
     bool dead;
     public event System.Action OnDeath;
