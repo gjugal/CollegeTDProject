@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Instantiate(soldierPrefab, spawnPoint.position + Vector3.up*0.4f, Quaternion.identity);
+        //Instantiate(soldierPrefab, spawnPoint.position + Vector3.up*0.4f, Quaternion.identity);
         Instantiate(kingPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
     }
 
@@ -27,5 +27,9 @@ public class GameManager : MonoBehaviour
             }
         }
         return _targets;
+    }
+
+    public void SpawnSoldier() {
+        Instantiate(soldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
     }
 }
