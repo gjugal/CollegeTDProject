@@ -99,7 +99,7 @@ public class Soldier : Entity
     {
         if (col.gameObject.tag == "TowerBase")
         {
-            agent.enabled = false;
+            //agent.enabled = false;
             currentState = State.ATTACK;
         }
     }
