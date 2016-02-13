@@ -6,12 +6,11 @@ public class TowerController : MonoBehaviour {
     GameObject bullet;
     Transform dome;
 
-    public float speed = 5;
     public GameObject bulletPrefab;
     public Transform nozzlePosition;
 
     void Start()
-    {
+    { 
         dome = this.transform.GetChild(1).gameObject.GetComponent<Transform>();
     }
 	// Use this for initialization
@@ -20,9 +19,17 @@ public class TowerController : MonoBehaviour {
         dome.LookAt(target);
     }
     
-    public void Shoot()
+    public void Shoot(float InitialForce)
     {
         bullet = Instantiate(bulletPrefab, nozzlePosition.position, nozzlePosition.rotation) as GameObject;
-        bullet.GetComponent<Bullet>().SetSpeed(speed);
+        //Debug.Log(bullet);
+        try
+        {
+            bullet.GetComponent<Bullet>().SetSpeed(InitialForce);
+        }
+        catch
+        {
+            bullet.GetComponent<Bomb>().SetSpeed(InitialForce);
+        }
     }
 }
