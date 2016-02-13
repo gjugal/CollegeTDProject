@@ -26,16 +26,19 @@ public class Bullet : MonoBehaviour {
 
     void CheckCollision(float distance)
     {
+        //Debug.Log("checkCollisionEnter");
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, distance, collisionMask, QueryTriggerInteraction.Collide))
         {
+            //Debug.Log("collision detected");
             OnHitObject(hit);
         }
     }
 
     private void OnHitObject(RaycastHit hit)
     {
+        //Debug.Log("onhit");
         IDamagable damagableObject = hit.collider.gameObject.GetComponent<IDamagable>();
         if (damagableObject != null)
         {

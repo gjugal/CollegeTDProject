@@ -30,6 +30,9 @@ public class Entity : MonoBehaviour,IDamagable {
         {
             OnDeath(this.transform);
         }
+        //GameObject.Destroy(gameObject);//base class gameobject 
+        //Debug.Log("Destroyed called");
         GameObject.Destroy(gameObject);
     }
+
 }

@@ -26,10 +26,10 @@ public class Soldier : Entity
         base.Start();
         health = soldier_health;
         gateEnd = GameObject.Find("Gate").GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(gateEnd.position + Vector3.up*0.4f);
+        //agent = GetComponent<NavMeshAgent>();
+        //agent.SetDestination(gateEnd.position + Vector3.up*0.4f);
 
-        base.Start();
+        //base.Start();
         activeTargets = new List<Transform>();
         activeTargets = GameObject.Find("GameManager").GetComponent<GameManager>().GetListOfActiveTarget();
         gateEnd = GameObject.Find("Gate").GetComponent<Transform>();
@@ -40,7 +40,7 @@ public class Soldier : Entity
             SetTarget();
         }
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
-        Debug.Log(originalColor);
+        //Debug.Log(originalColor);
 
     }
 
@@ -53,8 +53,11 @@ public class Soldier : Entity
             towerEntity.OnDeath += ChangeTarget;
         }
         currentState = State.WALK;
-        agent.enabled = true;
-        agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+        //agent.enabled = true;
+        if (agent != null)
+        {
+            agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+        }
        // this.gameObject.GetComponent<Renderer>().material.color = originalColor;
     }
 
@@ -81,7 +84,8 @@ public class Soldier : Entity
 
     void Update()
     {
-        if (currentState == State.ATTACK)
+        //Debug.Log(health);
+        if (currentState == State.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)
             {
