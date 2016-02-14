@@ -3,11 +3,11 @@ using System.Collections;
 
 public class ArrowTower : Tower {
 
-    public float timeBetweenShoot = 0.5f;
-    float lastShootTime = 0;
-    public float towerHealth;
+    //public float timeBetweenShoot = 0.5f;
+    //float lastShootTime = 0;
+    //public float towerHealth;
     // Use this for initialization
-    void Start () {
+    protected override void Start () {
         base.Start();
     }
 	

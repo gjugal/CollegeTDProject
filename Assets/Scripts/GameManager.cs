@@ -9,14 +9,32 @@ public class GameManager : MonoBehaviour
     public GameObject soldierPrefab;
     public GameObject kingPrefab;
     public List<Transform> targets;
-    Transform kingTransform;
+
+    private GameManager instance;
+
+    private GameManager()
+    {
+
+    }
+
+    public GameManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
         //Instantiate(soldierPrefab, spawnPoint.position + Vector3.up*0.4f, Quaternion.identity);
         Instantiate(kingPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
 
-        Debug.Log(kingTransform);
         //Camera.main.gameObject.GetComponent<CameraController>().SetInitialParameters(GameObject.FindGameObjectWithTag("King").transform);
         
     }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class Soldier : Entity
 {
@@ -16,10 +17,12 @@ public class Soldier : Entity
     List<Transform> activeTargets;
     int currentTargetIndex = 0;
     State currentState;
-    Color originalColor;
+    //Color originalColor;
     float timeBetweenShoots = 1;
     float lastShootTime = 0;
     float damage = 1;
+
+    Animator soldierAnimator;
 
     protected override void Start()
     {
@@ -27,6 +30,7 @@ public class Soldier : Entity
         health = soldier_health;
         gateEnd = GameObject.Find("Gate").GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
+        soldierAnimator = GetComponent<Animator>();
         agent.SetDestination(gateEnd.position + Vector3.up*0.4f);
 
         base.Start();
@@ -39,8 +43,8 @@ public class Soldier : Entity
             agent = GetComponent<NavMeshAgent>();
             SetTarget();
         }
-        originalColor = this.gameObject.GetComponent<Renderer>().material.color;
-        Debug.Log(originalColor);
+        //originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+        //Debug.Log(originalColor);
 
     }
 
@@ -53,6 +57,7 @@ public class Soldier : Entity
             towerEntity.OnDeath += ChangeTarget;
         }
         currentState = State.WALK;
+        soldierAnimator.SetTrigger("moveTrigger");
         agent.enabled = true;
         agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
        // this.gameObject.GetComponent<Renderer>().material.color = originalColor;
@@ -90,7 +95,7 @@ public class Soldier : Entity
             }
             else
             {
-                this.gameObject.GetComponent<Renderer>().material.color = originalColor;
+                //this.gameObject.GetComponent<Renderer>().material.color = originalColor;
             }
         }
     }
@@ -101,12 +106,13 @@ public class Soldier : Entity
         {
             //agent.enabled = false;
             currentState = State.ATTACK;
+            soldierAnimator.SetTrigger("attackTrigger");
         }
     }
 
     void Shoot()
     {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.white;
+       // this.gameObject.GetComponent<Renderer>().material.color = Color.white;
         currentTarget.gameObject.GetComponent<Entity>().TakeDamage(damage);
     }
 
