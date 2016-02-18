@@ -41,6 +41,7 @@ public abstract class Soldier : Entity
     
 
     public void TargetEntry(Transform t, Dictionary<string, int> d) {//called from censor whenever it detects a towerbase
+        Debug.Log("TargetEntry called");
         if (CheckCondition(t,d)) {
             Targets.AddLast(t);
             Entity towerEntity = t.gameObject.GetComponent<Entity>();
@@ -68,10 +69,14 @@ public abstract class Soldier : Entity
             currentTarget = null;
         }
         Targets.Remove(t);
+        
         if (Targets.Count > 0) {
-            foreach(Transform eachTarget in Targets) {
-                if (CheckCondition(eachTarget, eachTarget.parent.GetComponent<Tower>().attackingSoldiers))
+            foreach (Transform eachTarget in Targets) {
+                Debug.Log("eachtarget" + eachTarget);
+                if (CheckCondition(eachTarget, eachTarget.GetComponent<Tower>().attackingSoldiers))
                 {
+
+                    Debug.Log("count is > 0");
                     currentTarget = Targets.First.Value;
                     currentState = States.SET;
                     if (t.gameObject.tag == "Tower")
@@ -89,6 +94,7 @@ public abstract class Soldier : Entity
         }
         else
         {
+            Debug.Log("count is < 0");
             currentState = States.WALK;
             agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
         }
