@@ -27,6 +27,7 @@ public class BombTower : Tower
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("tower health= "+ health);
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);
@@ -46,23 +47,17 @@ public class BombTower : Tower
     void OnTriggerEnter(Collider col)
     {
         //base.OnEntry(col);
-        if (col.CompareTag("Soldier") || col.CompareTag("King"))
-        {
-            Entity soldierEntity = col.gameObject.GetComponent<Entity>();
-            soldierEntity.OnDeath += ChangeTarget;
-            entityLL.AddLast(col.gameObject.transform);
-            //Debug.Log("Added");
-        }
+        base.OnEntry(col);//Add to list and register tower ondeath
         base.SetTarget(FindTarget());
     }
 
     void OnTriggerExit(Collider col)
     {
-        base.OnExit(col);
+        base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
         base.SetTarget(FindTarget());
     }
 
-    public Transform FindTarget() {
+    public Transform FindTarget() {//returns target according to AI
         if (entityLL.Count < 1) {
             return null;
         }
@@ -111,11 +106,10 @@ public class BombTower : Tower
         }
     }
 
-    public void ChangeTarget(Transform t)
+    public override void ChangeTarget()// finds and set it to current
     {
         try
         {
-            base.RemoveEntity(t);
             //Debug.Log("try");
             base.SetTarget(FindTarget());
         }

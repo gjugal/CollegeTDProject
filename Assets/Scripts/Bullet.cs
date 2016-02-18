@@ -20,11 +20,11 @@ public class Bullet : MonoBehaviour {
     void Update()
     {
         float moveDistance = this.speed * Time.deltaTime;
-        CheckCollision(moveDistance);
+        CheckCollision(moveDistance);//check collision before hitting using raycast
         transform.Translate(Vector3.forward * moveDistance);
     }
 
-    void CheckCollision(float distance)
+    void CheckCollision(float distance)//check collision before hitting using raycast
     {
         //Debug.Log("checkCollisionEnter");
         Ray ray = new Ray(transform.position, transform.forward);
@@ -36,7 +36,7 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void OnHitObject(RaycastHit hit)
+    private void OnHitObject(RaycastHit hit)//gives damage to colliding tower and destroys bullet
     {
         //Debug.Log("onhit");
         IDamagable damagableObject = hit.collider.gameObject.GetComponent<IDamagable>();

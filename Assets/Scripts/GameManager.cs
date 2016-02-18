@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
 
     public Transform spawnPoint;
-    public GameObject soldierPrefab;
+    public GameObject swordSoldierPrefab;
+    public GameObject arrowSoldierPrefab;
+    public GameObject hammerSoldierPrefab;
     public GameObject kingPrefab;
     public List<Transform> targets;
     //Transform kingTransform;
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public List<Transform> GetListOfActiveTarget()
+    public List<Transform> GetListOfActiveTarget()//currently not in use
     {
         List<Transform> _targets = new List<Transform>();
         foreach (Transform t in targets)
@@ -34,7 +36,17 @@ public class GameManager : MonoBehaviour
         return _targets;
     }
 
-    public void SpawnSoldier() {
-        Instantiate(soldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+    public void SpawnSwordSoldier() {
+        Instantiate(swordSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+    }
+
+    public void SpawnArrowSoldier()
+    {
+        Instantiate(arrowSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+    }
+
+    public void SpawnHammerSoldier()
+    {
+        Instantiate(hammerSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
     }
 }

@@ -3,116 +3,139 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Soldier : Entity
+public abstract class Soldier : Entity
 {
 
-    public float soldier_health = 5f;
     Transform gateEnd;
-    Transform currentTarget = null;
+    protected Transform currentTarget = null;
 
     NavMeshAgent agent;
-    enum State { WALK, ATTACK };
+    protected enum States { WALK, SET, ATTACK };//SET is when soldier finds new target and moves towards it for attacking
 
-    List<Transform> activeTargets;
-    int currentTargetIndex = 0;
-    State currentState;
-    Color originalColor;
-    float timeBetweenShoots = 1;
-    float lastShootTime = 0;
-    float damage = 1;
+    LinkedList<Transform> Targets;
+    protected States currentState;
 
     protected override void Start()
     {
         base.Start();
-        health = soldier_health;
+        Targets = new LinkedList<Transform>();
         gateEnd = GameObject.Find("Gate").GetComponent<Transform>();
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.SetDestination(gateEnd.position + Vector3.up*0.4f);
-
+        agent = GetComponent<NavMeshAgent>();
+        agent.SetDestination(gateEnd.position + Vector3.up*0.4f);
+        currentState = States.WALK;
         //base.Start();
-        activeTargets = new List<Transform>();
-        activeTargets = GameObject.Find("GameManager").GetComponent<GameManager>().GetListOfActiveTarget();
-        gateEnd = GameObject.Find("Gate").GetComponent<Transform>();
-        activeTargets.Add(gateEnd);
-        if (currentTargetIndex < activeTargets.Count)
-        {
-            agent = GetComponent<NavMeshAgent>();
-            SetTarget();
-        }
-        originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+        //activeTargets = new List<Transform>();
+        //activeTargets = GameObject.Find("GameManager").GetComponent<GameManager>().GetListOfActiveTarget();
+        //gateEnd = GameObject.Find("Gate").GetComponent<Transform>();
+        //activeTargets.Add(gateEnd);
+        //if (currentTargetIndex < activeTargets.Count)
+        //{
+        //    agent = GetComponent<NavMeshAgent>();
+        //    SetTarget();
+        //}
+        
         //Debug.Log(originalColor);
 
     }
 
-    void SetTarget()
-    {
-        currentTarget = activeTargets[currentTargetIndex];
-        if (currentTarget.gameObject.tag == "Tower")
-        {
-            Entity towerEntity = currentTarget.gameObject.GetComponent<Entity>();
+    
+
+    public void TargetEntry(Transform t, Dictionary<string, int> d) {//called from censor whenever it detects a towerbase
+        if (CheckCondition(t,d)) {
+            Targets.AddLast(t);
+            Entity towerEntity = t.gameObject.GetComponent<Entity>();
             towerEntity.OnDeath += ChangeTarget;
-        }
-        currentState = State.WALK;
-        //agent.enabled = true;
-        if (agent != null)
-        {
-            agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
-        }
-       // this.gameObject.GetComponent<Renderer>().material.color = originalColor;
-    }
-
-    public void ChangeTarget(Transform t)
-    {
-        currentTargetIndex++;
-        bool targetFound = false;
-        if (currentTargetIndex < activeTargets.Count)
-        {
-            while (currentTargetIndex < activeTargets.Count && !targetFound)
-            {
-                if (activeTargets[currentTargetIndex].gameObject.activeSelf)
+            if (currentTarget == null) {
+                agent.SetDestination(t.position + Vector3.up * 0.4f);
+                currentState = States.SET;
+                currentTarget = Targets.First.Value;
+                if (t.gameObject.tag == "Tower")
                 {
-                    SetTarget();
-                    targetFound = true;
+                    currentTarget.gameObject.GetComponent<Tower>().AddToAttackingSoldiers(this.transform);//add this soldier to dict. of currenttarget tower
                 }
-                else
-                {
-                    currentTargetIndex++;
+                else if (t.gameObject.tag == "BlockBarricade") {
+                    currentTarget.gameObject.GetComponent<BlockBarricade>().AddToAttackingSoldiers(this.transform);
                 }
             }
         }
     }
 
-    void Update()
-    {
-        //Debug.Log(health);
-        if (currentState == State.ATTACK && currentTarget != null)
+    protected abstract bool CheckCondition(Transform t, Dictionary<string, int> d);
+
+    void ChangeTarget(Transform t) {//registered to OnDeath event of towers enrolled in this soldier
+        if (currentTarget == t) {
+            Debug.Log("change target called");
+            currentTarget = null;
+        }
+        Targets.Remove(t);
+        if (Targets.Count > 0) {
+            foreach(Transform eachTarget in Targets) {
+                if (CheckCondition(eachTarget, eachTarget.parent.GetComponent<Tower>().attackingSoldiers))
+                {
+                    currentTarget = Targets.First.Value;
+                    currentState = States.SET;
+                    if (t.gameObject.tag == "Tower")
+                    {
+                        currentTarget.gameObject.GetComponent<Tower>().AddToAttackingSoldiers(this.transform);//add this soldier to dict. of currenttarget tower
+                    }
+                    else if (t.gameObject.tag == "BlockBarricade")
+                    {
+                        currentTarget.gameObject.GetComponent<BlockBarricade>().AddToAttackingSoldiers(this.transform);
+                    }
+                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                    break;
+                }
+            }
+        }
+        else
         {
-            if (Time.time > lastShootTime + timeBetweenShoots)
-            {
-                lastShootTime = Time.time;
-                Shoot();
-            }
-            else
-            {
-                this.gameObject.GetComponent<Renderer>().material.color = originalColor;
-            }
+            currentState = States.WALK;
+            agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
         }
     }
 
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "TowerBase")
-        {
-            //agent.enabled = false;
-            currentState = State.ATTACK;
-        }
-    }
+    
 
-    void Shoot()
-    {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.white;
-        currentTarget.gameObject.GetComponent<Entity>().TakeDamage(damage);
-    }
+    
 
+    
+
+    //void SetTarget()
+    //{
+    //    currentTarget = activeTargets[currentTargetIndex];
+    //    if (currentTarget.gameObject.tag == "Tower")
+    //    {
+    //        Entity towerEntity = currentTarget.gameObject.GetComponent<Entity>();
+    //        towerEntity.OnDeath += ChangeTarget;
+    //    }
+    //    currentState = State.WALK;
+    //    //agent.enabled = true;
+    //    if (agent != null)
+    //    {
+    //        agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+    //    }
+    //   // this.gameObject.GetComponent<Renderer>().material.color = originalColor;
+    //}
+
+    //public void ChangeTarget(Transform t)
+    //{
+    //    currentTargetIndex++;
+    //    bool targetFound = false;
+    //    if (currentTargetIndex < activeTargets.Count)
+    //    {
+    //        while (currentTargetIndex < activeTargets.Count && !targetFound)
+    //        {
+    //            if (activeTargets[currentTargetIndex].gameObject.activeSelf)
+    //            {
+    //                SetTarget();
+    //                targetFound = true;
+    //            }
+    //            else
+    //            {
+    //                currentTargetIndex++;
+    //            }
+    //        }
+    //    }
+    //}
 
 }
