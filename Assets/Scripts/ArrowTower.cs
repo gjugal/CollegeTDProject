@@ -39,24 +39,17 @@ public class ArrowTower : Tower {
 
     void OnTriggerEnter(Collider col)
     {
-        //base.OnEntry(col);
-        if (col.CompareTag("Soldier") || col.CompareTag("King"))
-        {
-            Entity soldierEntity = col.gameObject.GetComponent<Entity>();
-            soldierEntity.OnDeath += ChangeTarget;
-            entityLL.AddLast(col.gameObject.transform);
-            //Debug.Log("Added");
-        }
+        base.OnEntry(col);//Add to list and register tower ondeath
         base.SetTarget(FindTarget());
     }
 
     void OnTriggerExit(Collider col)
     {
-        base.OnExit(col);
+        base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
         base.SetTarget(FindTarget());
     }
 
-   public Transform FindTarget() {
+   public Transform FindTarget() {//returns target according to AI
         if (entityLL.Count == 1) {
             return entityLL.First.Value;
         }
@@ -75,8 +68,7 @@ public class ArrowTower : Tower {
         return null;
     }
 
-    public void ChangeTarget(Transform t) {
-        base.RemoveEntity(t);
+    public override void ChangeTarget() {//find new target and set it to cuurent // called from remove from tower.entity()
         base.SetTarget(FindTarget());
     }
 

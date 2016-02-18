@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SoldierController : MonoBehaviour {
+public class GroundBarricade : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

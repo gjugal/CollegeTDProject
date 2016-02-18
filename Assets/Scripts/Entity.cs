@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour,IDamagable {
 	}
 
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage)//reduce health according to damage and check if the entity is still alive
     {
         health -= damage;
         if (health <= 0 && !dead)
@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour,IDamagable {
         dead = true;
         if (OnDeath != null)
         {
-            OnDeath(this.transform);
+            OnDeath(this.transform);//call all method registered to this event of all objects and pass this entity's transform as parameter 
         }
         //GameObject.Destroy(gameObject);//base class gameobject 
         //Debug.Log("Destroyed called");
