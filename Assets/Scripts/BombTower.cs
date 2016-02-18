@@ -108,14 +108,6 @@ public class BombTower : Tower
 
     public override void ChangeTarget()// finds and set it to current
     {
-        try
-        {
-            //Debug.Log("try");
-            base.SetTarget(FindTarget());
-        }
-        catch {
-            //Debug.Log("catch");
-            base.SetTarget(FindTarget());
-        }
+        base.SetTarget(FindTarget());
     }
 }

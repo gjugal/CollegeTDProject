@@ -40,8 +40,11 @@ public class SwordSoldier : Soldier {
         }
     }
 
+    int i = 0;
     protected override bool CheckCondition(Transform t, Dictionary<string, int> d)
     {// checks condition to add tower in list
+        Debug.Log("CheckCondition" + i);
+        i++;
         if (d[this.name] < 5)
         {
             return true;
