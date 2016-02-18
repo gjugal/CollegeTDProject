@@ -46,11 +46,4 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public static class Constants
-    {
-        public const int START_MENU_SCENE = 0;
-        public const int SHOP_MENU_SCENE = 1;
-        public const int GAME_SCENE = 2;
-    }
-
 }
