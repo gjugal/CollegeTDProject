@@ -21,7 +21,7 @@ public class BombTower : Tower
         lastShootTime = lastShootTimec;
         health = towerHealth;
         towerController = GetComponent<TowerController>();
-        entityLL = new LinkedList<Transform>();
+        entityLL = new LinkedList<MyTargets>();
     }
 
     // Update is called once per frame
@@ -63,7 +63,7 @@ public class BombTower : Tower
         }
 
         if (entityLL.Count == 1) {
-            return entityLL.First.Value;
+            return entityLL.First.Value.GetTransfrom();
         }
 
         switch (level) {
@@ -71,26 +71,26 @@ public class BombTower : Tower
             case levels.Level1:
                 //AI FOR LEVEL1 -- first come first serve
                 //Debug.Log("this is case level 1");
-                return entityLL.First.Value;
+                return entityLL.First.Value.GetTransfrom();
 
             case levels.Level2:
                 //AI FOR LEVEL2 -- soldier in center
                 //LinkedList<Transform> temp = entityLL;
                 //Debug.Log("this is case level 2");
                 Vector3 avg = new Vector3(0, 0, 0);
-                foreach (Transform t in entityLL) {
-                    avg += t.position;
+                foreach (MyTargets t in entityLL) {
+                    avg += t.GetTransfrom().position;
                 }
                 avg = avg / entityLL.Count;
                 //Debug.Log(avg);
                 float distance = 100f;
                 float tempDistance = 0f;
                 Transform temp = null;
-                foreach (Transform t in entityLL) {
-                    tempDistance = Mathf.Sqrt((avg.x * t.position.x) + (avg.z * t.position.z));
+                foreach (MyTargets t in entityLL) {
+                    tempDistance = Mathf.Sqrt((avg.x * t.GetTransfrom().position.x) + (avg.z * t.GetTransfrom().position.z));
                     if (tempDistance < distance) {
                         distance = tempDistance;
-                        temp = t;
+                        temp = t.GetTransfrom();
                     }
                 }
 

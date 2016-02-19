@@ -19,7 +19,7 @@ public class ArrowTower : Tower {
         lastShootTime = lastShootTimec;
         health = towerHealth;
         towerController = GetComponent<TowerController>();
-        entityLL = new LinkedList<Transform>();
+        entityLL = new LinkedList<MyTargets>();
     }
 
     // Update is called once per frame
@@ -51,14 +51,14 @@ public class ArrowTower : Tower {
 
    public Transform FindTarget() {//returns target according to AI
         if (entityLL.Count == 1) {
-            return entityLL.First.Value;
+            return entityLL.First.Value.GetTransfrom();
         }
         switch (level) {
             case levels.Level1:
                 //AI FOR LEVEL1 -- first come first serve
                 if (entityLL.Count > 0)
                 {
-                    return  entityLL.First.Value;
+                    return  entityLL.First.Value.GetTransfrom();
                 }
                 break;
 

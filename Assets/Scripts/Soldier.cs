@@ -52,7 +52,7 @@ public abstract class Soldier : Entity
                 currentTarget = Targets.First.Value;
                 if (t.gameObject.tag == "Tower")
                 {
-                    currentTarget.gameObject.GetComponent<Tower>().AddToAttackingSoldiers(this.transform);//add this soldier to dict. of currenttarget tower
+                    currentTarget.gameObject.GetComponent<Tower>().AddToAttackingEntity(this.transform);//add this soldier to dict. of currenttarget tower
                 }
                 else if (t.gameObject.tag == "BlockBarricade") {
                     currentTarget.gameObject.GetComponent<BlockBarricade>().AddToAttackingSoldiers(this.transform);
@@ -81,7 +81,7 @@ public abstract class Soldier : Entity
                     currentState = States.SET;
                     if (t.gameObject.tag == "Tower")
                     {
-                        currentTarget.gameObject.GetComponent<Tower>().AddToAttackingSoldiers(this.transform);//add this soldier to dict. of currenttarget tower
+                        currentTarget.gameObject.GetComponent<Tower>().AddToAttackingEntity(this.transform);//add this soldier to dict. of currenttarget tower
                     }
                     else if (t.gameObject.tag == "BlockBarricade")
                     {

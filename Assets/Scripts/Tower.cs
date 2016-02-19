@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(TowerController))]
-public abstract class Tower : Entity {
+public abstract class Tower : Entity
+{
 
     //Add the states for tower
 
     protected TowerController towerController;
     protected float initialForce;
-    protected LinkedList<Transform> entityLL;
+    protected LinkedList<MyTargets> entityLL;
     protected Transform currentTarget;
     protected float timeBetweenShoot;
     protected float lastShootTime;
@@ -19,10 +20,9 @@ public abstract class Tower : Entity {
     protected override void Start()
     {
         base.Start();
-        attackingSoldiers.Add("SwordSoldier(Clone)", 0);
-        attackingSoldiers.Add("ArrowSoldier(Clone)", 0);
-        attackingSoldiers.Add("HammerSoldier(Clone)", 0);
-        attackingSoldiers.Add("Soldier(Clone)", 0);
+        //attackingSoldiers.Add("SwordSoldier(Clone)", 0);
+        //attackingSoldiers.Add("ArrowSoldier(Clone)", 0);
+        //attackingSoldiers.Add("HammerSoldier(Clone)", 0);
 
     }
 
@@ -30,10 +30,10 @@ public abstract class Tower : Entity {
     {
         if (col.CompareTag("Soldier") || col.CompareTag("King"))
         {
-            Entity soldierEntity = col.gameObject.GetComponent<Entity>(); 
+            Entity soldierEntity = col.gameObject.GetComponent<Entity>();
             soldierEntity.OnDeath += RemoveEntity;
-            entityLL.AddLast(col.gameObject.transform);
-            //Debug.Log("Added");
+
+            entityLL.AddLast(new MyTargets(col.gameObject.transform, false));
         }
     }
 
@@ -46,48 +46,112 @@ public abstract class Tower : Entity {
 
     protected void SetTarget(Transform target)
     {
-            currentTarget = target;
+        currentTarget = target;
     }
 
     protected void RemoveEntity(Transform entity)
     {
-        LinkedListNode<Transform> exitingEntity = entityLL.Find(entity);
-        try
-        {
-            //bcoz a soldier may be destroyed by other tower before this method
-            entityLL.Remove(exitingEntity);
-        }
-        catch { }
-        if (entityLL.Count > 0) {
-            if (currentTarget == entity) {
-                ChangeTarget();
+        MyTargets removingTarget = null;
+        foreach(MyTargets targets in entityLL)
+        { 
+            if (targets.GetTransfrom() == entity)
+            {
+                removingTarget = targets;
+                break;
+            }
+            else
+            {
+                Debug.LogError("Removing entity nit found");
             }
         }
-        //Debug.Log("Removed");
+        if (removingTarget != null)
+        {
+            LinkedListNode<MyTargets> exitingEntity = entityLL.Find(removingTarget);
+            entityLL.Remove(exitingEntity);
+            if (entityLL.Count > 0)
+            {
+                if (currentTarget == entity)
+                {
+                    ChangeTarget();
+                }
+            }
+        }
     }
 
-    void OnDestroy() {
-        //Debug.Log("On Destory called");
+    void OnDestroy()
+    {
         GameObject.Destroy(gameObject);
     }
 
     public abstract void ChangeTarget();
 
-    public void AddToAttackingSoldiers(Transform t) {
-        string name = t.gameObject.name;
-        //Debug.Log("added " + name);
-        attackingSoldiers[name] += 1;
-        Entity soldierEntity = t.gameObject.GetComponent<Entity>();
-        soldierEntity.OnDeath += RemoveFromDictionary;
+    public void AddToAttackingEntity(Transform t)
+    {
+        MyTargets myTarget = null;
+        foreach(MyTargets target in entityLL)
+        {
+            if(target.GetTransfrom() == t)
+            {
+                myTarget = target;
+                break;
+            }
+        }
+        if(myTarget != null)
+        {
+            myTarget.SetAttackingMode(true);
+        }
+        else
+        {
+            entityLL.AddLast(new MyTargets(t, true));
+        }
 
     }
 
-    void RemoveFromDictionary(Transform t) {
-        string name = t.gameObject.name;
-        //check if removed entity is soldier
+    void RemoveFromAttackingEntity(Transform t)
+    {
+        MyTargets myTarget = null;
+        foreach (MyTargets target in entityLL)
+        {
+            if (target.GetTransfrom() == t)
+            {
+                myTarget = target;
+                break;
+            }
+        }
+        if (myTarget != null)
+        {
+            myTarget.SetAttackingMode(false);
+        }
+        else
+        {
+            Debug.LogError("Entity not found. Cannot set its attacking mode to false");
+        }
+    }
 
-        if (name != "King") {
-            attackingSoldiers[name] -= 1;
+    protected class MyTargets
+    {
+        Transform myTransform;
+        bool attackState;
+
+        public MyTargets(Transform _tranform, bool _state)
+        {
+            myTransform = _tranform;
+            attackState = _state;
+        }
+
+        public void SetAttackingMode(bool state)
+        {
+            attackState = state;
+        }
+
+        public bool GetAttackingMode()
+        {
+            return attackState;
+        }
+
+        public Transform GetTransfrom()
+        {
+            return myTransform;
         }
     }
 }
