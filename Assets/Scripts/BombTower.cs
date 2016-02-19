@@ -27,7 +27,7 @@ public class BombTower : Tower
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("tower health= "+ health);
+        //Debug.Log("tower health= "+ health);
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);

@@ -25,7 +25,7 @@ public class ArrowTower : Tower {
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(health);
+        //Debug.Log(health);
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);

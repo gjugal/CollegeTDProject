@@ -12,6 +12,7 @@ public class SoldierCensor : MonoBehaviour {
             this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform.parent.transform, col.gameObject.transform.parent.GetComponent<Tower>().attackingSoldiers);
         }
         else if (col.gameObject.tag == "BlockBarricade") {
+            //Debug.Log("barricade detected");
             this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform, col.gameObject.GetComponent<BlockBarricade>().attackingSoldiers);
         }
     }
