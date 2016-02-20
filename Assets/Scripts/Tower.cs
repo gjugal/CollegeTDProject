@@ -68,15 +68,16 @@ public abstract class Tower : Entity
     public void AddToAttackingEntity(Transform t)
     {
         MyTargets myTarget = FindFromTargets(t);
-        if(myTarget != null)
+        Entity entity = t.gameObject.GetComponent<Entity>();
+        if (myTarget != null)
         { 
             myTarget.SetAttackingMode(true);
         }
         else
         {
-            entityLL.AddLast(new MyTargets(t, true, t.gameObject.GetComponent<Entity>().myFirstName));
+            entityLL.AddLast(new MyTargets(t, true, entity.myFirstName));
         }
-
+        entity.OnDeath += RemoveFromAttackingEntity;
     }
 
     void RemoveFromAttackingEntity(Transform t)
