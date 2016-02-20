@@ -41,6 +41,36 @@ public class Entity : MonoBehaviour, IDamagable
         GameObject.Destroy(gameObject);
     }
 
+    protected MyTargets FindFromTargets(Transform t)
+    {
+        if (entityLL.Count > 0)
+        {
+            MyTargets target = null;
+            foreach (MyTargets targets in entityLL)
+            {
+                if (targets.GetTransfrom() == t)
+                {
+                    target = targets;
+                    break;
+                }
+            }
+            if (target != null)
+            {
+                return target;
+            }
+            else
+            {
+                Debug.LogError("The target being accessed is not present in entityLL");
+            }
+
+        }
+        else
+        {
+            Debug.LogError("Size of entityLL is zero. Target couldn't be found");
+        }
+        return null;
+    }
+
     protected class MyTargets
     {
         Transform myTransform;

@@ -28,7 +28,8 @@ public abstract class Soldier : Entity
 
 
     public void TargetEntry(Transform t, int[] entities_count)
-    {//called from censor whenever it detects a towerbase or barricade
+    {
+        //called from censor whenever it detects a towerbase or barricade
         if (CheckCondition(t, entities_count))
         {
             Entity defenseEntity = t.gameObject.GetComponent<Entity>();
@@ -58,28 +59,13 @@ public abstract class Soldier : Entity
     protected abstract bool CheckCondition(Transform t, int[] entities_count);
 
     void ChangeTarget(Transform t)
-    {//registered to OnDeath event of towers enrolled in this soldier
+    {
+        //registered to OnDeath event of towers enrolled in this soldier
         if (currentTarget == t)
         {
             currentTarget = null;
         }
-        MyTargets removingTarget = null;
-        foreach (MyTargets targets in entityLL)
-        {
-            if (targets.GetTransfrom() == t)
-            {
-                removingTarget = targets;
-                break;
-            }
-        }
-        if(removingTarget != null)
-        {
-            entityLL.Remove(removingTarget);
-        }
-        else
-        {
-            Debug.LogError("Removing Defense Entity not found");
-        }
+        entityLL.Remove(FindFromTargets(t));
         if (entityLL.Count > 0)
         {
             bool isFound = false;
@@ -92,7 +78,7 @@ public abstract class Soldier : Entity
                     {
                         currentTarget = defenseTransform;
                         currentState = States.SET;
-                        currentTarget.gameObject.GetComponent<Tower>().AddToAttackingEntity(this.transform);//add this soldier to dict. of currenttarget tower
+                        currentTarget.gameObject.GetComponent<Tower>().AddToAttackingEntity(this.transform);
                         agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
                         isFound = true;
                     }

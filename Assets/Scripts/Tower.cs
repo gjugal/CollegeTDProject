@@ -44,26 +44,13 @@ public abstract class Tower : Entity
     protected void RemoveEntity(Transform entity)
     {
         Debug.Log("remove soldier :" + entity);
-        MyTargets removingTarget = null;
-        foreach(MyTargets targets in entityLL)
-        { 
-            if (targets.GetTransfrom() == entity)
-            {
-                removingTarget = targets;
-                break;
-            }
-        }
-        if (removingTarget != null)
+        entityLL.Remove(FindFromTargets(entity));
+        if (entityLL.Count > 0)
         {
-            LinkedListNode<MyTargets> exitingEntity = entityLL.Find(removingTarget);
-            entityLL.Remove(exitingEntity);
-            if (entityLL.Count > 0)
+            if (currentTarget == entity)
             {
-                if (currentTarget == entity)
-                {
-                    ChangeTarget();
-                }
-            }
+                ChangeTarget();
+            }     
         }
         else
         {
@@ -80,17 +67,9 @@ public abstract class Tower : Entity
 
     public void AddToAttackingEntity(Transform t)
     {
-        MyTargets myTarget = null;
-        foreach(MyTargets target in entityLL)
-        {
-            if(target.GetTransfrom() == t)
-            {
-                myTarget = target;
-                break;
-            }
-        }
+        MyTargets myTarget = FindFromTargets(t);
         if(myTarget != null)
-        {
+        { 
             myTarget.SetAttackingMode(true);
         }
         else
@@ -102,15 +81,7 @@ public abstract class Tower : Entity
 
     void RemoveFromAttackingEntity(Transform t)
     {
-        MyTargets myTarget = null;
-        foreach (MyTargets target in entityLL)
-        {
-            if (target.GetTransfrom() == t)
-            {
-                myTarget = target;
-                break;
-            }
-        }
+        MyTargets myTarget = FindFromTargets(t);
         if (myTarget != null)
         {
             myTarget.SetAttackingMode(false);

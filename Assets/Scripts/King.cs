@@ -44,7 +44,7 @@ public class King : Entity
     {
         //Debug.Log(currentState);
         // movement
-        if (Input.GetMouseButtonDown(0))//on mouse click go to destination
+        if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())//on mouse click go to destination
         {
             Vector3 clickPos = Input.mousePosition;
             Ray ray = mainCamera.ScreenPointToRay(clickPos);
