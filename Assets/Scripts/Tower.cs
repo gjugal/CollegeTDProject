@@ -10,7 +10,6 @@ public abstract class Tower : Entity
 
     protected TowerController towerController;
     protected float initialForce;
-    protected LinkedList<MyTargets> entityLL;
     protected Transform currentTarget;
     protected float timeBetweenShoot;
     protected float lastShootTime;
@@ -20,27 +19,20 @@ public abstract class Tower : Entity
     protected override void Start()
     {
         base.Start();
-        //attackingSoldiers.Add("SwordSoldier(Clone)", 0);
-        //attackingSoldiers.Add("ArrowSoldier(Clone)", 0);
-        //attackingSoldiers.Add("HammerSoldier(Clone)", 0);
-
+        myFirstName = "Tower";
     }
 
     protected void OnEntry(Collider col)//called from OnTriggerEnter of childTowers
     {
-        if (col.CompareTag("Soldier") || col.CompareTag("King"))
-        {
-            Entity soldierEntity = col.gameObject.GetComponent<Entity>();
-            soldierEntity.OnDeath += RemoveEntity;
-
-            entityLL.AddLast(new MyTargets(col.gameObject.transform, false));
-        }
+            Entity entity = col.gameObject.GetComponent<Entity>();
+            entity.OnDeath += RemoveEntity;
+            entityLL.AddLast(new MyTargets(col.gameObject.transform, false, entity.myFirstName));
     }
 
     protected void OnExit(Collider col)
     {
-        Transform exitingTransform = col.gameObject.transform;
-        RemoveEntity(exitingTransform);
+         Transform exitingTransform = col.gameObject.transform;
+         RemoveEntity(exitingTransform);
     }
 
 
@@ -51,6 +43,7 @@ public abstract class Tower : Entity
 
     protected void RemoveEntity(Transform entity)
     {
+        Debug.Log("remove soldier :" + entity);
         MyTargets removingTarget = null;
         foreach(MyTargets targets in entityLL)
         { 
@@ -58,10 +51,6 @@ public abstract class Tower : Entity
             {
                 removingTarget = targets;
                 break;
-            }
-            else
-            {
-                Debug.LogError("Removing entity nit found");
             }
         }
         if (removingTarget != null)
@@ -75,6 +64,10 @@ public abstract class Tower : Entity
                     ChangeTarget();
                 }
             }
+        }
+        else
+        {
+            Debug.LogError("Removing entity not found");
         }
     }
 
@@ -102,7 +95,7 @@ public abstract class Tower : Entity
         }
         else
         {
-            entityLL.AddLast(new MyTargets(t, true));
+            entityLL.AddLast(new MyTargets(t, true, t.gameObject.GetComponent<Entity>().myFirstName));
         }
 
     }
@@ -128,32 +121,27 @@ public abstract class Tower : Entity
         }
     }
 
-    protected class MyTargets
+    public int[] GetAttackingEntitiesCount()
     {
-        Transform myTransform;
-        bool attackState;
-
-        public MyTargets(Transform _tranform, bool _state)
+        int[] entities = new int[Constants.SOLDIER_TYPES];
+        foreach(MyTargets t in entityLL)
         {
-            myTransform = _tranform;
-            attackState = _state;
+            string type = t.GetTargetType();
+            if(type == "Sword_Soldier")
+            {
+                entities[Constants.SWORD_SOLDIER]++;
+            }else if(type == "Arrow_Soldier")
+            {
+                entities[Constants.ARROW_SOLDIER]++;
+            }else if(type == "Hammer_Soldier")
+            {
+                entities[Constants.HAMMER_SOLDIER]++;
+            }
         }
-
-        public void SetAttackingMode(bool state)
-        {
-            attackState = state;
-        }
-
-        public bool GetAttackingMode()
-        {
-            return attackState;
-        }
-
-        public Transform GetTransfrom()
-        {
-            return myTransform;
-        }
+        return entities;
     }
+
+  
 }
 
 

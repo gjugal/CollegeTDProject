@@ -5,40 +5,66 @@ using System.Collections.Generic;
 public class BlockBarricade : Entity {
 
     public float blockBarrierHealth = 5;
-
-
-    public Dictionary<string, int> attackingSoldiers = new Dictionary<string, int>();//This is to keep track of type and count of attackingsoldiers for soldier AI
+  //  public Dictionary<string, int> attackingSoldiers = new Dictionary<string, int>();//This is to keep track of type and count of attackingsoldiers for soldier AI
     // Use this for initialization
 
     protected override void Start() {
         base.Start();
+        myFirstName = "BlockBarricade";
+        entityLL = new LinkedList<MyTargets>();
         health = blockBarrierHealth;
 
-        attackingSoldiers.Add("SwordSoldier(Clone)", 0);
-        attackingSoldiers.Add("ArrowSoldier(Clone)", 0);
-        attackingSoldiers.Add("HammerSoldier(Clone)", 0);
-        attackingSoldiers.Add("Soldier(Clone)", 0);
     }
 
     public void AddToAttackingSoldiers(Transform t)
     {
-        string name = t.gameObject.name;
-        //Debug.Log("added " + name);
-        attackingSoldiers[name] += 1;
-        Entity soldierEntity = t.gameObject.GetComponent<Entity>();
-        soldierEntity.OnDeath += RemoveFromDictionary;
-
+        Entity entity = t.gameObject.GetComponent<Entity>();
+        entity.OnDeath += RemoveFromDictionary;
+        entityLL.AddLast(new MyTargets(t, true, entity.myFirstName));
     }
 
     void RemoveFromDictionary(Transform t)
     {
-        string name = t.gameObject.name;
-        //check if removed entity is soldier
-
-        if (name != "King")
+        MyTargets removingTarget = null;
+        foreach (MyTargets targets in entityLL)
         {
-            attackingSoldiers[name] -= 1;
+            if (targets.GetTransfrom() == t)
+            {
+                removingTarget = targets;
+                break;
+            }
         }
+        if (removingTarget != null)
+        {
+            LinkedListNode<MyTargets> exitingEntity = entityLL.Find(removingTarget);
+            entityLL.Remove(exitingEntity);
+        }
+        else
+        {
+            Debug.LogError("Removing entity not found");
+        }
+    }
+
+    public int[] GetAttackingEntitiesCount()
+    {
+        int[] entities = new int[Constants.SOLDIER_TYPES];
+        foreach (MyTargets t in entityLL)
+        {
+            string type = t.GetTargetType();
+            if (type == "Sword_Soldier")
+            {
+                entities[Constants.SWORD_SOLDIER]++;
+            }
+            else if (type == "Arrow_Soldier")
+            {
+                entities[Constants.ARROW_SOLDIER]++;
+            }
+            else if (type == "Hammer_Soldier")
+            {
+                entities[Constants.HAMMER_SOLDIER]++;
+            }
+        }
+        return entities;
     }
 
     // Update is called once per frame

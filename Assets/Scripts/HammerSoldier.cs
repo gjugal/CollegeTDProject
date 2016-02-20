@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class HammerSoldier : Soldier {
+public class HammerSoldier : Soldier
+{
 
     public float soldier_health = 5f;
 
@@ -16,6 +17,7 @@ public class HammerSoldier : Soldier {
     protected override void Start()
     {
         base.Start();
+        myFirstName = "Hammer_Soldier";
         health = soldier_health;
 
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
@@ -39,9 +41,9 @@ public class HammerSoldier : Soldier {
         }
     }
 
-    protected override bool CheckCondition(Transform t, Dictionary<string, int> d)
+    protected override bool CheckCondition(Transform t, int[] d)
     {// checks condition to add tower in list
-        if (d[this.name] < 5)
+        if (d[Constants.HAMMER_SOLDIER] < 5)
         {
             return true;
         }
@@ -55,6 +57,14 @@ public class HammerSoldier : Soldier {
         if (col.gameObject.tag == "TowerBase")
         {
             if (currentState == States.SET && col.transform.parent.transform == currentTarget)
+            {
+                //agent.enabled = false;
+                currentState = States.ATTACK;
+            }
+        }
+        else if (col.gameObject.tag == "BlockBarricade")
+        {
+            if (currentState == States.SET && col.transform == currentTarget)
             {
                 //agent.enabled = false;
                 currentState = States.ATTACK;

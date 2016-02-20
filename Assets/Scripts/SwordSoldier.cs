@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SwordSoldier : Soldier {
+public class SwordSoldier : Soldier
+{
 
     public float soldier_health = 5f;
 
@@ -17,6 +18,7 @@ public class SwordSoldier : Soldier {
     {
         base.Start();
         health = soldier_health;
+        myFirstName = "Sword_Soldier";
 
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
     }
@@ -24,8 +26,8 @@ public class SwordSoldier : Soldier {
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(currentState);
-        //Debug.Log(currentTarget);
+        Debug.Log(currentState);
+        Debug.Log("current target" + currentTarget);
         if (currentState == States.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)
@@ -40,10 +42,10 @@ public class SwordSoldier : Soldier {
         }
     }
 
-    int i = 0;
-    protected override bool CheckCondition(Transform t, Dictionary<string, int> d)
+    protected override bool CheckCondition(Transform t, int[] d)
     {// checks condition to add tower in list
-        if (d[this.name] < 5)
+        //Debug.Log("CheckCondition" + t.tag);
+        if (d[Constants.SWORD_SOLDIER] < 5)
         {
             return true;
         }
@@ -54,9 +56,18 @@ public class SwordSoldier : Soldier {
     }
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log("Attack Barricade");
         if (col.gameObject.tag == "TowerBase")
         {
             if (currentState == States.SET && col.transform.parent.transform == currentTarget)
+            {
+                //agent.enabled = false;
+                currentState = States.ATTACK;
+            }
+        }
+        else if (col.gameObject.tag == "BlockBarricade")
+        {
+            if (currentState == States.SET && col.transform == currentTarget)
             {
                 //agent.enabled = false;
                 currentState = States.ATTACK;

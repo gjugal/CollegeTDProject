@@ -9,11 +9,11 @@ public class SoldierCensor : MonoBehaviour {
         Debug.Log("triggered");
         if (col.gameObject.tag == "TowerBase") {
             //Debug.Log("triggered");
-            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform.parent.transform, col.gameObject.transform.parent.GetComponent<Tower>().attackingSoldiers);
+            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform.parent.transform, col.gameObject.transform.parent.GetComponent<Tower>().GetAttackingEntitiesCount());
         }
         else if (col.gameObject.tag == "BlockBarricade") {
-            //Debug.Log("barricade detected");
-            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform, col.gameObject.GetComponent<BlockBarricade>().attackingSoldiers);
+            Debug.Log("barricade detected");
+            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform, col.gameObject.GetComponent<BlockBarricade>().GetAttackingEntitiesCount());
         }
     }
 }

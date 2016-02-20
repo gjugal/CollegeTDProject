@@ -14,6 +14,9 @@ public static class Constants{
 
     //SOLDIER DETAILS
 
+    public const int SOLDIER_TYPES = 3;
+
+    public const int KING = 99;
     public const int SWORD_SOLDIER = 0;
     public const int ARROW_SOLDIER = 1;
     public const int HAMMER_SOLDIER = 2;

@@ -14,6 +14,7 @@ public class ArrowTower : Tower {
     // Use this for initialization
     protected override void Start () {
         base.Start();
+        myFirstName = "Arrow_Tower";
         initialForce = initialForceC;
         timeBetweenShoot = timeBetweenShootc;
         lastShootTime = lastShootTimec;
@@ -39,17 +40,24 @@ public class ArrowTower : Tower {
 
     void OnTriggerEnter(Collider col)
     {
-        base.OnEntry(col);//Add to list and register tower ondeath
-        base.SetTarget(FindTarget());
+        if (col.CompareTag("Soldier") || col.CompareTag("King"))
+        {
+            base.OnEntry(col);//Add to list and register tower ondeath
+            base.SetTarget(FindTarget());
+        }
     }
 
     void OnTriggerExit(Collider col)
     {
-        base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
-        base.SetTarget(FindTarget());
+        if (col.CompareTag("Soldier") || col.CompareTag("King"))
+        {
+            base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
+            base.SetTarget(FindTarget());
+        }
     }
 
-   public Transform FindTarget() {//returns target according to AI
+
+    public Transform FindTarget() {//returns target according to AI
         if (entityLL.Count == 1) {
             return entityLL.First.Value.GetTransfrom();
         }

@@ -16,6 +16,7 @@ public class BombTower : Tower
     protected override void Start()
     {
         base.Start();
+        myFirstName = "Bomb_Tower";
         initialForce = initialForceC;
         timeBetweenShoot = timeBetweenShootc;
         lastShootTime = lastShootTimec;
@@ -27,7 +28,6 @@ public class BombTower : Tower
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("tower health= "+ health);
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);
@@ -41,20 +41,24 @@ public class BombTower : Tower
         if (level == levels.Level2) {
             base.SetTarget(FindTarget());
         }
-        //Debug.Log(entityLL.Count);
     }
 
     void OnTriggerEnter(Collider col)
     {
-        //base.OnEntry(col);
-        base.OnEntry(col);//Add to list and register tower ondeath
-        base.SetTarget(FindTarget());
+        if (col.CompareTag("Soldier") || col.CompareTag("King"))
+        {
+            base.OnEntry(col);//Add to list and register tower ondeath
+            base.SetTarget(FindTarget());
+        }
     }
 
     void OnTriggerExit(Collider col)
     {
-        base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
-        base.SetTarget(FindTarget());
+        if (col.CompareTag("Soldier") || col.CompareTag("King"))
+        {
+            base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
+            base.SetTarget(FindTarget());
+        }
     }
 
     public Transform FindTarget() {//returns target according to AI
