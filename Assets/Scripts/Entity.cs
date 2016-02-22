@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Entity : MonoBehaviour, IDamagable
 {
-
+    
     public string myFirstName;
     protected float health;
     protected LinkedList<MyTargets> entityLL;

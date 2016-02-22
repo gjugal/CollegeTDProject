@@ -70,7 +70,16 @@ public class ArrowSoldier : Soldier
                 currentState = States.ATTACK;
             }
         }
+        else if (col.gameObject.tag == "GroundBarricade")
+        {
+            if (currentState == States.SET && col.transform == currentTarget)
+            {
+                //agent.enabled = false;
+                currentState = States.ATTACK;
+            }
+        }
     }
+
 
     void Shoot()
     {

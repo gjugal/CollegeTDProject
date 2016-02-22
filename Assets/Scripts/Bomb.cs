@@ -20,7 +20,6 @@ public class Bomb : MonoBehaviour {
         Destroy(gameObject, 3);
         targets = new LinkedList<Transform>();
         rb = GetComponent<Rigidbody>();
-        //Debug.Log("");
         
     }
 
@@ -31,11 +30,6 @@ public class Bomb : MonoBehaviour {
 
     void Update()
     {
-        //float moveDistance = this.speed * Time.deltaTime;
-        //CheckCollision(moveDistance);
-        //transform.Translate(Vector3.forward * moveDistance);
-        //rb.AddRelativeForce(Vector3.forward * speed);
-        //rb.velocity =transform.forward * speed;
         if (!speedSet) {//set speed only once at beginning after SetSpeed()
             rb.velocity = transform.forward * speed;
             speedSet = true;
@@ -43,35 +37,18 @@ public class Bomb : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider col) {//just add to last of linkedlist
-        //Debug.Log("Collision");
-        //if (col.gameObject.layer == collisionMask)
-        //    {
-        //        Debug.Log("added");
-        //        targets.AddLast(col.gameObject);
-        //    }
-        //Debug.Log("added");
-        //Debug.Log(col.gameObject);
-        targets.AddLast(col.gameObject.transform);
+        if (col.gameObject.layer == collisionMask)
+        {
+            targets.AddLast(col.gameObject.transform);
+        }
     }
 
     void OnTriggerExit(Collider col) {//remove from linkedlist
-        //if (col.gameObject.layer == collisionMask)
-        //{
-        //    targets.Remove(col.gameObject);
-        //}
-        targets.Remove(col.gameObject.transform);
-    }
-    /*void CheckCollision(float distance)
-    {
-        //Debug.Log("checkCollisionEnter");
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, distance, collisionMask, QueryTriggerInteraction.Collide))
+        if (col.gameObject.layer == collisionMask)
         {
-            //Debug.Log("collision detected");
-            OnHitObject();
+            targets.Remove(col.gameObject.transform);
         }
-    }*/
+    }
 
     void OnCollisionEnter(Collision col) {
         //Debug.Log("oncollision");
@@ -98,15 +75,5 @@ public class Bomb : MonoBehaviour {
         }
         //GameObject.Destroy(this.gameObject);
     }
-    //private void OnHitObject(RaycastHit hit)
-    //{
-    //    //Debug.Log("onhit");
-    //    IDamagable damagableObject = hit.collider.gameObject.GetComponent<IDamagable>();
-    //    if (damagableObject != null)
-    //    {
-    //        damagableObject.TakeDamage(damage);
-    //    }
-    //    GameObject.Destroy(this.gameObject);
-    //}
 
 }

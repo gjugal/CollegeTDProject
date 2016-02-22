@@ -6,14 +6,19 @@ public class SoldierCensor : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("triggered");
+        //Debug.Log("triggered");
         if (col.gameObject.tag == "TowerBase") {
             //Debug.Log("triggered");
-            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform.parent.transform, col.gameObject.transform.parent.GetComponent<Tower>().GetAttackingEntitiesCount());
+            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform.parent.transform);
         }
         else if (col.gameObject.tag == "BlockBarricade") {
-            Debug.Log("barricade detected");
-            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform, col.gameObject.GetComponent<BlockBarricade>().GetAttackingEntitiesCount());
+            //Debug.Log("barricade detected");
+            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform);
+        }
+        else if (col.gameObject.tag == "GroundBarricade")
+        {
+            //Debug.Log("barricade detected");
+            this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform);
         }
     }
 }

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject arrowSoldierPrefab;
     public GameObject hammerSoldierPrefab;
     public GameObject kingPrefab;
-    public List<Transform> targets;
+    public List<Transform> DefenseEntities;
     //Transform kingTransform;
 
     void Start()
@@ -23,10 +23,10 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public List<Transform> GetListOfActiveTarget()//currently not in use
+    public List<Transform> GetListOfDefenseEntities()//currently not in use
     {
         List<Transform> _targets = new List<Transform>();
-        foreach (Transform t in targets)
+        foreach (Transform t in DefenseEntities)
         {
             if (t.gameObject.activeSelf)
             {

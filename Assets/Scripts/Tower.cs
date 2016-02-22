@@ -31,8 +31,10 @@ public abstract class Tower : Entity
 
     protected void OnExit(Collider col)
     {
-         Transform exitingTransform = col.gameObject.transform;
-         RemoveEntity(exitingTransform);
+        Transform exitingTransform = col.gameObject.transform;
+        Entity entity = col.gameObject.GetComponent<Entity>();
+        entity.OnDeath -= RemoveEntity;
+        RemoveEntity(exitingTransform);
     }
 
 
@@ -43,7 +45,7 @@ public abstract class Tower : Entity
 
     protected void RemoveEntity(Transform entity)
     {
-        Debug.Log("remove soldier :" + entity);
+        //Debug.Log("remove soldier :" + entity);
         entityLL.Remove(FindFromTargets(entity));
         if (entityLL.Count > 0)
         {
@@ -54,7 +56,7 @@ public abstract class Tower : Entity
         }
         else
         {
-            Debug.LogError("Removing entity not found");
+            //Debug.LogError("Removing entity not found");
         }
     }
 

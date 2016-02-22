@@ -7,12 +7,14 @@ using System.Collections.Generic;
 public class King : Entity
 {
     public float kingHealth;
+    public float rotationSpeed = 5f;
+    public float moveSpeed = 5f;
     enum KingStates { IDLE, WALK, ATTACK };
     NavMeshAgent agent;
     KingStates currentState;
     Camera mainCamera;
     public LayerMask pathLayerMask;
-    public LayerMask blockingLayerMask;
+    public LayerMask defenseLayerMask;
 
     bool isButton = false;
     float timeBetweenShoots = 1;
@@ -23,6 +25,8 @@ public class King : Entity
     Dictionary<string, bool> blockingButtonsName; 
     LinkedList<Transform> targets = null;
     Transform currentTarget = null;
+    [HideInInspector]
+    public bool isFirstPerson = false;
 
     // Use this for initialization
     protected override void Start()
@@ -34,14 +38,13 @@ public class King : Entity
         agent = GetComponent<NavMeshAgent>();
         targets = new LinkedList<Transform>();
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
-        blockingButtonsName = new Dictionary<string, bool>();
-        blockingButtonsName.Add("SpawnSoldier_Button",true);
-        blockingButtonsName.Add("ChangeView_Button",true);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log((agent.destination + Vector3.up * 0.4f) + "   " + transform.position);
         //Debug.Log(currentState);
         // movement
         if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())//on mouse click go to destination
@@ -50,24 +53,23 @@ public class King : Entity
             Ray ray = mainCamera.ScreenPointToRay(clickPos);
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
 
-            RaycastHit rh;
-            if (Physics.Raycast(ray.origin, ray.direction * 10, out rh, 500, blockingLayerMask)) {
-                Debug.Log("button hit");
-                if (blockingButtonsName[rh.transform.gameObject.name]) {
-                    isButton = true;
-                }
-            }
-
             RaycastHit rayhit;
-            if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, pathLayerMask) && !isButton)
+            if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, defenseLayerMask))
+            {
+                Vector3 final = rayhit.point;
+                //Debug.Log(final);
+                currentTarget = rayhit.collider.gameObject.transform;
+                agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                currentState = KingStates.WALK;
+            }
+            else if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, pathLayerMask))
             {
                 Vector3 final = rayhit.point;
                 //Debug.Log(final);
                 agent.SetDestination(final + Vector3.up * 0.4f);
                 currentState = KingStates.WALK;
             }
-
-            isButton = false;
+            
             //clickPos1.z = 10;
             //Vector3 clickPos = Camera.main.ScreenToWorldPoint(clickPos1);
         }
@@ -78,7 +80,10 @@ public class King : Entity
         // if destination reached and there is target in range(in targets linked list) then attack else idle
         if (currentState == KingStates.WALK && this.transform.position == agent.destination + Vector3.up * 0.4f) {
             Debug.Log("Dest. reached");
-            if (targets.Count > 0)
+            if (currentTarget != null) {
+                currentState = KingStates.ATTACK;
+            }
+            else if (targets.Count > 0)
             {
                 currentState = KingStates.ATTACK;
                 currentTarget = targets.First.Value;
@@ -102,6 +107,11 @@ public class King : Entity
                 this.gameObject.GetComponent<Renderer>().material.color = originalColor;
             }
         }
+        if (isFirstPerson)
+        {
+            transform.eulerAngles += new Vector3(0.0f, Input.GetAxis("Horizontal") * rotationSpeed, 0.0f);
+            transform.position += new Vector3(0.0f, 0.0f, Input.GetAxis("Vertical") * moveSpeed);
+        }
 
     }
 
@@ -112,6 +122,24 @@ public class King : Entity
             {
                 //Debug.Log("target entered");
                 targets.AddLast(col.transform.parent.transform);
+
+                if (targets.Last.Value.gameObject.tag == "Tower")//if lastly added target is tower then register changetarget() to its ondeath event
+                {
+                    //Debug.Log("registered");
+                    Entity towerEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
+                    towerEntity.OnDeath += ChangeTarget;
+                }
+                //targets.AddLast(col.gameObject.transform);
+                if (currentTarget == null && currentState == KingStates.IDLE)//if king is idle on new entry then change to attack
+                {
+                    currentTarget = targets.First.Value;
+                    currentState = KingStates.ATTACK;
+                }
+            }
+            else if (col.gameObject.tag == "BlockBarricade")
+            {
+                //Debug.Log("target entered");
+                targets.AddLast(col.transform);
 
                 if (targets.Last.Value.gameObject.tag == "Tower")//if lastly added target is tower then register changetarget() to its ondeath event
                 {
@@ -172,4 +200,5 @@ public class King : Entity
             targets.Remove(t);
         }
     }
+
 }

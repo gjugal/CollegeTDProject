@@ -9,10 +9,13 @@ public class CameraController : MonoBehaviour {
     bool isFirstPerson = false;
     Vector3 cameraPosition;
     Quaternion cameraRotation;
+
+    //GameObject king;
 	void Start () {
         //store initial values of camera's transform
         cameraPosition = this.transform.position;
         cameraRotation = this.transform.rotation;
+        kingTransform = GameObject.FindGameObjectWithTag("King").transform;
     }
 	
 	// Update is called once per frame
@@ -37,14 +40,17 @@ public class CameraController : MonoBehaviour {
             cameraPosition = this.transform.position;
             cameraRotation = this.transform.rotation;
             //SetInitialParameters(GameObject.FindGameObjectWithTag("King").transform);
-            this.kingTransform = GameObject.FindGameObjectWithTag("King").transform;
             //isKing = true;
             isFirstPerson = true;
+            kingTransform.gameObject.GetComponent<King>().isFirstPerson = true;
+            //king.GetComponent<King>().isfirstPerson = true;
         }else {
             //isKing = false;
             this.transform.position = cameraPosition;
             this.transform.rotation = cameraRotation;
             isFirstPerson = false;
+            kingTransform.gameObject.GetComponent<King>().isFirstPerson = false;
+            //king.GetComponent<King>().isfirstPerson = false;
         }
     }
 
