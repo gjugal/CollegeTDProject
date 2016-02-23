@@ -26,8 +26,8 @@ public class SwordSoldier : Soldier
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(currentState);
-        Debug.Log("current target" + currentTarget);
+        //Debug.Log(health + " is " + transform);
+        //Debug.Log("current target" + currentTarget);
         if (currentState == States.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)

@@ -16,7 +16,6 @@ public class King : Entity
     public LayerMask pathLayerMask;
     public LayerMask defenseLayerMask;
 
-    bool isButton = false;
     float timeBetweenShoots = 1;
     float lastShootTime = 0;
     float damage = 1;
@@ -44,7 +43,7 @@ public class King : Entity
     void Update()
     {
 
-        Debug.Log((agent.destination + Vector3.up * 0.4f) + "   " + transform.position);
+        //Debug.Log((agent.destination + Vector3.up * 0.4f) + "   " + transform.position);
         //Debug.Log(currentState);
         // movement
         if (Input.GetMouseButtonDown(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())//on mouse click go to destination
@@ -56,10 +55,11 @@ public class King : Entity
             RaycastHit rayhit;
             if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, defenseLayerMask))
             {
-                Vector3 final = rayhit.point;
                 //Debug.Log(final);
-                currentTarget = rayhit.collider.gameObject.transform;
-                agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                currentTarget = rayhit.collider.gameObject.transform.parent.transform;
+
+                //Debug.Log(currentTarget);
+                agent.SetDestination(rayhit.collider.transform.position + Vector3.up * 0.4f);
                 currentState = KingStates.WALK;
             }
             else if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, pathLayerMask))
@@ -79,7 +79,7 @@ public class King : Entity
 
         // if destination reached and there is target in range(in targets linked list) then attack else idle
         if (currentState == KingStates.WALK && this.transform.position == agent.destination + Vector3.up * 0.4f) {
-            Debug.Log("Dest. reached");
+            //Debug.Log("Dest. reached");
             if (currentTarget != null) {
                 currentState = KingStates.ATTACK;
             }
@@ -110,7 +110,7 @@ public class King : Entity
         if (isFirstPerson)
         {
             transform.eulerAngles += new Vector3(0.0f, Input.GetAxis("Horizontal") * rotationSpeed, 0.0f);
-            transform.position += new Vector3(0.0f, 0.0f, Input.GetAxis("Vertical") * moveSpeed);
+            //transform.Translate(Vector3.forward * moveSpeed * Input.GetAxis("Vertical"));
         }
 
     }
@@ -122,13 +122,9 @@ public class King : Entity
             {
                 //Debug.Log("target entered");
                 targets.AddLast(col.transform.parent.transform);
-
-                if (targets.Last.Value.gameObject.tag == "Tower")//if lastly added target is tower then register changetarget() to its ondeath event
-                {
-                    //Debug.Log("registered");
-                    Entity towerEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
-                    towerEntity.OnDeath += ChangeTarget;
-                }
+                //Debug.Log("registered");
+                Entity towerEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
+                towerEntity.OnDeath += ChangeTarget;
                 //targets.AddLast(col.gameObject.transform);
                 if (currentTarget == null && currentState == KingStates.IDLE)//if king is idle on new entry then change to attack
                 {
@@ -136,17 +132,13 @@ public class King : Entity
                     currentState = KingStates.ATTACK;
                 }
             }
-            else if (col.gameObject.tag == "BlockBarricade")
+            else if (col.gameObject.tag == "BlockBarricade" || col.gameObject.tag == "GroundBarricade")
             {
                 //Debug.Log("target entered");
                 targets.AddLast(col.transform);
 
-                if (targets.Last.Value.gameObject.tag == "Tower")//if lastly added target is tower then register changetarget() to its ondeath event
-                {
-                    //Debug.Log("registered");
-                    Entity towerEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
-                    towerEntity.OnDeath += ChangeTarget;
-                }
+                Entity BarricadeEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
+                BarricadeEntity.OnDeath += ChangeTarget;
                 //targets.AddLast(col.gameObject.transform);
                 if (currentTarget == null && currentState == KingStates.IDLE)//if king is idle on new entry then change to attack
                 {

@@ -15,11 +15,14 @@ public abstract class Tower : Entity
     protected float lastShootTime;
     public Dictionary<string, int> attackingSoldiers = new Dictionary<string, int>();//This is to keep track of type and count of attackingsoldiers for soldier AI
 
+    protected LayerMask offenseLayer;
 
     protected override void Start()
     {
         base.Start();
         myFirstName = "Tower";
+
+        offenseLayer = 9;
     }
 
     protected void OnEntry(Collider col)//called from OnTriggerEnter of childTowers

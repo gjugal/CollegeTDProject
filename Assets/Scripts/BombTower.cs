@@ -45,7 +45,7 @@ public class BombTower : Tower
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.CompareTag("Soldier") || col.CompareTag("King"))
+        if (col.gameObject.layer == offenseLayer)
         {
             base.OnEntry(col);//Add to list and register tower ondeath
             base.SetTarget(FindTarget());
@@ -54,7 +54,7 @@ public class BombTower : Tower
 
     void OnTriggerExit(Collider col)
     {
-        if (col.CompareTag("Soldier") || col.CompareTag("King"))
+        if (col.gameObject.layer == offenseLayer)
         {
             base.OnExit(col);//Remove from list And ChangeTarget() is called from removeentity()
             base.SetTarget(FindTarget());
