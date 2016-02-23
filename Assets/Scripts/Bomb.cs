@@ -4,29 +4,22 @@ using System.Collections.Generic;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bomb : MonoBehaviour {
-
-    public LayerMask collisionMask;
-    float damage = 1;
-    float speed ;
+public class Bomb : Projectiles
+{ 
     Rigidbody rb;
     bool speedSet = false;
     
     LinkedList<Transform> targets = null;
 
 
-    void Start()
+    protected override void Start()
     {
-        Destroy(gameObject, 3);
         targets = new LinkedList<Transform>();
         rb = GetComponent<Rigidbody>();
-        
+        speed = 2;
+        damage = 1;
     }
 
-    public void SetSpeed(float _speed)
-    {
-        speed = _speed;
-    }
 
     void Update()
     {

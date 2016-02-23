@@ -1,21 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : Projectiles
+{
+  
 
-    public LayerMask collisionMask;
-    float speed = 5f;
-    float damage = 1;
-
-    void Start()
+    protected override void Start()
     {
-        Destroy(gameObject, 3);    
+        base.Start();
+        speed = 5;
+        damage = 1;
     }
 
-    public void SetSpeed(float _speed)
-    {
-        speed = _speed;
-    }
+    
 
     void Update()
     {
