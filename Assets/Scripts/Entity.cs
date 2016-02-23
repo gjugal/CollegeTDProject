@@ -31,6 +31,7 @@ public class Entity : MonoBehaviour, IDamagable
 
     protected void Die()
     {
+        //Debug.Log("Die called for" + this.transform.name);
         dead = true;
         if (OnDeath != null)
         {

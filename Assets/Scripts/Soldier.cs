@@ -56,24 +56,49 @@ public abstract class Soldier : Entity
 
     void ChangeTarget(Transform t)//registered to OnDeath event of towers enrolled in this soldier
     {
-        
-        if (currentTarget == t)
+        try
         {
-            OffenseHeadquaters.GetComponent<OffenseHeadquaters>().RemoveMeFromDefense(t, myFirstName);
-            currentTarget = null;
+            if (currentTarget == t)
+            {
+                OffenseHeadquaters.GetComponent<OffenseHeadquaters>().RemoveMeFromDefense(t, myFirstName);
+                agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
+                currentTarget = null;
+            }
+            entityLL.Remove(FindFromTargets(t));
+            if (entityLL.Count > 0)
+            {
+                currentTarget = entityLL.First.Value.GetTransfrom();
+                currentState = States.SET;
+                if (agent != null)
+                {
+                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                    OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
+                }
+                else
+                {
+                    agent = GetComponent<NavMeshAgent>();
+                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                    OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
+                }
+            }
+            else
+            {
+                if (agent != null)
+                {
+                    currentState = States.WALK;
+                    agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
+                }
+                else
+                {
+                    Debug.Log("my name is " + myFirstName);
+                    agent = GetComponent<NavMeshAgent>();
+                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                    OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
+                }
+            }
         }
-        entityLL.Remove(FindFromTargets(t));
-        if (entityLL.Count > 0)
-        {
-            currentTarget = entityLL.First.Value.GetTransfrom();
-            currentState = States.SET;
-            agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
-            OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
-        }
-        else
-        {
-            currentState = States.WALK;
-            agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
+        catch {
+            Debug.Log("Exception catched");
         }
     }
 
@@ -83,5 +108,6 @@ public abstract class Soldier : Entity
             OffenseHeadquaters.GetComponent<OffenseHeadquaters>().RemoveMeFromDefense(currentTarget, myFirstName);
         }
     }
+    
 
 }

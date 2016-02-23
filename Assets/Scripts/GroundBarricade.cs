@@ -20,7 +20,7 @@ public class GroundBarricade : Entity {
     }
 
     void OnTriggerEnter(Collider col) {
-        Debug.Log("Collider triggered");
+        //Debug.Log("Collider triggered");
         if (col.tag == "Soldier" || col.tag == "King")
         {
             Entity entity = col.gameObject.GetComponent<Entity>();

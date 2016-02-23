@@ -26,7 +26,7 @@ public class HammerSoldier : Soldier
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         if (currentState == States.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)
