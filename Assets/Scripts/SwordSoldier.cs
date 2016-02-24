@@ -27,7 +27,7 @@ public class SwordSoldier : Soldier
     void Update()
     {
         //Debug.Log(health + " is " + transform);
-        Debug.Log("current target" + currentTarget);
+        //Debug.Log("current target" + currentTarget);
         if (currentState == States.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)

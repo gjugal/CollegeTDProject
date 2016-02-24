@@ -6,10 +6,11 @@ public class Projectiles : MonoBehaviour {
     protected float speed;
     protected float damage;
 
-    public LayerMask collisionMask;
+    protected LayerMask collisionMask;
     // Use this for initialization
     protected virtual void Start () {
-        Destroy(gameObject, 3);
+
+        
     }
 	
 	// Update is called once per frame
