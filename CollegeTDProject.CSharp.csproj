@@ -79,10 +79,10 @@
     <Compile Include="Assets\Scripts\MakeScriptableObjects.cs" />
     <Compile Include="Assets\Scripts\OffenseHeadquaters.cs" />
     <Compile Include="Assets\Scripts\Projectiles.cs" />
+    <Compile Include="Assets\Scripts\RPB.cs" />
+    <Compile Include="Assets\Scripts\ScriptableSoldierProps.cs" />
     <Compile Include="Assets\Scripts\Soldier.cs" />
     <Compile Include="Assets\Scripts\SoldierCensor.cs" />
-    <Compile Include="Assets\Scripts\SoldierProps.cs" />
-    <Compile Include="Assets\Scripts\SoldierTest.cs" />
     <Compile Include="Assets\Scripts\StartMenuManager.cs" />
     <Compile Include="Assets\Scripts\StatisticsManager.cs" />
     <Compile Include="Assets\Scripts\StoreManager.cs" />

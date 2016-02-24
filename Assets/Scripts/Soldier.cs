@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Soldier : Entity
 {
-    public SoldierProps props;
+    public ScriptableSoldierProps props;
     Transform gateEnd;
     protected Transform currentTarget = null;
 

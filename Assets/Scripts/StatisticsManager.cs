@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class StatisticsManager : MonoBehaviour {
 
+    public SoldierType[] typesOfSoldiers;
     public static StatisticsManager SM;
     Dictionary<string, string> stats;
 
@@ -18,12 +19,12 @@ public class StatisticsManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+        
     }
 
     void Start()
     {
         //create a dictionary of player statistics
-        stats = new Dictionary<string, string>();
 
         //Check whether data is present on the disk, then fetch it and store the player current stats
         /*
@@ -36,8 +37,8 @@ public class StatisticsManager : MonoBehaviour {
         */
 
         //else check if the dictionary is null then so can go and set the InitialDetails
+        stats = new Dictionary<string, string>();
         SetThePlayerInitialDetails();
-
     }
 
     void SetThePlayerInitialDetails()
@@ -47,7 +48,7 @@ public class StatisticsManager : MonoBehaviour {
         SetDetails("Sword_Soldier_State", Constants.BUYABLE.ToString());
         SetDetails("Arrow_Soldier_State", Constants.BUYABLE.ToString());
         SetDetails("Hammer_Soldier_State", Constants.BUYABLE.ToString());
-
+        Debug.Log("Added EveryThing to Dictionary");
     }
 
     public void SetDetails(string key, string value)
@@ -73,5 +74,17 @@ public class StatisticsManager : MonoBehaviour {
             Debug.LogError("Key Not Found In Player Statistics Dictionary");
         }
         return -1;
+    }
+
+    public ScriptableSoldierProps GetSoldierProperties(int type, int level)
+    {
+        Debug.Log("type: " + type + " level: " + level);
+        return typesOfSoldiers[type].soldierPropsArray[level-1];
+    }
+
+    [System.Serializable]
+    public class SoldierType
+    {
+        public ScriptableSoldierProps[] soldierPropsArray;
     }
 }

@@ -7,7 +7,7 @@ public class MakeScriptableObjects{
 	[MenuItem("Assets/Create/New Soldier Properties")]
     public static void CreateMyAssest()
     {
-        SoldierProps asset = ScriptableObject.CreateInstance<SoldierProps>();
+        ScriptableSoldierProps asset = ScriptableObject.CreateInstance<ScriptableSoldierProps>();
         AssetDatabase.CreateAsset(asset, "Assets/Soldiers/NewSoldierProps.asset");
         AssetDatabase.SaveAssets();
 
