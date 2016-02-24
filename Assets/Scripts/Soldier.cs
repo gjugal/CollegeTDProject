@@ -67,32 +67,13 @@ public abstract class Soldier : Entity
             {
                 currentTarget = entityLL.First.Value.GetTransfrom();
                 currentState = States.SET;
-                if (agent != null)
-                {
-                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
-                    OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
-                }
-                else
-                {
-                    agent = GetComponent<NavMeshAgent>();
-                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
-                    OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
-                }
+                agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+                OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
             }
             else
             {
-                if (agent != null)
-                {
-                    currentState = States.WALK;
-                    agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
-                }
-                else
-                {
-                    Debug.Log("my name is " + myFirstName);
-                    agent = GetComponent<NavMeshAgent>();
-                    agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
-                    OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
-                }
+                currentState = States.WALK;
+                agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
             }
         }
         catch {

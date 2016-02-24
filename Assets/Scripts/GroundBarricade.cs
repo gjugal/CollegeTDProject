@@ -9,6 +9,7 @@ public class GroundBarricade : Entity {
     float lastShootTime = 0;
     float damage = 1;
     Color originalColor;
+    LayerMask offenseLayer;
 
     // Use this for initialization
     protected override void Start () {
@@ -17,11 +18,12 @@ public class GroundBarricade : Entity {
         entityLL = new System.Collections.Generic.LinkedList<MyTargets>();
         health = groundbarricadeHealth;
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+        offenseLayer = 9;
     }
 
     void OnTriggerEnter(Collider col) {
         //Debug.Log("Collider triggered");
-        if (col.tag == "Soldier" || col.tag == "King")
+        if (col.gameObject.layer == offenseLayer)
         {
             Entity entity = col.gameObject.GetComponent<Entity>();
             entity.OnDeath += RemoveEntity;
@@ -30,7 +32,7 @@ public class GroundBarricade : Entity {
     }
 
     void OnTriggerExit(Collider col) {
-        if (col.tag == "Soldier" || col.tag == "King")
+        if (col.gameObject.layer == offenseLayer)
         {
             entityLL.Remove(FindFromTargets(col.transform));
         }

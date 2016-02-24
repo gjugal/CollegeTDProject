@@ -6,12 +6,13 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class Bomb : MonoBehaviour {
 
-    public LayerMask collisionMask;
+    public GameObject blastEffect;
+    LayerMask collisionMask;
+    LayerMask pathMask;
     float damage = 1;
     float speed ;
     Rigidbody rb;
     bool speedSet = false;
-    
     LinkedList<Transform> targets = null;
 
 
@@ -20,7 +21,9 @@ public class Bomb : MonoBehaviour {
         Destroy(gameObject, 3);
         targets = new LinkedList<Transform>();
         rb = GetComponent<Rigidbody>();
-        
+        collisionMask = 9;
+        pathMask = 8;
+
     }
 
     public void SetSpeed(float _speed)
@@ -52,8 +55,11 @@ public class Bomb : MonoBehaviour {
 
     void OnCollisionEnter(Collision col) {
         //Debug.Log("oncollision");
-        if (col.gameObject.tag == "Soldier" || col.gameObject.tag == "King")//check if it is colliding with the soldier and not its censor AND destroy bomb
+        if (col.gameObject.layer == collisionMask || col.gameObject.layer == pathMask)//check if it is colliding with the soldier and not its censor AND destroy bomb
         {
+            //Debug.Log("condition ttrue");
+            Object bombBlast = Instantiate(blastEffect, this.transform.position, this.transform.rotation);
+            Destroy(bombBlast, 1);
             GameObject.Destroy(this.gameObject);
             OnHitObject();
         }

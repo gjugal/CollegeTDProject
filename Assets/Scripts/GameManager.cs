@@ -35,18 +35,5 @@ public class GameManager : MonoBehaviour
         }
         return _targets;
     }
-
-    public void SpawnSwordSoldier() {
-        Instantiate(swordSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
-    }
-
-    public void SpawnArrowSoldier()
-    {
-        Instantiate(arrowSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
-    }
-
-    public void SpawnHammerSoldier()
-    {
-        Instantiate(hammerSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
-    }
+    
 }
