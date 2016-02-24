@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Soldier : Entity
 {
-
+    public SoldierProps props;
     Transform gateEnd;
     protected Transform currentTarget = null;
 
@@ -51,6 +51,8 @@ public abstract class Soldier : Entity
     }
 
     protected abstract bool CheckCondition(Transform t, int[] entities_count);
+
+   
 
     void ChangeTarget(Transform t)//registered to OnDeath event of towers enrolled in this soldier
     {

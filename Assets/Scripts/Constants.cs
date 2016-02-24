@@ -82,5 +82,11 @@ public static class Constants{
     public const float HS_LVL_3_RANGE = 0.7f;
     public const float HS_LVL_3_RATE = 0.2f;
 
+    //DEFENSE ENTITIES
+    public const int ARROW_TOWER = 0;
+    public const int BOMB_TOWER = 1;
+    public const int BLOCK_BARRICADE = 2;
+    public const int GROUND_BARRICADE = 3;
+
    
 }
