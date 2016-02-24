@@ -6,10 +6,12 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 
 public class Bomb : Projectiles
-{ 
+{
+    public GameObject blastEffect;
     Rigidbody rb;
     bool speedSet = false;
     LinkedList<Transform> targets = null;
+    LayerMask pathMask;
 
 
     protected override void Start()
@@ -18,7 +20,6 @@ public class Bomb : Projectiles
         rb = GetComponent<Rigidbody>();
         collisionMask = 9;
         pathMask = 8;
-        speed = 2;
         damage = 1;
 
     }

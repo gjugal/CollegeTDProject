@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SoldierProps : ScriptableObject {
 
-    public string name = "entityFirstName";
+    public string myFirstname = "entityFirstName";
     public Color originalColor = Color.white;
     public float timeBetweenShoots = 0;
     public float damage;
