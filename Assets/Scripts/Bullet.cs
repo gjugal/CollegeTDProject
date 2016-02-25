@@ -11,6 +11,7 @@ public class Bullet : Projectiles
         base.Start();
         speed = 5;
         damage = 1;
+        collisionMask = 9;
     }
 
     

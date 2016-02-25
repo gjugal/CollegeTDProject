@@ -14,7 +14,7 @@ public class GroundBarricade : Entity {
     // Use this for initialization
     protected override void Start () {
         base.Start();
-        myFirstName = "GroundBarricade";
+        myFirstName = "Ground_Barricade";
         entityLL = new System.Collections.Generic.LinkedList<MyTargets>();
         health = groundbarricadeHealth;
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
@@ -22,7 +22,7 @@ public class GroundBarricade : Entity {
     }
 
     void OnTriggerEnter(Collider col) {
-        //Debug.Log("Collider triggered");
+        Debug.Log("Collider triggered");
         if (col.gameObject.layer == offenseLayer)
         {
             Entity entity = col.gameObject.GetComponent<Entity>();
@@ -45,7 +45,7 @@ public class GroundBarricade : Entity {
 	// Update is called once per frame
 	void Update () {
         if(entityLL.Count > 0) {
-            //Debug.Log("Total targets = " + entityLL.Count);
+            Debug.Log("Total targets = " + entityLL.Count);
             if (Time.time > lastShootTime + timeBetweenShoots)
             {
                 lastShootTime = Time.time;

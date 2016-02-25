@@ -1,26 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class HammerSoldier : Soldier
-{
-
-    public float soldier_health = 5f;
-
-
-    Color originalColor;
-    float timeBetweenShoots = 1;
-    float lastShootTime = 0;
-    float damage = 1;
+{     
 
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
-        myFirstName = "Hammer_Soldier";
-        health = soldier_health;
-
-        originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+        SetMyProperties();
     }
 
     // Update is called once per frame
@@ -36,7 +26,7 @@ public class HammerSoldier : Soldier
             }
             else
             {
-                this.gameObject.GetComponent<Renderer>().material.color = originalColor;
+                this.gameObject.GetComponent<Renderer>().material = originalMaterial;
             }
         }
     }
@@ -83,6 +73,31 @@ public class HammerSoldier : Soldier
     void Shoot()
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
-        currentTarget.gameObject.GetComponent<Entity>().TakeDamage(damage);
+        Entity entity = currentTarget.gameObject.GetComponent<Entity>();
+        int type_of_target = GameManager.GM.GetDefenseType(entity.myFirstName);
+        Debug.Log("" + type_of_target);
+        entity.TakeDamage(damage * damagePercentage[type_of_target]/100);
+    }
+
+    protected override void SetMyProperties()
+    {
+        int level = StatisticsManager.SM.GetDetails("Hammer_Soldier_State");
+        int type = Constants.HAMMER_SOLDIER;
+        if (level >= 1)
+        {
+            if (level > 3)
+                level = 1;
+            myProperties = StatisticsManager.SM.GetSoldierProperties(type, level);
+            myFirstName = myProperties.myFirstname;
+            health = myProperties.health;
+            originalMaterial = myProperties.originalMaterial;
+            timeBetweenShoots = myProperties.timeBetweenShoots;
+            damage = myProperties.damage;
+            damagePercentage = myProperties.damagePercentage;
+        }
+        else
+        {
+            Debug.LogError("You have still not bought the Arrow Soldier");
+        }
     }
 }

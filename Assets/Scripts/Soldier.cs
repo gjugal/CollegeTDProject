@@ -5,15 +5,19 @@ using System.Collections.Generic;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Soldier : Entity
 {
-    public ScriptableSoldierProps props;
     Transform gateEnd;
     protected Transform currentTarget = null;
 
     NavMeshAgent agent;
     protected enum States { WALK, SET, ATTACK };//SET is when soldier finds new target and moves towards it for attacking
-
     protected States currentState;
     protected GameObject OffenseHeadquaters;
+    protected ScriptableSoldierProps myProperties;
+    protected Material originalMaterial;
+    protected float timeBetweenShoots;
+    protected float lastShootTime = 0;
+    protected float damage;
+    protected List<int> damagePercentage = null;
 
     protected override void Start()
     {
@@ -52,6 +56,7 @@ public abstract class Soldier : Entity
 
     protected abstract bool CheckCondition(Transform t, int[] entities_count);
 
+    protected abstract void SetMyProperties();
    
 
     void ChangeTarget(Transform t)//registered to OnDeath event of towers enrolled in this soldier

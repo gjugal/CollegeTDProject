@@ -4,23 +4,28 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-
+    public static GameManager GM;
     public Transform spawnPoint;
-    public GameObject swordSoldierPrefab;
-    public GameObject arrowSoldierPrefab;
-    public GameObject hammerSoldierPrefab;
     public GameObject kingPrefab;
     public List<Transform> DefenseEntities;
     //Transform kingTransform;
 
+    void Awake()
+    {
+        if (!GM)
+        {
+            GM = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
-        //Instantiate(soldierPrefab, spawnPoint.position + Vector3.up*0.4f, Quaternion.identity);
         Instantiate(kingPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
-
-        //Debug.Log(kingTransform);
-        //Camera.main.gameObject.GetComponent<CameraController>().SetInitialParameters(GameObject.FindGameObjectWithTag("King").transform);
-        
     }
 
     public List<Transform> GetListOfDefenseEntities()//currently not in use
@@ -34,6 +39,27 @@ public class GameManager : MonoBehaviour
             }
         }
         return _targets;
+    }
+
+    public int GetDefenseType(string defense_type)
+    {
+        if(defense_type == "Arrow_Tower")
+        {
+            return Constants.ARROW_TOWER;
+        }
+        else if(defense_type == "Bomb_Tower")
+        {
+            return Constants.BOMB_TOWER;
+        }
+        else if(defense_type == "Block_Barricade")
+        {
+            return Constants.BLOCK_BARRICADE;
+        }
+        else if(defense_type == "Ground_Barricade")
+        {
+            return Constants.GROUND_BARRICADE;
+        }
+        return -1; ;
     }
     
 }
