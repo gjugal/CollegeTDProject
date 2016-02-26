@@ -7,6 +7,7 @@ public abstract class Soldier : Entity
 {
     Transform gateEnd;
     protected Transform currentTarget = null;
+    static int i = 0;
 
     NavMeshAgent agent;
     protected enum States { WALK, SET, ATTACK };//SET is when soldier finds new target and moves towards it for attacking
@@ -18,6 +19,7 @@ public abstract class Soldier : Entity
     protected float lastShootTime = 0;
     protected float damage;
     protected List<int> damagePercentage = null;
+    protected int[] target_priority;
 
     protected override void Start()
     {
@@ -35,22 +37,34 @@ public abstract class Soldier : Entity
 
     public void TargetEntry(Transform t)//called from censor whenever it detects a towerbase or barricade
     {
+        i++;
+        Debug.Log("TargetEntry called " + t);
         //Debug.Log("Defense details of " + t + " is" + OffenseHeadquaters.GetComponent<OffenseHeadquaters>().Defensedetails[t][0] + OffenseHeadquaters.GetComponent<OffenseHeadquaters>().Defensedetails[t][1] + OffenseHeadquaters.GetComponent<OffenseHeadquaters>().Defensedetails[t][2]);
         if (CheckCondition(t, OffenseHeadquaters.GetComponent<OffenseHeadquaters>().Defensedetails[t]))
         {
             Entity defenseEntity = t.gameObject.GetComponent<Entity>();
             defenseEntity.OnDeath += ChangeTarget;
             entityLL.AddLast(new MyTargets(t, false, defenseEntity.myFirstName));
+            OffenseHeadquaters oHQ = OffenseHeadquaters.GetComponent<OffenseHeadquaters>();
             //Debug.Log("Soldier's next target added : " + defenseEntity.myFirstName);
             if (currentTarget == null)
             {
-                agent.SetDestination(t.position + Vector3.up * 0.4f);
-                currentState = States.SET;
-                currentTarget = entityLL.First.Value.GetTransfrom();
-
-                //Debug.Log("Target entry" + t.gameObject.tag);
-                OffenseHeadquaters.GetComponent<OffenseHeadquaters>().AddMeToDefense(currentTarget, myFirstName);
+                currentTarget = ComputeHighPriorityTarget(); 
             }
+            else
+            {
+                Transform newTarget = ComputeHighPriorityTarget();
+                Debug.Log("Change target to " + newTarget);
+                if(newTarget != currentTarget)
+                {
+                    oHQ.RemoveMeFromDefense(currentTarget, myFirstName);
+                }
+                currentTarget = newTarget;
+            }
+            agent.SetDestination(currentTarget.position + Vector3.up * 0.4f);
+            currentState = States.SET;
+            //Debug.Log("Target entry" + t.gameObject.tag);
+            oHQ.AddMeToDefense(currentTarget, myFirstName);
         }
     }
 
@@ -86,6 +100,26 @@ public abstract class Soldier : Entity
         catch {
             Debug.Log("Exception catched");
         }
+    }
+
+    private Transform ComputeHighPriorityTarget()
+    {
+        MyTargets priorityTarget = null;
+        int temp_priority = 100; ;
+        foreach(MyTargets t in entityLL)
+        {
+            int priority = target_priority[GameManager.GM.GetDefenseType(t.GetTargetType())];
+            if(priority < temp_priority)
+            {
+                temp_priority = priority;
+                priorityTarget = t;
+            }
+        }
+        if(priorityTarget == null)
+        {
+            Debug.LogError("Priority Target couldn't be found and thus it is null");
+        }
+        return priorityTarget.GetTransfrom();
     }
 
     void OnDestroy()

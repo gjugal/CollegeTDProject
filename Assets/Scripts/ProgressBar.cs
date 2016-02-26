@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class RPB : MonoBehaviour {
+public class ProgressBar : MonoBehaviour {
 
     public GameObject swordSoldierPrefab;
     public GameObject arrowSoldierPrefab;

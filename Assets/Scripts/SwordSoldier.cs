@@ -96,6 +96,7 @@ public class SwordSoldier : Soldier
             timeBetweenShoots = myProperties.timeBetweenShoots;
             damage = myProperties.damage;
             damagePercentage = myProperties.damagePercentage;
+            target_priority = myProperties.priority;
         }
         else
         {

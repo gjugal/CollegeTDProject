@@ -78,8 +78,8 @@
     <Compile Include="Assets\Scripts\King.cs" />
     <Compile Include="Assets\Scripts\MakeScriptableObjects.cs" />
     <Compile Include="Assets\Scripts\OffenseHeadquaters.cs" />
+    <Compile Include="Assets\Scripts\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Projectiles.cs" />
-    <Compile Include="Assets\Scripts\RPB.cs" />
     <Compile Include="Assets\Scripts\ScriptableSoldierProps.cs" />
     <Compile Include="Assets\Scripts\Soldier.cs" />
     <Compile Include="Assets\Scripts\SoldierCensor.cs" />

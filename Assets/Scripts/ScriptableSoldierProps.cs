@@ -11,5 +11,6 @@ public class ScriptableSoldierProps : ScriptableObject {
     public float damage;
     public int health;
     public List<int> damagePercentage;
+    public int[] priority;
     public int cost;
 }

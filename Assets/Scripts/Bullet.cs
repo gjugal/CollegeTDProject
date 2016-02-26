@@ -7,7 +7,7 @@ public class Bullet : Projectiles
 
     protected override void Start()
     {
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 1);
         base.Start();
         speed = 5;
         damage = 1;
