@@ -17,7 +17,7 @@ public class SoldierCensor : MonoBehaviour {
         }
         else if (col.gameObject.tag == "GroundBarricade")
         {
-            //Debug.Log("barricade detected");
+            Debug.Log("barricade detected");
             this.transform.parent.GetComponent<Soldier>().TargetEntry(col.transform);
         }
     }

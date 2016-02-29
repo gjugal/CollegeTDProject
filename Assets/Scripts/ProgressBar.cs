@@ -24,7 +24,7 @@ public class ProgressBar : MonoBehaviour {
         {
             //Debug.Log(currentAmount + "is less than 100");
             currentAmount += spwanSpeed * Time.deltaTime;
-            //isClickable = false;
+            isClickable = false;
         }
         else {
             isClickable = true;

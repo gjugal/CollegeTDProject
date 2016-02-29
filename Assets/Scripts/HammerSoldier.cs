@@ -75,7 +75,6 @@ public class HammerSoldier : Soldier
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
         Entity entity = currentTarget.gameObject.GetComponent<Entity>();
         int type_of_target = GameManager.GM.GetDefenseType(entity.myFirstName);
-        Debug.Log("" + type_of_target);
         entity.TakeDamage(damage * damagePercentage[type_of_target]/100);
     }
 

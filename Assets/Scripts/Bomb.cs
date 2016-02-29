@@ -7,20 +7,23 @@ using System.Collections.Generic;
 
 public class Bomb : Projectiles
 {
-    //public GameObject blastEffect;
+    //public GameObject explodeParticles;
+    public float blastRadius = 1.2f;
     Rigidbody rb;
     bool speedSet = false;
-    LinkedList<Transform> targets = null;
-    LayerMask pathMask;
+    //LinkedList<Transform> targets = null;
+    LayerMask pathMask, defenseMask;
+    bool explode = false;
 
 
     protected override void Start()
     {
-        targets = new LinkedList<Transform>();
+       // targets = new LinkedList<Transform>();
         rb = GetComponent<Rigidbody>();
         pathMask = 8;
         collisionMask = 9;
-        damage = 1;
+        defenseMask = 11;
+        damage = 2;
 
     }
 
@@ -33,47 +36,31 @@ public class Bomb : Projectiles
         }
     }
 
-    void OnTriggerEnter(Collider col) {//just add to last of linkedlist
-        if (col.gameObject.layer == collisionMask)
+    void FixedUpdate()
+    {
+        if(explode)
         {
-            targets.AddLast(col.gameObject.transform);
-        }
-    }
-
-    void OnTriggerExit(Collider col) {//remove from linkedlist
-        if (col.gameObject.layer == collisionMask)
-        {
-            targets.Remove(col.gameObject.transform);
-        }
-    }
-
-    void OnCollisionEnter(Collision col) {
-        Debug.Log("oncollision");
-        if (col.gameObject.layer == collisionMask || col.gameObject.layer == pathMask)//check if it is colliding with the soldier and not its censor AND destroy bomb
-        {
-            //Debug.Log("condition ttrue");
-            //Object bombBlast = Instantiate(blastEffect, this.transform.position, this.transform.rotation);
-            //Destroy(bombBlast, 1);
-            GameObject.Destroy(this.gameObject);
-            OnHitObject();
-        }
-    }
-
-    private void OnHitObject() {//just give damage to all towers in LinkedList
-        //Debug.Log("on hit called");
-        foreach (Transform t in targets)
-        {
-            try
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
+            foreach(Collider col in hitColliders)
             {
-                IDamagable damagableObject = t.GetComponent<IDamagable>();
-                if (damagableObject != null)
+                if (col.gameObject.layer == collisionMask)
                 {
-                    damagableObject.TakeDamage(damage);
+                    IDamagable damagableObject = col.gameObject.GetComponent<IDamagable>();
+                    if (damagableObject != null)
+                    {
+                        damagableObject.TakeDamage(damage);
+                    }
                 }
             }
-            catch { }
+            Destroy(gameObject);
         }
-        //GameObject.Destroy(this.gameObject);
+    }
+
+    void OnTriggerEnter(Collider col) {
+        if (col.gameObject.layer == collisionMask || col.gameObject.layer == pathMask)//check if it is colliding with the soldier and not its censor AND destroy bomb
+        {
+            explode = true;
+        }
     }
 
 }
