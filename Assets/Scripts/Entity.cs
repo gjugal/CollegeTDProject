@@ -42,6 +42,27 @@ public class Entity : MonoBehaviour, IDamagable
         GameObject.Destroy(gameObject);
     }
 
+    protected bool IsTargetPresent(Transform t)
+    {
+        if (entityLL.Count > 0)
+        {
+            bool isPresent = false;
+            foreach (MyTargets targets in entityLL)
+            {
+                if (targets.GetTransfrom() == t)
+                {
+                    isPresent = true;
+                    break;
+                }
+            }
+            return isPresent;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     protected MyTargets FindFromTargets(Transform t)
     {
         if (entityLL.Count > 0)

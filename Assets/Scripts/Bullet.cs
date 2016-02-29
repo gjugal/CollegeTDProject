@@ -7,10 +7,11 @@ public class Bullet : Projectiles
 
     protected override void Start()
     {
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 2);
         base.Start();
         speed = 5;
         damage = 1;
+        collisionMask = 9;
     }
 
     
@@ -27,9 +28,10 @@ public class Bullet : Projectiles
         //Debug.Log("checkCollisionEnter");
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, distance, collisionMask, QueryTriggerInteraction.Collide))
+        if (Physics.Raycast(ray, out hit, distance))
         {
             //Debug.Log("collision detected");
+            if(hit.collider.gameObject.layer == collisionMask)
             OnHitObject(hit);
         }
     }

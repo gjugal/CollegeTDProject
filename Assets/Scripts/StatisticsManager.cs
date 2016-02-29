@@ -78,7 +78,6 @@ public class StatisticsManager : MonoBehaviour {
 
     public ScriptableSoldierProps GetSoldierProperties(int type, int level)
     {
-        Debug.Log("type: " + type + " level: " + level);
         return typesOfSoldiers[type].soldierPropsArray[level-1];
     }
 

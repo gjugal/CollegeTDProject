@@ -6,10 +6,11 @@ using System.Collections.Generic;
 public class ScriptableSoldierProps : ScriptableObject {
 
     public string myFirstname = "entityFirstName";
-    public Color originalColor = Color.white;
+    public Material originalMaterial;
     public float timeBetweenShoots = 0;
     public float damage;
     public int health;
     public List<int> damagePercentage;
+    public int[] priority;
     public int cost;
 }

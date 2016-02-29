@@ -8,7 +8,7 @@ public class BlockBarricade : Entity {
 
     protected override void Start() {
         base.Start();
-        myFirstName = "BlockBarricade";
+        myFirstName = "Block_Barricade";
         entityLL = new LinkedList<MyTargets>();
         health = blockBarrierHealth;
     }
