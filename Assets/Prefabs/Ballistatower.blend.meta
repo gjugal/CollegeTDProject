@@ -1,27 +1,32 @@
 fileFormatVersion: 2
-guid: 6fc6a4c673ae53e44a0a6c549747f48c
-timeCreated: 1456580964
+guid: d4a1f36170aa977499e87ad96b05d25c
+timeCreated: 1456823818
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Armature
     100002: Ballista
-    100004: Bone
+    100004: Ballista_001
     100006: //RootNode
-    100008: Tower
+    100008: Bone
+    100010: Tower
     400000: Armature
     400002: Ballista
-    400004: Bone
+    400004: Ballista_001
     400006: //RootNode
-    400008: Tower
-    2300000: Tower
-    3300000: Tower
-    4300000: Ballista
-    4300002: Tower
+    400008: Bone
+    400010: Tower
+    2300000: Ballista
+    2300002: Tower
+    3300000: Ballista
+    3300002: Tower
+    4300000: Ballista_001
+    4300002: Ballista
+    4300004: Tower
     7400000: Default Take
     9500000: //RootNode
-    13700000: Ballista
+    13700000: Ballista_001
   materials:
     importMaterials: 1
     materialName: 0

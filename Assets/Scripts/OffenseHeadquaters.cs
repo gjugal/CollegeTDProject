@@ -6,19 +6,31 @@ using System.Collections.Generic;
 public class OffenseHeadquaters : MonoBehaviour {
 
 
-    public List<Transform> DefenseEntities;
+    //public List<Transform> DefenseEntities;
+    public LayerMask DefenseLayer;
+    public GameObject map;
 
     [HideInInspector]
     public Dictionary<Transform, int[]> Defensedetails;
 
 	// Use this for initialization
 	void Start () {
-
         Defensedetails = new Dictionary<Transform, int[]>();
-        foreach (Transform t in DefenseEntities) {
-            int[] entities = new int[Constants.SOLDIER_TYPES] { 0,0,0};
-            Defensedetails.Add(t, entities );
+        Transform[] mapElements = map.GetComponentsInChildren<Transform>();
+        foreach(Transform t in mapElements)
+        {
+            if(t.gameObject.layer == 11)
+            {
+                int[] entities = new int[Constants.SOLDIER_TYPES] { 0, 0, 0 };
+                Defensedetails.Add(t, entities);
+                //Debug.Log(t.transform.name + "has values " + Defensedetails[t][0] + " " + Defensedetails[t][0] + " " + Defensedetails[t][0]);
+            }
         }
+        //Defensedetails = new Dictionary<Transform, int[]>();
+        //foreach (Transform t in DefenseEntities) {
+        //    int[] entities = new int[Constants.SOLDIER_TYPES] { 0,0,0};
+        //    Defensedetails.Add(t, entities );
+        //}
 
     }
 

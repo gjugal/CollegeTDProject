@@ -10,8 +10,9 @@ public class TowerController : MonoBehaviour {
     public Transform nozzlePosition;
 
     void Start()
-    { 
-        dome = this.transform.GetChild(1).gameObject.GetComponent<Transform>();
+    {
+        //Debug.Log(this.transform.FindChild("Armature").FindChild("Bone").name);
+        dome = this.transform.FindChild("Armature").GetComponent<Transform>();
     }
 	// Use this for initialization
     public void LookAtEnemy(Transform target)//called from update of arrowtower and bombtower

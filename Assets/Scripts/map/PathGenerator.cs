@@ -12,6 +12,8 @@ public class PathGenerator : MonoBehaviour {
     public Transform GroundBarricadePrefab;
     public Transform BlockBarricadePrefab;
     public Transform KingPrefab;
+    public Transform SpawnPoint;
+    public Transform Gate;
     public int mapSize;
     public int turn = 6;
     public int ArrowTowerCount;
@@ -107,10 +109,12 @@ public class PathGenerator : MonoBehaviour {
         path.Add(new Coord(currentCoord));
         endCoord = new Coord(currentCoord);
         //isAvailable[startCoord.x, startCoord.y] = true;
-        //InstantiateTile(tilePrefab, startCoord.x, startCoord.y);
-        InstantiateTile(KingPrefab, startCoord.x, 0, startCoord.y);
+        //InstantiateTile(SpawnPoint, startCoord.x, 0, startCoord.y);
+        SpawnPoint.position = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * startCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * startCoord.y)));
+        //InstantiateTile(KingPrefab, startCoord.x, 0, startCoord.y);
         //isAvailable[endCoord.x, endCoord.y] = true;
-        InstantiateTile(tilePrefab, endCoord.x, 0, endCoord.y);
+        //InstantiateTile(Gate, endCoord.x, 0, endCoord.y);
+        Gate.position = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * endCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * endCoord.y)));
 
         //traversing the path
         //foreach(Coord co in path)
@@ -288,7 +292,8 @@ public class PathGenerator : MonoBehaviour {
         float xx = (float)((-mapSize / 2) + 1.5 + (3 * x));
         float zz = (float)((-mapSize / 2) + 1.5 + (3 * z));
         Transform newPath = Instantiate(prefab, new Vector3(xx, y, zz), Quaternion.identity) as Transform;
-        Debug.Log("[x] = "+ x + " [y] = " + z + " value = " + isAvailable[(int)x, (int)z]);
+        newPath.parent = this.transform;
+        //Debug.Log("[x] = "+ x + " [y] = " + z + " value = " + isAvailable[(int)x, (int)z]);
         //Debug.LogError("");
         //Instantiate(tilePrefab, new Vector3(xx, 0, yy), Quaternion.Euler(Vector3.right * 90));
     }
@@ -300,7 +305,8 @@ public class PathGenerator : MonoBehaviour {
         float zz = (float)((-mapSize / 2) + 1.5 + (3 * z));
         Transform newPath = Instantiate(prefab, new Vector3(xx, y, zz), Quaternion.identity) as Transform;
         newPath.eulerAngles = new Vector3(newPath.rotation.x, angleY, newPath.rotation.z);
-        Debug.Log("[x] = " + x + " [y] = " + z + " value = " + isAvailable[(int)x, (int)z]);
+        newPath.parent = this.transform;
+        //Debug.Log("[x] = " + x + " [y] = " + z + " value = " + isAvailable[(int)x, (int)z]);
         //Debug.LogError("");
         //Instantiate(tilePrefab, new Vector3(xx, 0, yy), Quaternion.Euler(Vector3.right * 90));
     }

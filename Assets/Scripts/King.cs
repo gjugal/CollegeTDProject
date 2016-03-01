@@ -53,16 +53,16 @@ public class King : Entity
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
 
             RaycastHit rayhit;
-            if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, defenseLayerMask))
+            if (Physics.Raycast(ray.origin, ray.direction * 10000, out rayhit, 5000, defenseLayerMask))
             {
                 //Debug.Log(final);
-                currentTarget = rayhit.collider.gameObject.transform.parent.transform;
+                currentTarget = rayhit.collider.gameObject.transform;
 
                 //Debug.Log(currentTarget);
                 agent.SetDestination(rayhit.collider.transform.position + Vector3.up * 0.4f);
                 currentState = KingStates.WALK;
             }
-            else if (Physics.Raycast(ray.origin, ray.direction * 10, out rayhit, 500, pathLayerMask))
+            else if (Physics.Raycast(ray.origin, ray.direction * 10000, out rayhit, 5000, pathLayerMask))
             {
                 Vector3 final = rayhit.point;
                 //Debug.Log(final);
@@ -79,7 +79,7 @@ public class King : Entity
 
         // if destination reached and there is target in range(in targets linked list) then attack else idle
         if (currentState == KingStates.WALK && this.transform.position == agent.destination + Vector3.up * 0.4f) {
-            //Debug.Log("Dest. reached");
+            //Debug.Log("Dest. reached" + agent.destination + "");
             if (currentTarget != null) {
                 currentState = KingStates.ATTACK;
             }
@@ -120,7 +120,7 @@ public class King : Entity
         {
             if (col.gameObject.tag == "TowerBase")
             {
-                //Debug.Log("target entered");
+                Debug.Log("target entered");
                 targets.AddLast(col.transform.parent.transform);
                 //Debug.Log("registered");
                 Entity towerEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
@@ -134,7 +134,7 @@ public class King : Entity
             }
             else if (col.gameObject.tag == "BlockBarricade" || col.gameObject.tag == "GroundBarricade")
             {
-                //Debug.Log("target entered");
+                Debug.Log("target entered");
                 targets.AddLast(col.transform);
 
                 Entity BarricadeEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
@@ -157,7 +157,7 @@ public class King : Entity
             {
                 currentTarget = null;
                 targets.Remove(col.gameObject.transform);
-                //Debug.Log("target removed");
+                Debug.Log("target removed");
                 if (targets.Count > 0 && currentState == KingStates.ATTACK)
                 {
                     currentTarget = targets.First.Value;
@@ -171,7 +171,7 @@ public class King : Entity
     }
 
     void Shoot() {
-        //Debug.Log(currentTarget);
+        Debug.Log(currentTarget);
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
         currentTarget.gameObject.GetComponent<Entity>().TakeDamage(damage);
     }

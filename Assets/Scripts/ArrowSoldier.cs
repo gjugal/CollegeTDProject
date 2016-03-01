@@ -29,6 +29,11 @@ public class ArrowSoldier : Soldier
                 this.gameObject.GetComponent<Renderer>().material = originalMaterial;
             }
         }
+
+        if(currentState == States.SET && this.transform.position == agent.destination + Vector3.up * 0.4f  && currentTarget != null)
+        {
+            currentState = States.ATTACK;
+        }
     }
 
     protected override bool CheckCondition(Transform t, int[] d)

@@ -8,7 +8,7 @@ public abstract class Soldier : Entity
     Transform gateEnd;
     protected Transform currentTarget = null;
 
-    NavMeshAgent agent;
+    protected NavMeshAgent agent;
     protected enum States { WALK, SET, ATTACK };//SET is when soldier finds new target and moves towards it for attacking
     protected States currentState;
     protected GameObject OffenseHeadquaters;
