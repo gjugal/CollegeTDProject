@@ -9,6 +9,10 @@ public class CameraController : MonoBehaviour {
     bool isFirstPerson = false;
     Vector3 cameraPosition;
     Quaternion cameraRotation;
+    public float minimumX;
+    public float maximumX;
+    public float minimumZ;
+    public float maximumZ;
 
     //GameObject king;
 	void Start () {
@@ -23,6 +27,18 @@ public class CameraController : MonoBehaviour {
         if (isFirstPerson) {
             this.transform.position = kingTransform.position;
             this.transform.rotation = kingTransform.rotation;
+        }
+        else
+        {
+            float xMove = Input.GetAxis("Horizontal") * Time.deltaTime * 10;
+            Debug.Log("1: " + xMove);
+            xMove = xMove + transform.position.x;
+            xMove = Mathf.Clamp(xMove, minimumX, maximumX);
+            Debug.Log("2 :" + xMove);
+            float zMove = Input.GetAxis("Vertical") * Time.deltaTime * 10;
+            zMove = zMove + transform.position.z;
+            zMove = Mathf.Clamp(zMove, minimumZ, maximumZ);
+            this.transform.position = new Vector3(xMove, transform.position.y, zMove);
         }
 	}
 
