@@ -7,6 +7,7 @@ public class StatisticsManager : MonoBehaviour {
     public SoldierType[] typesOfSoldiers;
     public static StatisticsManager SM;
     Dictionary<string, string> stats;
+    public ScriptableTowerProps[] towers;
 
     void Awake()
     {
@@ -79,6 +80,11 @@ public class StatisticsManager : MonoBehaviour {
     public ScriptableSoldierProps GetSoldierProperties(int type, int level)
     {
         return typesOfSoldiers[type].soldierPropsArray[level-1];
+    }
+
+    public ScriptableTowerProps GetTowerProperties(int type)
+    {
+        return towers[type];
     }
 
     [System.Serializable]

@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class BombTower : Tower
 {
-
-    public float initialForceC;
-    public float timeBetweenShootc = 0.5f;
-    float lastShootTimec = 0;
-    public float towerHealth;
     public enum levels { Level1, Level2, Level3, Level4 };
     public levels level;
 
@@ -16,13 +12,9 @@ public class BombTower : Tower
     protected override void Start()
     {
         base.Start();
-        myFirstName = "Bomb_Tower";
-        initialForce = initialForceC;
-        timeBetweenShoot = timeBetweenShootc;
-        lastShootTime = lastShootTimec;
-        health = towerHealth;
-        towerController = GetComponent<TowerController>();
-        entityLL = new LinkedList<MyTargets>();
+        properties = StatisticsManager.SM.GetTowerProperties(Constants.BOMB_TOWER);
+        SetMyProperties();
+        towerController.SetTowerType(myFirstName);
     }
 
     // Update is called once per frame
@@ -113,5 +105,13 @@ public class BombTower : Tower
     public override void ChangeTarget()// finds and set it to current
     {
         base.SetTarget(FindTarget());
+    }
+
+    protected override void SetMyProperties()
+    {
+        myFirstName = properties.myFirstname;
+        health = properties.health;
+        timeBetweenShoot = properties.timeBetweenShoots;
+        initialForce = properties.initialForce;
     }
 }

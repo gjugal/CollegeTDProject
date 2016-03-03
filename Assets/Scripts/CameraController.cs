@@ -4,7 +4,6 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
     // Use this for initialization
-    //public bool isKing = false;
     Transform kingTransform;
     bool isFirstPerson = false;
     Vector3 cameraPosition;
@@ -31,10 +30,8 @@ public class CameraController : MonoBehaviour {
         else
         {
             float xMove = Input.GetAxis("Horizontal") * Time.deltaTime * 10;
-            Debug.Log("1: " + xMove);
             xMove = xMove + transform.position.x;
             xMove = Mathf.Clamp(xMove, minimumX, maximumX);
-            Debug.Log("2 :" + xMove);
             float zMove = Input.GetAxis("Vertical") * Time.deltaTime * 10;
             zMove = zMove + transform.position.z;
             zMove = Mathf.Clamp(zMove, minimumZ, maximumZ);
@@ -42,31 +39,19 @@ public class CameraController : MonoBehaviour {
         }
 	}
 
-    //public void SetInitialParameters(Transform kingTransform) {
-    //    Debug.Log("inside setinitparam");
-    //    this.kingTransform = kingTransform;
-    //    isKing = true;
-    //    Debug.Log(kingTransform);
-    //}
-
     public void ChangeView() {//called from button changeView from scene and changes the view
         
         if (!isFirstPerson)
         {
             cameraPosition = this.transform.position;
             cameraRotation = this.transform.rotation;
-            //SetInitialParameters(GameObject.FindGameObjectWithTag("King").transform);
-            //isKing = true;
             isFirstPerson = true;
             kingTransform.gameObject.GetComponent<King>().isFirstPerson = true;
-            //king.GetComponent<King>().isfirstPerson = true;
         }else {
-            //isKing = false;
             this.transform.position = cameraPosition;
             this.transform.rotation = cameraRotation;
             isFirstPerson = false;
             kingTransform.gameObject.GetComponent<King>().isFirstPerson = false;
-            //king.GetComponent<King>().isfirstPerson = false;
         }
     }
 

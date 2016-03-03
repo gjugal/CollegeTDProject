@@ -1,32 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class ArrowTower : Tower {
 
-    public float initialForceC;
-    public float timeBetweenShootc = 0.5f;
-    float lastShootTimec = 0;
-    public float towerHealth;
     public enum levels {Level1, Level2,Level3, Level4 };
     public levels level = levels.Level1;
 
     // Use this for initialization
     protected override void Start () {
         base.Start();
-        myFirstName = "Arrow_Tower";
-        initialForce = initialForceC;
-        timeBetweenShoot = timeBetweenShootc;
-        lastShootTime = lastShootTimec;
-        health = towerHealth;
-        towerController = GetComponent<TowerController>();
-        entityLL = new LinkedList<MyTargets>();
+        properties = StatisticsManager.SM.GetTowerProperties(Constants.ARROW_TOWER);
+        SetMyProperties();
+        towerController.SetTowerType(myFirstName); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(health);
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);
@@ -76,9 +68,15 @@ public class ArrowTower : Tower {
         return null;
     }
 
-    public override void ChangeTarget() {//find new target and set it to cuurent // called from remove from tower.entity()
+    public override void ChangeTarget() {//find new target and set it to current // called from remove from tower.entity()
         base.SetTarget(FindTarget());
     }
 
-
+    protected override void SetMyProperties()
+    {
+        myFirstName = properties.myFirstname;
+        health = properties.health;
+        timeBetweenShoot = properties.timeBetweenShoots;
+        initialForce = properties.initialForce;
+    }
 }

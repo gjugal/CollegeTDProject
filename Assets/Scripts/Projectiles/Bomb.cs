@@ -7,24 +7,19 @@ using System.Collections.Generic;
 
 public class Bomb : Projectiles
 {
-    //public GameObject explodeParticles;
     public float blastRadius = 1.2f;
     Rigidbody rb;
     bool speedSet = false;
-    //LinkedList<Transform> targets = null;
-    LayerMask pathMask, defenseMask;
+    LayerMask pathMask;
     bool explode = false;
 
 
     protected override void Start()
     {
-       // targets = new LinkedList<Transform>();
+        base.Start();
         rb = GetComponent<Rigidbody>();
         pathMask = 8;
-        collisionMask = 9;
-        defenseMask = 11;
         damage = 2;
-
     }
 
 

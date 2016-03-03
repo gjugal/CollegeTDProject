@@ -16,8 +16,6 @@ public class SwordSoldier : Soldier
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(health + " is " + transform);
-        //Debug.Log("current target" + currentTarget);
         if (currentState == States.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)
@@ -34,7 +32,6 @@ public class SwordSoldier : Soldier
 
     protected override bool CheckCondition(Transform t, int[] d)
     {// checks condition to add tower in list
-        //Debug.Log("CheckCondition" + t.tag);
         if (d[Constants.SWORD_SOLDIER] < 5)
         {
             return true;
@@ -46,7 +43,6 @@ public class SwordSoldier : Soldier
     }
     void OnTriggerEnter(Collider col)
     {
-        //Debug.Log("Attack Barricade");
         base.OnSoldierColliderEntry(col);
     }
 

@@ -9,8 +9,7 @@ public class Projectiles : MonoBehaviour {
     protected LayerMask collisionMask;
     // Use this for initialization
     protected virtual void Start () {
-
-        
+        collisionMask = 9;
     }
 	
 	// Update is called once per frame

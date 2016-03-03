@@ -5,31 +5,31 @@ using System.Collections.Generic;
 [RequireComponent(typeof(TowerController))]
 public abstract class Tower : Entity
 {
+    public Dictionary<string, int> attackingSoldiers = new Dictionary<string, int>();//This is to keep track of type and count of attackingsoldiers for soldier AI
 
     //Add the states for tower
-
+    protected ScriptableTowerProps properties;
     protected TowerController towerController;
     protected float initialForce;
     protected Transform currentTarget;
     protected float timeBetweenShoot;
-    protected float lastShootTime;
-    public Dictionary<string, int> attackingSoldiers = new Dictionary<string, int>();//This is to keep track of type and count of attackingsoldiers for soldier AI
-
+    protected float lastShootTime = 0;
     protected LayerMask offenseLayer;
 
     protected override void Start()
     {
         base.Start();
         myFirstName = "Tower";
-
         offenseLayer = 9;
+        towerController = GetComponent<TowerController>();
+        entityLL = new LinkedList<MyTargets>();
     }
 
     protected void OnEntry(Collider col)//called from OnTriggerEnter of childTowers
     {
-            Entity entity = col.gameObject.GetComponent<Entity>();
-            entity.OnDeath += RemoveEntity;
-            entityLL.AddLast(new MyTargets(col.gameObject.transform, false, entity.myFirstName));
+        Entity entity = col.gameObject.GetComponent<Entity>();
+        entity.OnDeath += RemoveEntity;
+        entityLL.AddLast(new MyTargets(col.gameObject.transform, false, entity.myFirstName));
     }
 
     protected void OnExit(Collider col)
@@ -48,7 +48,6 @@ public abstract class Tower : Entity
 
     protected void RemoveEntity(Transform entity)
     {
-        //Debug.Log("remove soldier :" + entity);
         entityLL.Remove(FindFromTargets(entity));
         if (entityLL.Count > 0)
         {
@@ -59,43 +58,13 @@ public abstract class Tower : Entity
         }
         else
         {
-            //Debug.LogError("Removing entity not found");
+            currentTarget = null;
         }
     }
 
     void OnDestroy()
     {
         GameObject.Destroy(gameObject);
-    }
-
-    public abstract void ChangeTarget();
-
-    public void AddToAttackingEntity(Transform t)
-    {
-        MyTargets myTarget = FindFromTargets(t);
-        Entity entity = t.gameObject.GetComponent<Entity>();
-        if (myTarget != null)
-        { 
-            myTarget.SetAttackingMode(true);
-        }
-        else
-        {
-            entityLL.AddLast(new MyTargets(t, true, entity.myFirstName));
-        }
-        entity.OnDeath += RemoveFromAttackingEntity;
-    }
-
-    void RemoveFromAttackingEntity(Transform t)
-    {
-        MyTargets myTarget = FindFromTargets(t);
-        if (myTarget != null)
-        {
-            myTarget.SetAttackingMode(false);
-        }
-        else
-        {
-            Debug.LogError("Entity not found. Cannot set its attacking mode to false");
-        }
     }
 
     public int[] GetAttackingEntitiesCount()
@@ -118,7 +87,14 @@ public abstract class Tower : Entity
         return entities;
     }
 
-  
+    public float GetInitialForce()
+    {
+        return initialForce;
+    }
+
+    public abstract void ChangeTarget();
+
+    protected abstract void SetMyProperties();
 }
 
 

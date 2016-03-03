@@ -31,14 +31,11 @@ public class Entity : MonoBehaviour, IDamagable
 
     protected void Die()
     {
-        //Debug.Log("Die called for" + this.transform.name);
         dead = true;
         if (OnDeath != null)
         {
             OnDeath(this.transform);//call all method registered to this event of all objects and pass this entity's transform as parameter 
         }
-        //GameObject.Destroy(gameObject);//base class gameobject 
-        //Debug.Log("Destroyed called");
         GameObject.Destroy(gameObject);
     }
 
