@@ -56,7 +56,7 @@ public class King : Entity
             if (Physics.Raycast(ray.origin, ray.direction * 10000, out rayhit, 5000, defenseLayerMask))
             {
                 //Debug.Log(final);
-                currentTarget = rayhit.collider.gameObject.transform;
+                currentTarget = rayhit.collider.gameObject.transform.parent.transform;
 
                 //Debug.Log(currentTarget);
                 agent.SetDestination(rayhit.collider.transform.position + Vector3.up * 0.4f);
@@ -132,20 +132,27 @@ public class King : Entity
                     currentState = KingStates.ATTACK;
                 }
             }
-            else if (col.gameObject.tag == "BlockBarricade" || col.gameObject.tag == "GroundBarricade")
-            {
-                Debug.Log("target entered");
-                targets.AddLast(col.transform);
 
-                Entity BarricadeEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
-                BarricadeEntity.OnDeath += ChangeTarget;
-                //targets.AddLast(col.gameObject.transform);
-                if (currentTarget == null && currentState == KingStates.IDLE)//if king is idle on new entry then change to attack
-                {
-                    currentTarget = targets.First.Value;
-                    currentState = KingStates.ATTACK;
-                }
+            if (col.gameObject.transform.parent.tag == "BlockBarricade" && currentState == KingStates.WALK)
+            {
+                currentState = KingStates.ATTACK;
+                currentTarget = col.gameObject.transform.parent;
             }
+
+            //else if (col.gameObject.tag == "BlockBarricade" || col.gameObject.tag == "GroundBarricade")
+            //{
+            //    Debug.Log("target entered");
+            //    targets.AddLast(col.transform);
+
+            //    Entity BarricadeEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
+            //    BarricadeEntity.OnDeath += ChangeTarget;
+            //    //targets.AddLast(col.gameObject.transform);
+            //    if (currentTarget == null && currentState == KingStates.IDLE)//if king is idle on new entry then change to attack
+            //    {
+            //        currentTarget = targets.First.Value;
+            //        currentState = KingStates.ATTACK;
+            //    }
+            //}
         }
         catch { }
     }

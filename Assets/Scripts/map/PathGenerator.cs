@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PathGenerator : MonoBehaviour {
+public class PathGenerator : MonoBehaviour
+{
 
     public Transform tilePrefab;
     public Transform PrefabStraight;
@@ -42,7 +43,7 @@ public class PathGenerator : MonoBehaviour {
         path = new List<Coord>();
         //Debug.Log(length);
         isAvailable = new int[length + 1, length + 1];
-        for(int i = 0; i <= length; i++)
+        for (int i = 0; i <= length; i++)
         {
             for (int j = 0; j <= length; j++)
             {
@@ -63,7 +64,7 @@ public class PathGenerator : MonoBehaviour {
         {
             Debug.LogError("Too Many Towers For This Path length is " + length);
         }
-        if((GroundBarricadeCount + BlockBarricadeCount) < (path.Count-4))
+        if ((GroundBarricadeCount + BlockBarricadeCount) < (path.Count - 4))
         {
             GenerateBarricade(BlockBarricadeCount, BlockBarricadePrefab);
             GenerateBarricade(GroundBarricadeCount, GroundBarricadePrefab);
@@ -97,7 +98,7 @@ public class PathGenerator : MonoBehaviour {
             move(i);
         }
 
-        for(int i = currentCoord.y + 1; i <= length - 1; i++)
+        for (int i = currentCoord.y + 1; i <= length - 1; i++)
         {
             isAvailable[currentCoord.x, i] = 1;
             InstantiateTile(PrefabStraight, currentCoord.x, 0, i);
@@ -128,7 +129,7 @@ public class PathGenerator : MonoBehaviour {
     {
         System.Random rand = new System.Random();
         int p = rand.Next(currentCoord.y + 2, length - turnsLeft + 1);
-        for(int i = currentCoord.y + 1; i <= (p - 1); i++)
+        for (int i = currentCoord.y + 1; i <= (p - 1); i++)
         {
             isAvailable[currentCoord.x, i] = 1;
             InstantiateTile(PrefabStraight, currentCoord.x, 0, i);
@@ -148,14 +149,14 @@ public class PathGenerator : MonoBehaviour {
         {
             side = rand.Next(0, 2);
         }
-        if(side == 0)// left
+        if (side == 0)// left
         {
             isAvailable[currentCoord.x, currentCoord.y] = 3;
             InstantiateTile(PrefabUpLeft, currentCoord.x, 0, currentCoord.y);
             path.Add(new Coord(currentCoord.x, currentCoord.y));
             rand = new System.Random();
             p = rand.Next(1, currentCoord.x - 1);
-            for(int i = currentCoord.x - 1; i >= (p + 1); i--)
+            for (int i = currentCoord.x - 1; i >= (p + 1); i--)
             {
                 isAvailable[i, currentCoord.y] = 2;
                 InstantiateTile(PrefabStraight, i, 0, currentCoord.y, 90);
@@ -188,15 +189,15 @@ public class PathGenerator : MonoBehaviour {
 
     void GenerateDefense(int count, Transform prefab)
     {
-        for(int i = 0; i < count; )
+        for (int i = 0; i < count;)
         {
             bool found = false;
             System.Random rand = new System.Random();
-            int p = rand.Next(1, path.Count - 1);
-            int[] side = new int[] {0,1,2,3};
+            int p = rand.Next(3, path.Count - 1);
+            int[] side = new int[] { 0, 1, 2, 3 };
             side = Utility.ShuffleArray<int>(side);
             //Debug.Log("i = " + i + " Random p is " + p + " sides " + side[0] + side[1] + side[2] + side[3]);
-            foreach(int s in side)
+            foreach (int s in side)
             {
                 if (!found)
                 {
@@ -204,28 +205,28 @@ public class PathGenerator : MonoBehaviour {
                     if (s == 0 && isAvailable[path[p].x - 1, path[p].y] == 0)
                     {
                         isAvailable[path[p].x - 1, path[p].y] = 7;
-                        InstantiateTile(prefab, path[p].x - 1, 0, path[p].y);
+                        InstantiateTile(prefab, (float)(path[p].x - 0.5), 0, path[p].y);
                         found = true;
                         i++;
                     }
                     else if (s == 1 && isAvailable[path[p].x + 1, path[p].y] == 0)
                     {
                         isAvailable[path[p].x + 1, path[p].y] = 7;
-                        InstantiateTile(prefab, path[p].x + 1, 0, path[p].y);
+                        InstantiateTile(prefab, (float)(path[p].x + 0.5), 0, path[p].y);
                         found = true;
                         i++;
                     }
                     else if (s == 2 && isAvailable[path[p].x, path[p].y + 1] == 0)
                     {
                         isAvailable[path[p].x, path[p].y + 1] = 7;
-                        InstantiateTile(prefab, path[p].x, 0, path[p].y + 1);
+                        InstantiateTile(prefab, path[p].x, 0, (float)(path[p].y + 0.5));
                         found = true;
                         i++;
                     }
                     else if (s == 3 && isAvailable[path[p].x, path[p].y - 1] == 0)
                     {
                         isAvailable[path[p].x, path[p].y - 1] = 7;
-                        InstantiateTile(prefab, path[p].x, 0, path[p].y - 1);
+                        InstantiateTile(prefab, path[p].x, 0, (float)(path[p].y - 0.5));
                         found = true;
                         i++;
                     }
@@ -314,24 +315,24 @@ public class PathGenerator : MonoBehaviour {
 }
 
 
-    public class Coord
+public class Coord
+{
+    public int x;
+    public int y;
+
+
+    public Coord() { }
+
+    public Coord(Coord co)
     {
-        public int x;
-        public int y;
-        
-
-        public Coord() { }
-
-        public Coord(Coord co) {
-            x = co.x;
-            y = co.y;
-        }
-
-        public Coord(int _x, int _y)
-        {
-            x = _x;
-            y = _y;
-        }
-
+        x = co.x;
+        y = co.y;
     }
 
+    public Coord(int _x, int _y)
+    {
+        x = _x;
+        y = _y;
+    }
+
+}
