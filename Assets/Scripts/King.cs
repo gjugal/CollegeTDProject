@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,6 +27,7 @@ public class King : Entity
     Transform currentTarget = null;
     [HideInInspector]
     public bool isFirstPerson = false;
+    bool attack = false;
 
     // Use this for initialization
     protected override void Start()
@@ -42,7 +44,7 @@ public class King : Entity
     // Update is called once per frame
     void Update()
     {
-
+        healthSlider.GetComponent<Image>().fillAmount = health / kingHealth;
         //Debug.Log((agent.destination + Vector3.up * 0.4f) + "   " + transform.position);
         //Debug.Log(currentState);
         // movement
@@ -53,16 +55,7 @@ public class King : Entity
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
 
             RaycastHit rayhit;
-            if (Physics.Raycast(ray.origin, ray.direction * 10000, out rayhit, 5000, defenseLayerMask))
-            {
-                //Debug.Log(final);
-                currentTarget = rayhit.collider.gameObject.transform.parent.transform;
-
-                //Debug.Log(currentTarget);
-                agent.SetDestination(rayhit.collider.transform.position + Vector3.up * 0.4f);
-                currentState = KingStates.WALK;
-            }
-            else if (Physics.Raycast(ray.origin, ray.direction * 10000, out rayhit, 5000, pathLayerMask))
+            if (Physics.Raycast(ray.origin, ray.direction * 10000, out rayhit, 5000, pathLayerMask))
             {
                 Vector3 final = rayhit.point;
                 //Debug.Log(final);
@@ -79,7 +72,7 @@ public class King : Entity
 
         // if destination reached and there is target in range(in targets linked list) then attack else idle
         if (currentState == KingStates.WALK && this.transform.position == agent.destination + Vector3.up * 0.4f) {
-            //Debug.Log("Dest. reached" + agent.destination + "");
+            Debug.Log("Dest. reached" + agent.destination + "");
             if (currentTarget != null) {
                 currentState = KingStates.ATTACK;
             }
@@ -95,7 +88,7 @@ public class King : Entity
         }
 
         //shoot at regular interval
-        if (currentState == KingStates.ATTACK && currentTarget != null)
+        if (attack && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)
             {
@@ -126,18 +119,21 @@ public class King : Entity
                 Entity towerEntity = targets.Last.Value.gameObject.GetComponent<Entity>();
                 towerEntity.OnDeath += ChangeTarget;
                 //targets.AddLast(col.gameObject.transform);
-                if (currentTarget == null && currentState == KingStates.IDLE)//if king is idle on new entry then change to attack
+                if (currentTarget == null)
                 {
                     currentTarget = targets.First.Value;
                     currentState = KingStates.ATTACK;
+                    attack = true;
+                    Debug.Log("current state is set to attack");
                 }
             }
 
-            if (col.gameObject.transform.parent.tag == "BlockBarricade" && currentState == KingStates.WALK)
-            {
-                currentState = KingStates.ATTACK;
-                currentTarget = col.gameObject.transform.parent;
-            }
+            //if (col.gameObject.transform.parent.tag == "BlockBarricade" && currentState == KingStates.WALK)
+            //{
+            //    currentState = KingStates.ATTACK;
+            //    currentTarget = col.transform.parent.transform;
+            //    targets.AddFirst(col.transform.parent.transform);
+            //}
 
             //else if (col.gameObject.tag == "BlockBarricade" || col.gameObject.tag == "GroundBarricade")
             //{
@@ -160,25 +156,31 @@ public class King : Entity
     void OnTriggerExit(Collider col) {
         try
         {
-            if (currentTarget == col.gameObject.transform)
+            if (col.transform.tag == "TowerBase")
             {
-                currentTarget = null;
-                targets.Remove(col.gameObject.transform);
-                Debug.Log("target removed");
-                if (targets.Count > 0 && currentState == KingStates.ATTACK)
+                if (currentTarget == col.transform.parent.transform)
                 {
-                    currentTarget = targets.First.Value;
+                    currentTarget = null;
+                    attack = false;
+                    targets.Remove(col.transform.parent.transform);
+                    Debug.Log("target removed");
+                    if (targets.Count > 0 && currentState == KingStates.ATTACK)
+                    {
+                        currentTarget = targets.First.Value;
+                        attack = true;
+                    }
                 }
-            }
-            else {
-                targets.Remove(col.gameObject.transform);
+                else
+                {
+                    targets.Remove(col.transform.parent.transform);
+                }
             }
         }
         catch { }
     }
 
     void Shoot() {
-        Debug.Log(currentTarget);
+        //Debug.Log(currentTarget);
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
         currentTarget.gameObject.GetComponent<Entity>().TakeDamage(damage);
     }
@@ -188,15 +190,18 @@ public class King : Entity
         if (currentTarget == t)
         {
             currentTarget = null;
+            attack = false;
             targets.Remove(t);
             if (targets.Count > 0)
             {
                 currentTarget = targets.First.Value;
+                attack = true;
             }
         }
         else
         {
             targets.Remove(t);
+            currentState = KingStates.IDLE;
         }
     }
 

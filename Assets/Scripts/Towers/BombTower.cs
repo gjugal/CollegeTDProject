@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -8,6 +9,7 @@ public class BombTower : Tower
     public enum levels { Level1, Level2, Level3, Level4 };
     public levels level;
 
+    float myHealth;
     // Use this for initialization
     protected override void Start()
     {
@@ -15,11 +17,13 @@ public class BombTower : Tower
         properties = StatisticsManager.SM.GetTowerProperties(Constants.BOMB_TOWER);
         SetMyProperties();
         towerController.SetTowerType(myFirstName);
+        myHealth = health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);

@@ -145,29 +145,29 @@ public abstract class Soldier : Entity
                 currentState = States.ATTACK;
             }
         }
-        else if (col.gameObject.tag == "BlockBarricade")
-        {
-            if (currentState == States.SET)
-            {
-                if(col.transform == currentTarget)
-                {
+        //else if (col.gameObject.tag == "BlockBarricade")
+        //{
+        //    if (currentState == States.SET)
+        //    {
+        //        if(col.transform == currentTarget)
+        //        {
 
-                }else if(col.transform != currentTarget)
-                {
-                    currentTarget = col.transform;
-                }
-                //agent.enabled = false;
-                currentState = States.ATTACK;
-            }
-        }
-        else if (col.gameObject.tag == "GroundBarricade")
-        {
-            if (currentState == States.SET && col.transform == currentTarget)
-            {
-                //agent.enabled = false;
-                currentState = States.ATTACK;
-            }
-        }
+        //        }else if(col.transform != currentTarget)
+        //        {
+        //            currentTarget = col.transform;
+        //        }
+        //        //agent.enabled = false;
+        //        currentState = States.ATTACK;
+        //    }
+        //}
+        //else if (col.gameObject.tag == "GroundBarricade")
+        //{
+        //    if (currentState == States.SET && col.transform == currentTarget)
+        //    {
+        //        //agent.enabled = false;
+        //        currentState = States.ATTACK;
+        //    }
+        //}
     }
     
 

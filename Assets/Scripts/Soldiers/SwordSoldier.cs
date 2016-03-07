@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
 public class SwordSoldier : Soldier
 {
-
+    float myHealth;
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
         SetMyProperties();
+        myHealth = health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
         if (currentState == States.ATTACK && currentTarget != null)
         {
             if (Time.time > lastShootTime + timeBetweenShoots)

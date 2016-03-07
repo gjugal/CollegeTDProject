@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -8,17 +9,20 @@ public class ArrowTower : Tower {
     public enum levels {Level1, Level2,Level3, Level4 };
     public levels level = levels.Level1;
 
+    float myHealth;
     // Use this for initialization
     protected override void Start () {
         base.Start();
         properties = StatisticsManager.SM.GetTowerProperties(Constants.ARROW_TOWER);
         SetMyProperties();
-        towerController.SetTowerType(myFirstName); 
+        towerController.SetTowerType(myFirstName);
+        myHealth = health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
         if (currentTarget != null)
         {
             towerController.LookAtEnemy(currentTarget);

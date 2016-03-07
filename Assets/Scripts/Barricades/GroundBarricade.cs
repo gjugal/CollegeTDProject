@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,6 +16,8 @@ public class GroundBarricade : Entity {
     List<Transform> tempAddedList;
     List<Transform> tempRemovedList;
 
+    float myHealth;
+
     // Use this for initialization
     protected override void Start () {
         base.Start();
@@ -24,6 +27,7 @@ public class GroundBarricade : Entity {
         tempRemovedList = new List<Transform>();
         health = groundbarricadeHealth;
         originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+        myHealth = health;
     }
 
     void OnTriggerEnter(Collider col) {
@@ -65,7 +69,9 @@ public class GroundBarricade : Entity {
 
 	// Update is called once per frame
 	void Update () {
-        if(entityLL.Count > 0) {
+
+        healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
+        if (entityLL.Count > 0) {
             if (Time.time > lastShootTime + timeBetweenShoots && !isShooting)
             {
                 isShooting = true;

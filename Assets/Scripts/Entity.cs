@@ -12,6 +12,8 @@ public class Entity : MonoBehaviour, IDamagable
     bool dead;
     public delegate void DeathOccurence(Transform t);
     public event DeathOccurence OnDeath;
+    public GameObject healthSlider;
+
     // Use this for initialization
     protected virtual void Start()
     {

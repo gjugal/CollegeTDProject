@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
 public class ArrowSoldier : Soldier
 {
-
+    float myHealth;
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
         SetMyProperties();
+        myHealth = health;
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
         //Debug.Log(currentState);
         if (currentState == States.ATTACK && currentTarget != null)
         {
@@ -49,7 +52,21 @@ public class ArrowSoldier : Soldier
     }
     void OnTriggerEnter(Collider col)
     {
-        base.OnSoldierColliderEntry(col);
+        //base.OnSoldierColliderEntry(col);
+        if (col.gameObject.tag == "TowerBase")
+        {
+            Debug.Log("triggered enter");
+            if (currentState == States.SET && col.transform.parent.transform == currentTarget)
+            {
+                try {
+                    //agent.enabled = false;
+                    currentState = States.ATTACK;
+                    Vector3 tempPos = this.transform.position;
+                    agent.destination = tempPos;
+                }
+                catch { }
+            }
+        }
     }
 
     void Shoot()
