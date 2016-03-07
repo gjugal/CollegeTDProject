@@ -44,6 +44,8 @@ public class StatisticsManager : MonoBehaviour {
 
     void SetThePlayerInitialDetails()
     {
+        SetDetails("Player_XP", 0.ToString());
+        SetDetails("Player_Rank", 1.ToString());
         SetDetails("Player_Coins", Constants.PLAYER_INITIAL_COINS.ToString());
         SetDetails("Player_Gems", Constants.PLAYER_INITIAL_GEMS.ToString());
         SetDetails("Sword_Soldier_State", Constants.BUYABLE.ToString());

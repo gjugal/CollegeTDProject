@@ -27,4 +27,16 @@ public class MakeScriptableObjects{
 
         Selection.activeObject = asset;
     }
+
+    [MenuItem("Assets/Create/New Rank Properties")]
+    public static void CreateMyRank()
+    {
+        ScriptableRankProperties asset = ScriptableObject.CreateInstance<ScriptableRankProperties>();
+        AssetDatabase.CreateAsset(asset, "Assets/Data/Ranks/NewRankProps.asset");
+        AssetDatabase.SaveAssets();
+
+        EditorUtility.FocusProjectWindow();
+
+        Selection.activeObject = asset;
+    }
 }

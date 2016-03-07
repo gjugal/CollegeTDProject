@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
     // Use this for initialization
-    Transform kingTransform;
+    //Transform kingTransform;
     bool isFirstPerson = false;
     Vector3 cameraPosition;
     Quaternion cameraRotation;
@@ -18,14 +18,14 @@ public class CameraController : MonoBehaviour {
         //store initial values of camera's transform
         cameraPosition = this.transform.position;
         cameraRotation = this.transform.rotation;
-        kingTransform = GameObject.FindGameObjectWithTag("King").transform;
+      //  kingTransform = GameObject.FindGameObjectWithTag("King").transform;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (isFirstPerson) {
-            this.transform.position = kingTransform.position;
-            this.transform.rotation = kingTransform.rotation;
+         //   this.transform.position = kingTransform.position;
+          //  this.transform.rotation = kingTransform.rotation;
         }
         else
         {
@@ -46,12 +46,12 @@ public class CameraController : MonoBehaviour {
             cameraPosition = this.transform.position;
             cameraRotation = this.transform.rotation;
             isFirstPerson = true;
-            kingTransform.gameObject.GetComponent<King>().isFirstPerson = true;
+         //   kingTransform.gameObject.GetComponent<King>().isFirstPerson = true;
         }else {
             this.transform.position = cameraPosition;
             this.transform.rotation = cameraRotation;
             isFirstPerson = false;
-            kingTransform.gameObject.GetComponent<King>().isFirstPerson = false;
+       //     kingTransform.gameObject.GetComponent<King>().isFirstPerson = false;
         }
     }
 
