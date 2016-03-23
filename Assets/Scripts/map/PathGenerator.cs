@@ -293,42 +293,42 @@ public class PathGenerator : MonoBehaviour
             if (isAvailable[path[p].x, path[p].y] == 1)
             {
                 isAvailable[path[p].x, path[p].y] = 8;
-                InstantiateTile(prefab, path[p].x, (float)0.1, (float)(path[p].y + 0.5));
+                InstantiateTile(prefab, path[p].x, 0, (float)(path[p].y + 0.5));
                 //Debug.Log("[x] = " + path[p].x + " [y] = " + path[p].y + " value = " + isAvailable[path[p].x, path[p].y]);
                 i++;
             }
             else if (isAvailable[path[p].x, path[p].y] == 2)
             {
                 isAvailable[path[p].x, path[p].y] = 8;
-                InstantiateTile(prefab, (float)(path[p].x - 0.5), (float)0.1, path[p].y, 90);
+                InstantiateTile(prefab, (float)(path[p].x - 0.5), 0, path[p].y, 90);
                 //Debug.Log("[x] = " + path[p].x + " [y] = " + path[p].y + " value = " + isAvailable[path[p].x, path[p].y]);
                 i++;
             }
             else if (isAvailable[path[p].x, path[p].y] == 3)
             {
                 isAvailable[path[p].x, path[p].y] = 8;
-                InstantiateTile(prefab, (float)(path[p].x - 0.5), (float)0.1, path[p].y, 90);
+                InstantiateTile(prefab, (float)(path[p].x - 0.5), 0, path[p].y, 90);
                 //Debug.Log("[x] = " + path[p].x + " [y] = " + path[p].y + " value = " + isAvailable[path[p].x, path[p].y]);
                 i++;
             }
             else if (isAvailable[path[p].x, path[p].y] == 4)
             {
                 isAvailable[path[p].x, path[p].y] = 8;
-                InstantiateTile(prefab, (float)(path[p].x + 0.5), (float)0.1, path[p].y, 90);
+                InstantiateTile(prefab, (float)(path[p].x + 0.5), 0, path[p].y, 90);
                 //Debug.Log("[x] = " + path[p].x + " [y] = " + path[p].y + " value = " + isAvailable[path[p].x, path[p].y]);
                 i++;
             }
             else if (isAvailable[path[p].x, path[p].y] == 5)
             {
                 isAvailable[path[p].x, path[p].y] = 8;
-                InstantiateTile(prefab, path[p].x, (float)0.1, (float)(path[p].y + 0.5));
+                InstantiateTile(prefab, path[p].x, 0, (float)(path[p].y + 0.5));
                 //Debug.Log("[x] = " + path[p].x + " [y] = " + path[p].y + " value = " + isAvailable[path[p].x, path[p].y]);
                 i++;
             }
             else if (isAvailable[path[p].x, path[p].y] == 6)
             {
                 isAvailable[path[p].x, path[p].y] = 8;
-                InstantiateTile(prefab, (float)(path[p].x - 0.5), (float)0.1, path[p].y, 90);
+                InstantiateTile(prefab, (float)(path[p].x - 0.5), 0, path[p].y, 90);
                 //Debug.Log("[x] = " + path[p].x + " [y] = " + path[p].y + " value = " + isAvailable[path[p].x, path[p].y]);
                 i++;
             }

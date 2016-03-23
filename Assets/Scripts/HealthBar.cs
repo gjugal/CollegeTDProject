@@ -16,7 +16,7 @@ public class HealthBar : MonoBehaviour {
             if(transform.parent.transform.rotation.y != 0)
             {
                 //Debug.Log("rotate me " + transform.parent.transform.rotation.y);//change it
-                transform.localScale = new Vector3(2f, 0.4f, 1f);
+                //transform.localScale = new Vector3(2f, 0.4f, 1f);
                 //Debug.Log("now " + transform.localEulerAngles);
             }
         }
