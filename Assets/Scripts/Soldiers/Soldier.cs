@@ -29,7 +29,7 @@ public abstract class Soldier : Entity
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(gateEnd.position + Vector3.up * 0.4f);
         currentState = States.WALK;
-        OffenseHeadquaters = GameObject.Find("OffenseHeadquaters");
+        OffenseHeadquaters = GameObject.Find("OffenseHeadQuaters");
     }
 
 

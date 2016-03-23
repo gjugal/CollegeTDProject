@@ -15,13 +15,39 @@ public class PathGenerator : MonoBehaviour
     public Transform kingPrefab;
     public Transform spawnPoint;
     public Transform gate;
+
     int mapSize;
     int turn = 6;
     int arrowTowerCount;
     int bombTowerCount;
     int groundBarricadeCount;
     int blockBarricadeCount;
+    int percentageDone = 0;
+    int percentIncrement;
 
+    [HideInInspector]
+    public Vector3 spawnPointPosition;
+    Vector3 gatePosition;
+
+    public delegate void PercentChange(int change);
+    public event PercentChange OnPercentChange;
+
+    public int PercentDone
+    {
+        get
+        {
+            return percentageDone;
+        }
+        set
+        {
+            if (value >= percentageDone)
+            {
+                OnPercentChange(value);
+                Debug.Log("The value of percentDone : " + value);
+                percentageDone = Mathf.Clamp(value, 0, 100);
+            }
+        }
+    }
 
     int length;
     [Range(0, 1)]
@@ -43,6 +69,7 @@ public class PathGenerator : MonoBehaviour
         bombTowerCount = props.numOfBombTowers;
         groundBarricadeCount = props.numOfGroundBarricade;
         blockBarricadeCount = props.numOfBlockBarricade;
+        percentIncrement = 80 / (turn/2);
         Generate();
     }
 
@@ -53,7 +80,6 @@ public class PathGenerator : MonoBehaviour
         length = (mapSize / 3) - 1;
         currentCoord = new Coord();
         path = new List<Coord>();
-        //Debug.Log(length);
         isAvailable = new int[length + 1, length + 1];
         for (int i = 0; i <= length; i++)
         {
@@ -71,6 +97,7 @@ public class PathGenerator : MonoBehaviour
         {
             GenerateDefense(arrowTowerCount, arrowTowerPrefab);
             GenerateDefense(bombTowerCount, bombTowerPrefab);
+            PercentDone = percentageDone + 10;
         }
         else
         {
@@ -80,6 +107,7 @@ public class PathGenerator : MonoBehaviour
         {
             GenerateBarricade(blockBarricadeCount, blockBarricadePrefab);
             GenerateBarricade(groundBarricadeCount, groundBarricadePrefab);
+            PercentDone = percentageDone + 10;
         }
         else
         {
@@ -107,8 +135,10 @@ public class PathGenerator : MonoBehaviour
         for (int i = turn; i > 0; i = i - 2)
         {
             move(i);
+            //add the percentIncrement here
+            PercentDone = percentIncrement + percentageDone;
         }
-
+        
         for (int i = currentCoord.y + 1; i <= length - 1; i++)
         {
             isAvailable[currentCoord.x, i] = 1;
@@ -122,18 +152,25 @@ public class PathGenerator : MonoBehaviour
         endCoord = new Coord(currentCoord);
         //isAvailable[startCoord.x, startCoord.y] = true;
         //InstantiateTile(SpawnPoint, startCoord.x, 0, startCoord.y);
-        spawnPoint.position = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * startCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * startCoord.y)));
+        spawnPointPosition = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * startCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * startCoord.y)));
+        Transform spawnEntity = Instantiate(spawnPoint, spawnPointPosition, Quaternion.identity) as Transform;
+        spawnEntity.gameObject.name = "SpawnPoint";
         //InstantiateTile(KingPrefab, startCoord.x, 0, startCoord.y);
         //isAvailable[endCoord.x, endCoord.y] = true;
         //InstantiateTile(Gate, endCoord.x, 0, endCoord.y);
-        gate.position = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * endCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * endCoord.y)));
-
+        gatePosition = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * endCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * endCoord.y)));
+        Transform gateEntity = Instantiate(gate, gatePosition, Quaternion.identity) as Transform;
+        gateEntity.gameObject.name = "Gate";
         //traversing the path
         //foreach(Coord co in path)
         //{
         //    Debug.Log("x = " + co.x + " y = " + co.y + co.availSides[0] + co.availSides[1] + co.availSides[2] + co.availSides[3]);
         //}
         //Debug.Log(path.Count);
+        if (percentageDone != 80)
+        {
+            PercentDone = 80;
+        }
     }
 
     void move(int turnsLeft)

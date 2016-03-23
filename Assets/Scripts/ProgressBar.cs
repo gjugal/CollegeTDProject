@@ -7,14 +7,14 @@ public class ProgressBar : MonoBehaviour {
     public GameObject swordSoldierPrefab;
     public GameObject arrowSoldierPrefab;
     public GameObject hammerSoldierPrefab;
-    public Transform spawnPoint;
+    Vector3 spawnPoint;
     bool isClickable = true;
     float currentAmount = 0;
     public float spwanSpeed = 10;
 
     // Use this for initialization
     void Start () {
-	
+        spawnPoint = GameManager.GM.spawnPosition;
 	}
 	
 	// Update is called once per frame
@@ -35,7 +35,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(swordSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+            Instantiate(swordSoldierPrefab, spawnPoint + Vector3.up * 0.4f, Quaternion.identity);
             currentAmount = 0;
         }
     }
@@ -43,7 +43,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(arrowSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+            Instantiate(arrowSoldierPrefab, spawnPoint + Vector3.up * 0.4f, Quaternion.identity);
             currentAmount = 0;
         }
     }
@@ -51,7 +51,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(hammerSoldierPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+            Instantiate(hammerSoldierPrefab, spawnPoint + Vector3.up * 0.4f, Quaternion.identity);
             currentAmount = 0;
         }
     }

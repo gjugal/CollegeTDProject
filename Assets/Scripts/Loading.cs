@@ -4,17 +4,20 @@ using UnityEngine.UI;
 
 public class Loading : MonoBehaviour {
 
-    Text loading;
+    public Text loading;
+    public float timeGap;
+    public float existenceTime;
+
+    [HideInInspector]
+    public bool startLoading = false;
+
     int i = 0;
     float lastTime = 0;
     int length;
-
-    public float timeGap;
     string originalString;
 
 	void Start()
     {
-        loading = gameObject.GetComponent<Text>();
         originalString = loading.text.ToString();
         length = originalString.Length;
     }
@@ -27,5 +30,10 @@ public class Loading : MonoBehaviour {
             loading.text = originalString.Substring(0, length - i);
             i = (i + 1) % (length + 1);
         }
+        if(startLoading)
+        {
+
+        }
     }
+
 }

@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager GM;
-    public Transform spawnPoint;
-    public GameObject kingPrefab;
+    public Transform kingPrefab, OffenseHQ;
+    public Transform myMap;
     public Image loadingBackground;
+    public Text percentDoneText;
+    public Transform pausePanel;
+    public Vector3 spawnPosition;
 
     //All Lists
     public ScriptableRankProperties[] rankProps;
@@ -18,7 +21,10 @@ public class GameManager : MonoBehaviour
     int rank;
     ScriptableRankProperties currentRankProps;
     PathGenerator generator;
-    WaitForSeconds waitTime = new WaitForSeconds(10f);
+    Transform myGeneratedMap;
+
+    float waitTime = 5f;
+    bool loadingDone = false;
 
     void Awake()
     {
@@ -41,22 +47,51 @@ public class GameManager : MonoBehaviour
         //4. Give the  values to PathGenerator Class
         //5. Activate the interface before battle
         //5. End
+        loadingDone = false;
         loadingBackground.gameObject.SetActive(true);
+
+        //Instantiate MyMap
+        myGeneratedMap = Instantiate(myMap, Vector3.zero, Quaternion.identity) as Transform;
+        myGeneratedMap.gameObject.name = "MyMap";
+
+        //Create OffenseHeadquaters
+        Transform OHQ = Instantiate(OffenseHQ, transform.position, Quaternion.identity) as Transform;
+        OHQ.name = "OffenseHeadQuaters";
+
         BeforeBattle(false);
         InBattle(false);
         rank = StatisticsManager.SM.GetDetails("Player_Rank");
         currentRankProps = rankProps[rank - 1];
-        generator = GameObject.Find("MyMap").GetComponent<PathGenerator>();
+        generator = myGeneratedMap.gameObject.GetComponent<PathGenerator>();
+        generator.OnPercentChange += UpdatePercentValue;
         generator.SetValuesAndGenerate(currentRankProps);
-        StartCoroutine(WaitSometime());
-        loadingBackground.gameObject.SetActive(false);
-        BeforeBattle(true);
-       
+        spawnPosition = generator.spawnPointPosition;
     }
 
-    IEnumerator WaitSometime()
+    public void UpdatePercentValue(int value)
     {
-        yield return waitTime;
+        percentDoneText.text = value + " %";
+        if(value == 100)
+        {
+            loadingDone = true;
+        }
+    }
+
+    void Update()
+    {
+        if(loadingDone)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                RemoveLoading();
+                loadingDone = false;
+            }
+        }
+    }
+    public void RemoveLoading()
+    {
+        loadingBackground.gameObject.SetActive(false);
+        BeforeBattle(true);
     }
 
     public int GetDefenseType(string defense_type)
@@ -77,13 +112,11 @@ public class GameManager : MonoBehaviour
         {
             return Constants.GROUND_BARRICADE;
         }
-        return -1; ;
+        return -1;
     }
 
     void InBattle(bool state)
     {
-        if(state)
-        Instantiate(kingPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
         foreach (GameObject b in interfaceActiveInBattle)
         {
             b.gameObject.SetActive(state);
@@ -102,8 +135,20 @@ public class GameManager : MonoBehaviour
     {
         t.gameObject.SetActive(false);
         InBattle(true);
-        // King should be instantiated now. This need to be done in future.
-        // Instantiate(kingPrefab, spawnPoint.position + Vector3.up * 0.4f, Quaternion.identity);
+        Instantiate(kingPrefab, spawnPosition, Quaternion.identity);
+    }
+
+    public void OnPauseClicked()
+    {
+        pausePanel.gameObject.SetActive(true);
+        InBattle(false);
+        Time.timeScale = 0f;
     }
     
+    public void OnResumeClicked()
+    {
+        pausePanel.gameObject.SetActive(false);
+        InBattle(true);
+        Time.timeScale = 1f;
+    }
 }

@@ -8,13 +8,14 @@ public class OffenseHeadquaters : MonoBehaviour {
 
     //public List<Transform> DefenseEntities;
     public LayerMask DefenseLayer;
-    public GameObject map;
+    GameObject map;
 
     [HideInInspector]
     public Dictionary<Transform, int[]> Defensedetails;
 
 	// Use this for initialization
 	void Start () {
+        map = GameObject.Find("MyMap");
         Defensedetails = new Dictionary<Transform, int[]>();
         Transform[] mapElements = map.GetComponentsInChildren<Transform>();
         foreach(Transform t in mapElements)
