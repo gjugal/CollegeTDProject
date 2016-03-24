@@ -112,6 +112,10 @@ public class GameManager : MonoBehaviour
         {
             return Constants.GROUND_BARRICADE;
         }
+        else if(defense_type == "Gate")
+        {
+            return Constants.GATE;
+        }
         return -1;
     }
 

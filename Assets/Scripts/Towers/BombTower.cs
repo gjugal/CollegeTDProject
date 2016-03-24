@@ -18,6 +18,7 @@ public class BombTower : Tower
         SetMyProperties();
         towerController.SetTowerType(myFirstName);
         myHealth = health;
+        offenseLayer = 9;
     }
 
     // Update is called once per frame
@@ -41,8 +42,9 @@ public class BombTower : Tower
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == offenseLayer)
+        if (col.gameObject.layer == 9)
         {
+            Debug.Log("hey" + col.transform + " " + col.gameObject.layer);
             base.OnEntry(col);//Add to list and register tower ondeath
             base.SetTarget(FindTarget());
         }

@@ -17,6 +17,7 @@ public class ArrowTower : Tower {
         SetMyProperties();
         towerController.SetTowerType(myFirstName);
         myHealth = health;
+        offenseLayer = 9;
     }
 
     // Update is called once per frame
@@ -36,8 +37,9 @@ public class ArrowTower : Tower {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == offenseLayer)
+        if (col.gameObject.layer == 9)
         {
+            Debug.Log("hey" + col.transform);
             base.OnEntry(col);//Add to list and register tower ondeath
             base.SetTarget(FindTarget());
         }

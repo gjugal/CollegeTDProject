@@ -38,6 +38,6 @@ public static class Constants{
     public const int BOMB_TOWER = 1;
     public const int BLOCK_BARRICADE = 2;
     public const int GROUND_BARRICADE = 3;
-
+    public const int GATE = 4;
    
 }

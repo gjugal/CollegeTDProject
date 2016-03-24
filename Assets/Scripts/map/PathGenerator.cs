@@ -155,12 +155,15 @@ public class PathGenerator : MonoBehaviour
         spawnPointPosition = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * startCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * startCoord.y)));
         Transform spawnEntity = Instantiate(spawnPoint, spawnPointPosition, Quaternion.identity) as Transform;
         spawnEntity.gameObject.name = "SpawnPoint";
+        spawnEntity.parent = this.transform;
         //InstantiateTile(KingPrefab, startCoord.x, 0, startCoord.y);
         //isAvailable[endCoord.x, endCoord.y] = true;
         //InstantiateTile(Gate, endCoord.x, 0, endCoord.y);
-        gatePosition = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * endCoord.x)), (float)0.4, (float)((-mapSize / 2) + 1.5 + (3 * endCoord.y)));
-        Transform gateEntity = Instantiate(gate, gatePosition, Quaternion.identity) as Transform;
+        gatePosition = new Vector3((float)((-mapSize / 2) + 1.5 + (3 * endCoord.x)), (float)1, (float)((-mapSize / 2) + 1.5 + (3 * endCoord.y)));
+        Quaternion rotation = Quaternion.Euler(0, 0, 0);
+        Transform gateEntity = Instantiate(gate, gatePosition, rotation) as Transform;
         gateEntity.gameObject.name = "Gate";
+        gateEntity.parent = this.transform;
         //traversing the path
         //foreach(Coord co in path)
         //{

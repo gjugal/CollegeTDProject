@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class BlockBarricade : Entity {
+public class Gate : Entity {
 
-    public float blockBarrierHealth = 5;
+    public float gateHealth = 15;
     float myHealth;
-    protected override void Start() {
+	// Use this for initialization
+	protected override void Start () {
         base.Start();
-        myFirstName = "Block_Barricade";
+        myFirstName = "Gate";
         entityLL = new LinkedList<MyTargets>();
-        health = blockBarrierHealth;
+        health = gateHealth;
         myHealth = health;
+        this.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
     }
 }
