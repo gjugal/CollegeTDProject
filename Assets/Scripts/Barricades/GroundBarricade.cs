@@ -26,7 +26,7 @@ public class GroundBarricade : Entity {
         tempAddedList = new List<Transform>();
         tempRemovedList = new List<Transform>();
         health = groundbarricadeHealth;
-        originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+        //originalColor = this.gameObject.GetComponent<Renderer>().material.color;
         myHealth = health;
     }
 
@@ -81,7 +81,7 @@ public class GroundBarricade : Entity {
             }
             else
             {
-                this.gameObject.GetComponent<Renderer>().material.color = originalColor;
+                //this.gameObject.GetComponent<Renderer>().material.color = originalColor;
                 if (!isShooting)
                 {
                     if (tempAddedList.Count > 0)
