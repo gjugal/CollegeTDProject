@@ -8,6 +8,8 @@ using System.Collections.Generic;
 public class Bomb : Projectiles
 {
     public float blastRadius = 1.2f;
+    public Transform explosion;
+    public GameObject blastEffect;
     Rigidbody rb;
     bool speedSet = false;
     LayerMask pathMask;
@@ -47,6 +49,8 @@ public class Bomb : Projectiles
                     }
                 }
             }
+            Object bombBlast = Instantiate(blastEffect, this.transform.position, this.transform.rotation);
+            Destroy(bombBlast, 1);
             Destroy(gameObject);
         }
     }
