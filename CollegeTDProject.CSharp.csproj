@@ -101,5 +101,8 @@
     <Compile Include="Assets\Scripts\map\PathGenerator.cs" />
     <Compile Include="Assets\Scripts\map\Utility.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Models\fantasy horde_goblin\shader\fantasy horde-goblin_Compressed MaskedShader2sided.shader" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

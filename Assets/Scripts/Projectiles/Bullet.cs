@@ -28,6 +28,10 @@ public class Bullet : Projectiles
         {
             if(hit.collider.gameObject.layer == collisionMask)
             OnHitObject(hit);
+            else if(hit.collider.gameObject.layer == pathMask)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

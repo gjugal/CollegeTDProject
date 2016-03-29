@@ -35,7 +35,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(swordSoldierPrefab, spawnPoint + Vector3.up * 0.8f, Quaternion.identity);
+            Instantiate(swordSoldierPrefab, spawnPoint, Quaternion.identity);
             currentAmount = 0;
         }
     }
@@ -43,7 +43,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(arrowSoldierPrefab, spawnPoint + Vector3.up * 0.4f, Quaternion.identity);
+            Instantiate(arrowSoldierPrefab, spawnPoint, Quaternion.identity);
             currentAmount = 0;
         }
     }
@@ -51,7 +51,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(hammerSoldierPrefab, spawnPoint + Vector3.up * 0.4f, Quaternion.identity);
+            Instantiate(hammerSoldierPrefab, spawnPoint, Quaternion.identity);
             currentAmount = 0;
         }
     }
