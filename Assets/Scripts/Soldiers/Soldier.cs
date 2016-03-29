@@ -13,7 +13,7 @@ public abstract class Soldier : Entity
     protected States currentState;
     protected GameObject OffenseHeadquaters;
     protected ScriptableSoldierProps myProperties;
-    protected Material originalMaterial;
+   // protected Material originalMaterial;
     protected float timeBetweenShoots;
     protected float lastShootTime = 0;
     protected float damage;

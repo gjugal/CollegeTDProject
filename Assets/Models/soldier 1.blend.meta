@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c5c0461d9d189a249b7acf5a6881232e
-timeCreated: 1458829596
+guid: 0bad5f1dbcf6a8b409f5104c85163df9
+timeCreated: 1459160778
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -74,8 +74,8 @@ ModelImporter:
     4300000: Cube_002
     4300002: Cube_001
     4300004: Cube
-    4300006: Plane
-    4300008: sword
+    4300006: sword
+    4300008: Plane
     7400000: Default Take
     7400002: ArmatureAction
     9500000: //RootNode

@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     PathGenerator generator;
     Transform myGeneratedMap;
 
+    public int towersDead = 0;
+    public int barricadesDead = 0;
+    public bool gateBroken = false;
+
     float waitTime = 5f;
     bool loadingDone = false;
 
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
         generator.OnPercentChange += UpdatePercentValue;
         generator.SetValuesAndGenerate(currentRankProps);
         spawnPosition = generator.spawnPointPosition;
+        gateBroken = false;
     }
 
     public void UpdatePercentValue(int value)
@@ -86,6 +91,10 @@ public class GameManager : MonoBehaviour
                 RemoveLoading();
                 loadingDone = false;
             }
+        }
+        if(true){
+           
+
         }
     }
     public void RemoveLoading()
@@ -154,5 +163,19 @@ public class GameManager : MonoBehaviour
         pausePanel.gameObject.SetActive(false);
         InBattle(true);
         Time.timeScale = 1f;
+    }
+
+    public void EntityDestoryed(string name)
+    {
+        if(name == "ArrowTower" || name == "BombTower")
+        {
+            towersDead++;
+        }if(name == "BlockBarricade" || name == "GroundBarricade")
+        {
+            barricadesDead++;
+        }if(name == "Gate")
+        {
+            gateBroken = true;
+        }
     }
 }

@@ -82,6 +82,8 @@ ModelImporter:
     4300008: Plane
     7400000: Default Take
     7400002: ArmatureAction
+    7400004: ArrowSoldierWalk
+    7400006: ArrowSoldierAttack
     9500000: //RootNode
     13700000: Circle
     13700002: Cube
@@ -107,7 +109,199 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: ArrowSoldierWalk
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 7
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/root
+        weight: 1
+      - path: Armature/root/armik_R
+        weight: 1
+      - path: Armature/root/armpole_R
+        weight: 1
+      - path: Armature/root/chest
+        weight: 1
+      - path: Armature/root/chest/stomach
+        weight: 1
+      - path: Armature/root/leg1_L
+        weight: 1
+      - path: Armature/root/leg1_L/leg2_L
+        weight: 1
+      - path: Armature/root/leg1_L/leg2_L/foot_L
+        weight: 1
+      - path: Armature/root/leg1_R
+        weight: 1
+      - path: Armature/root/leg1_R/leg2_R
+        weight: 1
+      - path: Armature/root/leg1_R/leg2_R/foot_R
+        weight: 1
+      - path: Armature/root/neck
+        weight: 1
+      - path: Armature/root/neck/face
+        weight: 1
+      - path: Armature/root/shoulder_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L/hand1_L_001
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L/hand2_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L/hand2_L/hand3_L
+        weight: 1
+      - path: Armature/root/shoulder_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R/hand1_R_001
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R/hand2_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R/hand2_R/hand3_R
+        weight: 1
+      - path: Circle
+        weight: 1
+      - path: Cube
+        weight: 1
+      - path: Cube/Plane
+        weight: 1
+      - path: Cube_001
+        weight: 1
+      - path: Cube_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArrowSoldierAttack
+      takeName: Default Take
+      firstFrame: 25
+      lastFrame: 62
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/root
+        weight: 1
+      - path: Armature/root/armik_R
+        weight: 1
+      - path: Armature/root/armpole_R
+        weight: 1
+      - path: Armature/root/chest
+        weight: 1
+      - path: Armature/root/chest/stomach
+        weight: 1
+      - path: Armature/root/leg1_L
+        weight: 1
+      - path: Armature/root/leg1_L/leg2_L
+        weight: 1
+      - path: Armature/root/leg1_L/leg2_L/foot_L
+        weight: 1
+      - path: Armature/root/leg1_R
+        weight: 1
+      - path: Armature/root/leg1_R/leg2_R
+        weight: 1
+      - path: Armature/root/leg1_R/leg2_R/foot_R
+        weight: 1
+      - path: Armature/root/neck
+        weight: 1
+      - path: Armature/root/neck/face
+        weight: 1
+      - path: Armature/root/shoulder_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L/hand1_L_001
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L/hand2_L
+        weight: 1
+      - path: Armature/root/shoulder_L/arm1_L/arm2_L/hand1_L/hand2_L/hand3_L
+        weight: 1
+      - path: Armature/root/shoulder_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R/hand1_R_001
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R/hand2_R
+        weight: 1
+      - path: Armature/root/shoulder_R/arm1_R/arm2_R/hand1_R/hand2_R/hand3_R
+        weight: 1
+      - path: Circle
+        weight: 1
+      - path: Cube
+        weight: 1
+      - path: Cube/Plane
+        weight: 1
+      - path: Cube_001
+        weight: 1
+      - path: Cube_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

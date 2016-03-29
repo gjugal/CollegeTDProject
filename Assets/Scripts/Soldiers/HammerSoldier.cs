@@ -30,8 +30,12 @@ public class HammerSoldier : Soldier
             }
             else
             {
-                this.gameObject.GetComponent<Renderer>().material = originalMaterial;
+                //this.gameObject.GetComponent<Renderer>().material = originalMaterial;
             }
+        }
+        if (currentState == States.SET && this.transform.position == agent.destination + Vector3.up * 0.4f && currentTarget != null)
+        {
+            currentState = States.ATTACK;
         }
     }
 
@@ -70,7 +74,7 @@ public class HammerSoldier : Soldier
             myProperties = StatisticsManager.SM.GetSoldierProperties(type, level);
             myFirstName = myProperties.myFirstname;
             health = myProperties.health;
-            originalMaterial = myProperties.originalMaterial;
+            //originalMaterial = myProperties.originalMaterial;
             timeBetweenShoots = myProperties.timeBetweenShoots;
             damage = myProperties.damage;
             damagePercentage = myProperties.damagePercentage;

@@ -126,4 +126,9 @@ public class Entity : MonoBehaviour, IDamagable
         }
 
     }
+
+    void Destroy()
+    {
+        GameManager.GM.EntityDestoryed(myFirstName);
+    }
 }
