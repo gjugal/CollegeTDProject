@@ -51,7 +51,7 @@ public class ProgressBar : MonoBehaviour {
     {
         if (isClickable)
         {
-            Instantiate(hammerSoldierPrefab, spawnPoint, Quaternion.identity);
+            Instantiate(hammerSoldierPrefab, spawnPoint + Vector3.up * 0.6f, Quaternion.identity);
             currentAmount = 0;
         }
     }

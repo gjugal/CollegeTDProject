@@ -7,18 +7,24 @@ using System;
 public class HammerSoldier : Soldier
 {
     float myHealth;
+    Animator hammerSoldierAnimator;
+    bool startWalking = false;
     // Use this for initialization
     protected override void Start()
     {
         base.Start();
         SetMyProperties();
         myHealth = health;
-
+        hammerSoldierAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if ((currentState == States.WALK || currentState == States.SET) && !startWalking)
+        {
+            startWalking = true;
+        }
         healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
         //Debug.Log(currentState);
         if (currentState == States.ATTACK && currentTarget != null)
@@ -36,6 +42,10 @@ public class HammerSoldier : Soldier
         if (currentState == States.SET && this.transform.position == agent.destination + Vector3.up * 0.4f && currentTarget != null)
         {
             currentState = States.ATTACK;
+        }
+        if (startWalking)
+        {
+            hammerSoldierAnimator.SetTrigger("moveTrigger");
         }
     }
 
@@ -57,7 +67,7 @@ public class HammerSoldier : Soldier
 
     void Shoot()
     {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.white;
+        hammerSoldierAnimator.SetTrigger("attackTrigger");
         Entity entity = currentTarget.gameObject.GetComponent<Entity>();
         int type_of_target = GameManager.GM.GetDefenseType(entity.myFirstName);
         entity.TakeDamage(damage * damagePercentage[type_of_target]/100);
