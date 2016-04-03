@@ -16,7 +16,7 @@
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebPlayer:6</UnityBuildTarget>
-    <UnityVersion>5.3.1f1</UnityVersion>
+    <UnityVersion>5.3.4f1</UnityVersion>
     <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -26,7 +26,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_1;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;CROSS_PLATFORM_INPUT</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -36,7 +36,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_5_3_1;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;CROSS_PLATFORM_INPUT</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -60,41 +60,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Barricades\BlockBarricade.cs" />
-    <Compile Include="Assets\Scripts\Barricades\GroundBarricade.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Constants.cs" />
     <Compile Include="Assets\Scripts\DataManager.cs" />
+    <Compile Include="Assets\Scripts\Defense\Barricades\BlockBarricade.cs" />
+    <Compile Include="Assets\Scripts\Defense\Barricades\GroundBarricade.cs" />
+    <Compile Include="Assets\Scripts\Defense\DefenseEntity.cs" />
+    <Compile Include="Assets\Scripts\Defense\Gate.cs" />
+    <Compile Include="Assets\Scripts\Defense\ScriptableTowerProps.cs" />
+    <Compile Include="Assets\Scripts\Defense\Towers\ArrowTower.cs" />
+    <Compile Include="Assets\Scripts\Defense\Towers\BombTower.cs" />
+    <Compile Include="Assets\Scripts\Defense\Towers\Tower.cs" />
+    <Compile Include="Assets\Scripts\Defense\Towers\TowerController.cs" />
     <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\EventManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Gate.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\IDamagable.cs" />
-    <Compile Include="Assets\Scripts\King.cs" />
     <Compile Include="Assets\Scripts\Loading.cs" />
     <Compile Include="Assets\Scripts\MakeScriptableObjects.cs" />
-    <Compile Include="Assets\Scripts\OffenseHeadquaters.cs" />
+    <Compile Include="Assets\Scripts\Offense\King.cs" />
+    <Compile Include="Assets\Scripts\Offense\Offense.cs" />
+    <Compile Include="Assets\Scripts\Offense\OffenseHeadquaters.cs" />
+    <Compile Include="Assets\Scripts\Offense\ScriptableSoldierProps.cs" />
+    <Compile Include="Assets\Scripts\Offense\Soldiers\ArrowSoldier.cs" />
+    <Compile Include="Assets\Scripts\Offense\Soldiers\HammerSoldier.cs" />
+    <Compile Include="Assets\Scripts\Offense\Soldiers\Soldier.cs" />
+    <Compile Include="Assets\Scripts\Offense\Soldiers\SoldierCensor.cs" />
+    <Compile Include="Assets\Scripts\Offense\Soldiers\SwordSoldier.cs" />
     <Compile Include="Assets\Scripts\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Bomb.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Bullet.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Projectiles.cs" />
     <Compile Include="Assets\Scripts\ScriptableRankProperties.cs" />
-    <Compile Include="Assets\Scripts\ScriptableSoldierProps.cs" />
-    <Compile Include="Assets\Scripts\ScriptableTowerProps.cs" />
-    <Compile Include="Assets\Scripts\Soldiers\ArrowSoldier.cs" />
-    <Compile Include="Assets\Scripts\Soldiers\HammerSoldier.cs" />
-    <Compile Include="Assets\Scripts\Soldiers\Soldier.cs" />
-    <Compile Include="Assets\Scripts\Soldiers\SoldierCensor.cs" />
-    <Compile Include="Assets\Scripts\Soldiers\SwordSoldier.cs" />
     <Compile Include="Assets\Scripts\StartMenuManager.cs" />
     <Compile Include="Assets\Scripts\StatisticsManager.cs" />
     <Compile Include="Assets\Scripts\StoreManager.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
-    <Compile Include="Assets\Scripts\Towers\ArrowTower.cs" />
-    <Compile Include="Assets\Scripts\Towers\BombTower.cs" />
-    <Compile Include="Assets\Scripts\Towers\Tower.cs" />
-    <Compile Include="Assets\Scripts\Towers\TowerController.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\UserProfile.cs" />
     <Compile Include="Assets\Scripts\map\NavMeshTest.cs" />

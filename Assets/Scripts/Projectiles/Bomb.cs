@@ -12,7 +12,6 @@ public class Bomb : Projectiles
     public GameObject blastEffect;
     Rigidbody rb;
     bool speedSet = false;
-    LayerMask pathMask;
     bool explode = false;
 
 

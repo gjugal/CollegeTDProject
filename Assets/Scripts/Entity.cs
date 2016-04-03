@@ -2,14 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Entity : MonoBehaviour, IDamagable
+public abstract class Entity : MonoBehaviour, IDamagable
 {
     
-    public string myFirstName;
+    protected string myFirstName;
     protected float health;
     protected LinkedList<MyTargets> entityLL;
-    float speed;
-    bool dead;
     public delegate void DeathOccurence(Transform t);
     public event DeathOccurence OnDeath;
     public GameObject healthSlider;
@@ -18,14 +16,14 @@ public class Entity : MonoBehaviour, IDamagable
     protected virtual void Start()
     {
         myFirstName = "Entity";
-        dead = false;
+        entityLL = new LinkedList<MyTargets>();
     }
 
 
     public void TakeDamage(float damage)//reduce health according to damage and check if the entity is still alive
     {
         health -= damage;
-        if (health <= 0 && !dead)
+        if (health <= 0)
         {
             Die();
         }
@@ -33,7 +31,6 @@ public class Entity : MonoBehaviour, IDamagable
 
     protected void Die()
     {
-        dead = true;
         if (OnDeath != null)
         {
             OnDeath(this.transform);//call all method registered to this event of all objects and pass this entity's transform as parameter 
@@ -131,4 +128,11 @@ public class Entity : MonoBehaviour, IDamagable
     {
         GameManager.GM.EntityDestoryed(myFirstName);
     }
+
+    public string GetMyName()
+    {
+        return myFirstName;
+    }
+
+    protected abstract void SetMyProperties();
 }
