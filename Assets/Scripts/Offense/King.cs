@@ -121,7 +121,7 @@ public class King : Offense
                 currentTarget = entityLL.First.Value.GetTransfrom();
                 currentState = KingStates.ATTACK;
                 attack = true;
-                Debug.Log("current state is set to attack");
+                //Debug.Log("current state is set to attack");
             }
         }
         
@@ -139,7 +139,7 @@ public class King : Offense
                 if (IsTargetPresent(currentTarget))
                 { 
                     entityLL.Remove(FindFromTargets(currentTarget));
-                    Debug.Log("target removed");
+                    //Debug.Log("target removed");
                     currentTarget = null;
                     if (entityLL.Count > 0 && currentState == KingStates.ATTACK)
                     {

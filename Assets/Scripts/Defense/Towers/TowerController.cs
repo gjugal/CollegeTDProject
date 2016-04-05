@@ -25,7 +25,7 @@ public class TowerController : MonoBehaviour {
     {
         if(type == "Arrow_Tower")
         {
-            dome.LookAt(target);
+            dome.LookAt(target.FindChild("Center"));
         }
         else if(type == "Bomb_Tower")
         {
@@ -39,7 +39,9 @@ public class TowerController : MonoBehaviour {
         projectile = Instantiate(bulletPrefab, nozzlePosition.position, nozzlePosition.rotation) as GameObject;
         if (type == "Arrow_Tower")
         {
-            projectile.GetComponent<Bullet>().SetSpeed(initialForce);
+            projectile.GetComponent<Arrow>().SetSpeed(initialForce);
+            projectile.GetComponent<Arrow>().myDamage = 1;
+            projectile.GetComponent<Arrow>().targetLayer = 13;
         }
         else if (type == "Bomb_Tower")
         {
