@@ -43,7 +43,7 @@ public class PathGenerator : MonoBehaviour
             if (value >= percentageDone)
             {
                 OnPercentChange(value);
-                Debug.Log("The value of percentDone : " + value);
+                //Debug.Log("The value of percentDone : " + value);
                 percentageDone = Mathf.Clamp(value, 0, 100);
             }
         }

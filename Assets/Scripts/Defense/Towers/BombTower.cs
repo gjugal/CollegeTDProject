@@ -98,7 +98,7 @@ public class BombTower : Tower
                 return temp;
 
             default:
-                Debug.Log("this is case default");
+                //Debug.Log("this is case default");
                 return null;
         }
     }

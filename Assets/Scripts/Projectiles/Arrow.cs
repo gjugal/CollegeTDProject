@@ -3,12 +3,16 @@ using System.Collections;
 
 public class Arrow : Projectiles
 {
-
+    [HideInInspector]
+    public float myDamage;
+    [HideInInspector]
+    public LayerMask targetLayer;
     protected override void Start()
     {
         Destroy(gameObject, 2);
         base.Start();
         speed = 5;
+        myDamage = 1;
     }
 
 
@@ -26,16 +30,26 @@ public class Arrow : Projectiles
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, distance))
         {
-            if (hit.collider.gameObject.layer == pathMask || hit.collider.gameObject.layer == DefenseMask)
+            if (hit.collider.gameObject.layer == targetLayer)
             {
+                OnHitObject(hit);
+            }
+            else if (hit.collider.gameObject.layer == pathMask)
                 Destroy(gameObject);
             }
         }
+
+    private void OnHitObject(RaycastHit hit)//gives damage to colliding tower and destroys bullet
+    {
+        //Debug.Log("onhitobject");
+        IDamagable damagableObject = hit.collider.gameObject.transform.parent.GetComponent<IDamagable>();
+        if (damagableObject != null)
+        {
+            damagableObject.TakeDamage(myDamage);
+            //Debug.Log("damage given");
+        }
+        GameObject.Destroy(this.gameObject);
     }
-
-    
-
-
 
 }
 

@@ -13,6 +13,7 @@ public class Bomb : Projectiles
     Rigidbody rb;
     bool speedSet = false;
     bool explode = false;
+    LayerMask offenseBase;
 
 
     protected override void Start()
@@ -21,6 +22,7 @@ public class Bomb : Projectiles
         rb = GetComponent<Rigidbody>();
         pathMask = 8;
         damage = 2;
+        offenseBase = 13;
     }
 
 
@@ -55,7 +57,7 @@ public class Bomb : Projectiles
     }
 
     void OnTriggerEnter(Collider col) {
-        if (col.gameObject.layer == collisionMask || col.gameObject.layer == pathMask)//check if it is colliding with the soldier and not its censor AND destroy bomb
+        if (col.gameObject.layer == offenseBase || col.gameObject.layer == pathMask)//check if it is colliding with the soldier and not its censor AND destroy bomb
         {
             explode = true;
         }
