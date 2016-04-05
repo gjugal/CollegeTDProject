@@ -69,11 +69,13 @@ public class King : Offense
             Debug.Log("Dest. reached" + agent.destination + "");
             if (currentTarget != null) {
                 currentState = KingStates.ATTACK;
+                agent.SetDestination(currentTarget.position);
             }
             else if (entityLL.Count > 0)
             {
                 currentState = KingStates.ATTACK;
                 currentTarget = entityLL.First.Value.GetTransfrom();
+                agent.SetDestination(currentTarget.position);
             }
             else
             {
@@ -118,7 +120,7 @@ public class King : Offense
             Entity defenseEntity = entityLL.Last.Value.GetTransfrom().GetComponent<Entity>();
             defenseEntity.OnDeath += ChangeTarget;
             //targets.AddLast(col.gameObject.transform);
-            if (currentTarget == null)
+            if (currentTarget == null && currentState == KingStates.IDLE)
             {
                 currentTarget = entityLL.First.Value.GetTransfrom();
                 currentState = KingStates.ATTACK;
@@ -146,6 +148,7 @@ public class King : Offense
                     if (entityLL.Count > 0 && currentState == KingStates.ATTACK)
                     {
                         currentTarget = entityLL.First.Value.GetTransfrom();
+                        agent.SetDestination(currentTarget.position);
                         attack = true;
                     }
                 }
@@ -173,7 +176,15 @@ public class King : Offense
     }
 
     void ChangeTarget(Transform t) {//called when tower dies
-        //Debug.Log("changed");
+                                    //Debug.Log("changed");
+
+        isIdle = true;
+        isAttacking = false;
+        isWalking = false;
+        Debug.Log("Idle motion");
+        kingAnimator.ResetTrigger("moveTrigger");
+        kingAnimator.ResetTrigger("attackTrigger");
+        kingAnimator.SetTrigger("idleTrigger");
         if (IsTargetPresent(t))
         {
             if (currentTarget == t)
@@ -184,6 +195,7 @@ public class King : Offense
                 if (entityLL.Count > 0)
                 {
                     currentTarget = entityLL.First.Value.GetTransfrom();
+                    agent.SetDestination(currentTarget.position);
                     attack = true;
                 }
             }

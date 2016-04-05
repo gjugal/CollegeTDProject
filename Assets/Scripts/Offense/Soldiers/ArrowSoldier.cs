@@ -6,6 +6,8 @@ using System;
 
 public class ArrowSoldier : Soldier
 {
+    public GameObject arrow;
+    public Transform nozzle;
     float myHealth;
     Animator arrowSoldierAnimator;
     bool startWalking = false;
@@ -91,6 +93,17 @@ public class ArrowSoldier : Soldier
         Entity entity = currentTarget.gameObject.GetComponent<Entity>();
         int type_of_target = GameManager.GM.GetDefenseType(entity.GetMyName());
         entity.TakeDamage(damage * damagePercentage[type_of_target]/100);
+        //nozzle.LookAt(currentTarget.FindChild("DefenseBase").GetComponent<BoxCollider>().center);
+        try {
+            nozzle.LookAt(currentTarget.FindChild("Center").transform.position);
+        }
+        catch
+        {
+            //in case current target is destroyed
+        }
+        //nozzle.LookAt(currentTarget.transform.position);
+        //Debug.Log("global coordinates of the target are " + currentTarget.FindChild("DefenseBase").transform.position);
+        Instantiate(arrow, nozzle.position, nozzle.rotation);
     }
 
     protected override void SetMyProperties()
