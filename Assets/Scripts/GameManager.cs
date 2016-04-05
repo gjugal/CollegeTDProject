@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager GM;
+    private static GameManager GM;
     public Transform kingPrefab, OffenseHQ;
     public Transform myMap;
     public Image loadingBackground;
@@ -27,23 +28,31 @@ public class GameManager : MonoBehaviour
     public int barricadesDead = 0;
     public bool gateBroken = false;
 
+    private GameResultPanel resultPanel;
+    private UnityAction nextLevelAction;
+    private UnityAction mainMenuAction;
+
     float waitTime = 5f;
     bool loadingDone = false;
 
-    void Awake()
+    public static GameManager Instance()
     {
         if (!GM)
         {
-            GM = this;
-            DontDestroyOnLoad(gameObject);
+            GM = FindObjectOfType(typeof(GameManager)) as GameManager;
+            if (!GM)
+                Debug.LogError("There needs to be one active gameOverPanel script on a GameObject in your scene.");
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        return GM;
     }
 
     void Start()
+    {
+        StatisticsManager.SM.OnDataSet += StartLoading;
+    }
+
+    void StartLoading()
     {
         //1. Loading should appear
         //2. Get value from StatisticsManager
@@ -70,6 +79,7 @@ public class GameManager : MonoBehaviour
         generator.OnPercentChange += UpdatePercentValue;
         generator.SetValuesAndGenerate(currentRankProps);
         spawnPosition = generator.spawnPointPosition;
+        resultPanel = GameResultPanel.Instance();
         gateBroken = false;
     }
 
@@ -93,8 +103,9 @@ public class GameManager : MonoBehaviour
             }
         }
         if(gateBroken){
-           //Display game Over dialog
-
+            //Display game Over dialog
+            gateBroken = false;
+            GateDestroyed();
 
         }
     }
@@ -178,5 +189,34 @@ public class GameManager : MonoBehaviour
         {
             gateBroken = true;
         }
+    }
+
+    private void GateDestroyed()
+    {
+        Time.timeScale = 0;
+        nextLevelAction = new UnityAction(StartNextLevel);
+        mainMenuAction = new UnityAction(OpenMainMenu);
+        int towersXp = towersDead * currentRankProps.towersXp;
+        if(towersDead == currentRankProps.numOfArrowTowers + currentRankProps.numOfBombTowers)
+        {
+            towersXp += currentRankProps.allTowers;
+        }
+        int barricadesXp = barricadesDead * currentRankProps.barricadeXp;
+        int gateXp = 0;
+        if(gateBroken)
+        {
+            gateXp += currentRankProps.gateXp;
+        }
+        resultPanel.ShowResult(nextLevelAction, mainMenuAction, towersXp, barricadesXp, gateXp);
+    }
+
+    private void StartNextLevel()
+    {
+        UIManager.UM.LoadScene(2);
+    }
+
+    private void OpenMainMenu()
+    {
+        UIManager.UM.LoadScene(0);
     }
 }

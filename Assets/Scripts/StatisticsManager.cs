@@ -8,6 +8,8 @@ public class StatisticsManager : MonoBehaviour {
     public static StatisticsManager SM;
     Dictionary<string, string> stats;
     public ScriptableTowerProps[] towers;
+    public delegate void StatisticsLoaded();
+    public event StatisticsLoaded OnDataSet;
 
     void Awake()
     {
@@ -40,6 +42,7 @@ public class StatisticsManager : MonoBehaviour {
         //else check if the dictionary is null then so can go and set the InitialDetails
         stats = new Dictionary<string, string>();
         SetThePlayerInitialDetails();
+
     }
 
     void SetThePlayerInitialDetails()
@@ -52,6 +55,7 @@ public class StatisticsManager : MonoBehaviour {
         SetDetails("Arrow_Soldier_State", Constants.BUYABLE.ToString());
         SetDetails("Hammer_Soldier_State", Constants.BUYABLE.ToString());
         Debug.Log("Added EveryThing to Dictionary");
+        OnPlayerDetailsAdded();
     }
 
     public void SetDetails(string key, string value)
@@ -93,5 +97,13 @@ public class StatisticsManager : MonoBehaviour {
     public class SoldierType
     {
         public ScriptableSoldierProps[] soldierPropsArray;
+    }
+
+    void OnPlayerDetailsAdded()
+    {
+        if(OnDataSet != null)
+        {
+            OnDataSet();
+        }
     }
 }

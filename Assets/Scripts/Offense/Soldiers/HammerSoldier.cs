@@ -72,7 +72,7 @@ public class HammerSoldier : Soldier
         hammerSoldierAnimator.ResetTrigger("moveTrigger");
         hammerSoldierAnimator.SetTrigger("attackTrigger");
         Entity entity = currentTarget.gameObject.GetComponent<Entity>();
-        int type_of_target = GameManager.GM.GetDefenseType(entity.GetMyName());
+        int type_of_target = GameManager.Instance().GetDefenseType(entity.GetMyName());
         entity.TakeDamage(damage * damagePercentage[type_of_target]/100);
     }
 

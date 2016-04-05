@@ -14,7 +14,7 @@ public class ProgressBar : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        spawnPoint = GameManager.GM.spawnPosition;
+        spawnPoint = GameManager.Instance().spawnPosition;
 	}
 	
 	// Update is called once per frame

@@ -112,7 +112,7 @@ public abstract class Soldier : Offense
         int temp_priority = 100;
         foreach(MyTargets t in entityLL)
         {
-            int priority = target_priority[GameManager.GM.GetDefenseType(t.GetTargetType())];
+            int priority = target_priority[GameManager.Instance().GetDefenseType(t.GetTargetType())];
             if(priority < temp_priority)
             {
                 temp_priority = priority;

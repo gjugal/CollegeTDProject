@@ -46,4 +46,8 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    public Scene GetCurrentScene()
+    {
+        return currentScene;
+    }
 }

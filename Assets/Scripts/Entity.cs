@@ -124,9 +124,9 @@ public abstract class Entity : MonoBehaviour, IDamagable
 
     }
 
-    void Destroy()
+    void OnDestroy()
     {
-        GameManager.GM.EntityDestoryed(myFirstName);
+        GameManager.Instance().EntityDestoryed(myFirstName);
     }
 
     public string GetMyName()
