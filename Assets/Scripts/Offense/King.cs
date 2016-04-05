@@ -53,7 +53,6 @@ public class King : Offense
                 agent.SetDestination(final + Vector3.up * 0.4f);
                 if (!isWalking)
                 {
-                    Debug.Log("Settting walking");
                     isAttacking = false;
                     isIdle = false;
                     isWalking = true;
@@ -66,7 +65,6 @@ public class King : Offense
 
         // if destination reached and there is target in range(in targets linked list) then attack else idle
         if (currentState == KingStates.WALK && this.transform.position == agent.destination) {
-            Debug.Log("Dest. reached" + agent.destination + "");
             if (currentTarget != null) {
                 currentState = KingStates.ATTACK;
                 agent.SetDestination(currentTarget.position);
@@ -103,7 +101,6 @@ public class King : Offense
                 isIdle = true;
                 isAttacking = false;
                 isWalking = false;
-                Debug.Log("Idle motion");
                 kingAnimator.ResetTrigger("moveTrigger");
                 kingAnimator.ResetTrigger("attackTrigger");
                 kingAnimator.SetTrigger("idleTrigger");
@@ -115,7 +112,6 @@ public class King : Offense
     void OnTriggerEnter(Collider col) {
         if (col.gameObject.tag == "TowerBase")
         {
-            Debug.Log("target entered");
             entityLL.AddLast(new MyTargets(col.transform.parent.transform,true,myFirstName));
             Entity defenseEntity = entityLL.Last.Value.GetTransfrom().GetComponent<Entity>();
             defenseEntity.OnDeath += ChangeTarget;
@@ -181,7 +177,6 @@ public class King : Offense
         isIdle = true;
         isAttacking = false;
         isWalking = false;
-        Debug.Log("Idle motion");
         kingAnimator.ResetTrigger("moveTrigger");
         kingAnimator.ResetTrigger("attackTrigger");
         kingAnimator.SetTrigger("idleTrigger");

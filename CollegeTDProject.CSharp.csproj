@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Offense\Soldiers\SoldierCensor.cs" />
     <Compile Include="Assets\Scripts\Offense\Soldiers\SwordSoldier.cs" />
     <Compile Include="Assets\Scripts\ProgressBar.cs" />
+    <Compile Include="Assets\Scripts\Projectiles\Arrow.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Bomb.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Bullet.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Projectiles.cs" />
