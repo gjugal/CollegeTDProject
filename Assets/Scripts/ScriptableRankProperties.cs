@@ -10,4 +10,8 @@ public class ScriptableRankProperties : ScriptableObject
     public int numOfBombTowers;
     public int numOfBlockBarricade;
     public int numOfGroundBarricade;
+    public int towersXp;
+    public int allTowers;
+    public int barricadeXp;
+    public int gateXp;
 }

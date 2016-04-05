@@ -92,8 +92,9 @@ public class GameManager : MonoBehaviour
                 loadingDone = false;
             }
         }
-        if(true){
-           
+        if(gateBroken){
+           //Display game Over dialog
+
 
         }
     }
