@@ -8,8 +8,7 @@ public class StatisticsManager : MonoBehaviour {
     public static StatisticsManager SM;
     Dictionary<string, string> stats;
     public ScriptableTowerProps[] towers;
-    public delegate void StatisticsLoaded();
-    public event StatisticsLoaded OnDataSet;
+    public bool firstGame = false;
 
     void Awake()
     {
@@ -22,10 +21,10 @@ public class StatisticsManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        
+        LoadStatistics();
     }
 
-    void Start()
+    void LoadStatistics()
     {
         //create a dictionary of player statistics
 
@@ -42,12 +41,11 @@ public class StatisticsManager : MonoBehaviour {
         //else check if the dictionary is null then so can go and set the InitialDetails
         stats = new Dictionary<string, string>();
         SetThePlayerInitialDetails();
-
     }
 
     void SetThePlayerInitialDetails()
     {
-        SetDetails("Player_XP", 0.ToString());
+        SetDetails("Player_XP", 10000.ToString());
         SetDetails("Player_Rank", 1.ToString());
         SetDetails("Player_Coins", Constants.PLAYER_INITIAL_COINS.ToString());
         SetDetails("Player_Gems", Constants.PLAYER_INITIAL_GEMS.ToString());
@@ -55,7 +53,6 @@ public class StatisticsManager : MonoBehaviour {
         SetDetails("Arrow_Soldier_State", Constants.BUYABLE.ToString());
         SetDetails("Hammer_Soldier_State", Constants.BUYABLE.ToString());
         Debug.Log("Added EveryThing to Dictionary");
-        OnPlayerDetailsAdded();
     }
 
     public void SetDetails(string key, string value)
@@ -99,11 +96,4 @@ public class StatisticsManager : MonoBehaviour {
         public ScriptableSoldierProps[] soldierPropsArray;
     }
 
-    void OnPlayerDetailsAdded()
-    {
-        if(OnDataSet != null)
-        {
-            OnDataSet();
-        }
-    }
 }

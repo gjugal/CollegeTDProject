@@ -58,11 +58,6 @@ public abstract class Tower : DefenseEntity
         }
     }
 
-    void OnDestroy()
-    {
-        GameObject.Destroy(gameObject);
-    }
-
     public int[] GetAttackingEntitiesCount()
     {
         int[] entities = new int[Constants.SOLDIER_TYPES];

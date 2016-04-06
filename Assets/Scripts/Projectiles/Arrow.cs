@@ -9,6 +9,7 @@ public class Arrow : Projectiles
     public LayerMask targetLayer;
     protected override void Start()
     {
+
         Destroy(gameObject, 2);
         base.Start();
         speed = 5;

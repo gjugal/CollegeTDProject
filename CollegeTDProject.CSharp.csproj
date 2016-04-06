@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\EventManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameResultPanel.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\IDamagable.cs" />
     <Compile Include="Assets\Scripts\Loading.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\Scripts\Offense\Soldiers\Soldier.cs" />
     <Compile Include="Assets\Scripts\Offense\Soldiers\SoldierCensor.cs" />
     <Compile Include="Assets\Scripts\Offense\Soldiers\SwordSoldier.cs" />
+    <Compile Include="Assets\Scripts\PausePanel.cs" />
     <Compile Include="Assets\Scripts\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Arrow.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Bomb.cs" />

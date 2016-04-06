@@ -43,7 +43,7 @@ public class ArrowSoldier : Soldier
             }
         }
 
-        if(currentState == States.SET && this.transform.position == agent.destination + Vector3.up * 0.4f  && currentTarget != null)
+        if (currentState == States.SET && this.transform.position == agent.destination + Vector3.up * 0.4f && currentTarget != null)
         {
             currentState = States.ATTACK;
         }
@@ -71,16 +71,14 @@ public class ArrowSoldier : Soldier
         //base.OnSoldierColliderEntry(col);
         if (col.gameObject.tag == "TowerBase")
         {
-            Debug.Log("triggered enter");
+            //Debug.Log("triggered enter");
             if (currentState == States.SET && col.transform.parent.transform == currentTarget)
             {
-                try {
                     //agent.enabled = false;
                     currentState = States.ATTACK;
                     Vector3 tempPos = this.transform.position;
                     agent.destination = tempPos;
-                }
-                catch { }
+
             }
         }
     }
@@ -92,18 +90,14 @@ public class ArrowSoldier : Soldier
         arrowSoldierAnimator.SetTrigger("attackTrigger");
         Entity entity = currentTarget.gameObject.GetComponent<Entity>();
         int type_of_target = GameManager.Instance().GetDefenseType(entity.GetMyName());
-        entity.TakeDamage(damage * damagePercentage[type_of_target]/100);
         //nozzle.LookAt(currentTarget.FindChild("DefenseBase").GetComponent<BoxCollider>().center);
-        try {
-            nozzle.LookAt(currentTarget.FindChild("Center").transform.position);
-        }
-        catch
-        {
-            //in case current target is destroyed
-        }
+        nozzle.LookAt(currentTarget.FindChild("Center").transform.position);
         //nozzle.LookAt(currentTarget.transform.position);
         //Debug.Log("global coordinates of the target are " + currentTarget.FindChild("DefenseBase").transform.position);
-        Instantiate(arrow, nozzle.position, nozzle.rotation);
+        GameObject tempArrow = Instantiate(arrow, nozzle.position, nozzle.rotation) as GameObject;
+        tempArrow.GetComponent<Arrow>().myDamage = (damage * damagePercentage[type_of_target] / 100);
+        tempArrow.GetComponent<Arrow>().targetLayer = 12;
+        //entity.TakeDamage(damage * damagePercentage[type_of_target] / 100);
     }
 
     protected override void SetMyProperties()

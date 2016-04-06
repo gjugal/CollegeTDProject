@@ -25,10 +25,8 @@ public class GroundBarricade : DefenseEntity {
     }
 
     void OnTriggerEnter(Collider col) {
-        Debug.Log("triggerenter");
         if (col.gameObject.layer == 9)
         {
-            Debug.Log("offenselayer");
             Entity entity = col.gameObject.GetComponent<Entity>();
             if (isShooting)
             {
@@ -38,7 +36,6 @@ public class GroundBarricade : DefenseEntity {
             {
                 entity.OnDeath += RemoveEntity;
                 entityLL.AddLast(new MyTargets(col.transform, true, entity.GetMyName()));
-                Debug.Log("Added");
             }
         }
     }
@@ -69,10 +66,8 @@ public class GroundBarricade : DefenseEntity {
 
         healthSlider.GetComponent<Image>().fillAmount = health / myHealth;
         if (entityLL.Count > 0) {
-            Debug.Log("time bet shoot");
             if (Time.time > lastShootTime + timeBetweenShoots && !isShooting)
             {
-                Debug.Log("time bet shoot");
                 isShooting = true;
                 lastShootTime = Time.time;
                 StartCoroutine(Shoot());
@@ -117,14 +112,12 @@ public class GroundBarricade : DefenseEntity {
 
     IEnumerator Shoot()
     {
-        Debug.Log("Shoot called");
         for(LinkedListNode<MyTargets> node = entityLL.First; node != null; node = node.Next)
         {
             IDamagable damagableObject = node.Value.GetTransfrom().GetComponent<IDamagable>();
             if (damagableObject != null)
             {
                 damagableObject.TakeDamage(damage);
-                Debug.Log("damage given");
             }
         }
         yield return waitLock;

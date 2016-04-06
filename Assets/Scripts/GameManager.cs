@@ -49,11 +49,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StatisticsManager.SM.OnDataSet += StartLoading;
-    }
-
-    void StartLoading()
-    {
+        Time.timeScale = 1;
         //1. Loading should appear
         //2. Get value from StatisticsManager
         //3. Set the values for Path
@@ -179,10 +175,10 @@ public class GameManager : MonoBehaviour
 
     public void EntityDestoryed(string name)
     {
-        if(name == "ArrowTower" || name == "BombTower")
+        if(name == "Arrow_Tower" || name == "Bomb_Tower")
         {
             towersDead++;
-        }if(name == "BlockBarricade" || name == "GroundBarricade")
+        }if(name == "Block_Barricade" || name == "Ground_Barricade")
         {
             barricadesDead++;
         }if(name == "Gate")
@@ -197,26 +193,22 @@ public class GameManager : MonoBehaviour
         nextLevelAction = new UnityAction(StartNextLevel);
         mainMenuAction = new UnityAction(OpenMainMenu);
         int towersXp = towersDead * currentRankProps.towersXp;
-        if(towersDead == currentRankProps.numOfArrowTowers + currentRankProps.numOfBombTowers)
+        if(towersDead == (currentRankProps.numOfArrowTowers + currentRankProps.numOfBombTowers))
         {
             towersXp += currentRankProps.allTowers;
         }
         int barricadesXp = barricadesDead * currentRankProps.barricadeXp;
-        int gateXp = 0;
-        if(gateBroken)
-        {
-            gateXp += currentRankProps.gateXp;
-        }
+        int gateXp = currentRankProps.gateXp;
         resultPanel.ShowResult(nextLevelAction, mainMenuAction, towersXp, barricadesXp, gateXp);
     }
 
     private void StartNextLevel()
     {
-        UIManager.UM.LoadScene(2);
+        UIManager.UM.LoadScene(Constants.GAME_SCENE);
     }
 
     private void OpenMainMenu()
     {
-        UIManager.UM.LoadScene(0);
+        UIManager.UM.LoadScene(Constants.START_MENU_SCENE);
     }
 }
