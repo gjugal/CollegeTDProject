@@ -124,6 +124,16 @@ public class King : Offense
                 //Debug.Log("current state is set to attack");
             }
         }
+        if(col.gameObject.transform.parent.tag == "BlockBarricade")
+        {
+            entityLL.AddLast(new MyTargets(col.transform.parent.transform, true, myFirstName));
+            Entity defenseEntity = entityLL.Last.Value.GetTransfrom().GetComponent<Entity>();
+            defenseEntity.OnDeath += ChangeTarget;
+            currentTarget = entityLL.Last.Value.GetTransfrom();
+            agent.SetDestination(this.transform.position);
+            currentState = KingStates.ATTACK;
+            attack = true;
+        }
         
     }
 
