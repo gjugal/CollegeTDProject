@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public Transform myMap;
     public Image loadingBackground;
     public Text percentDoneText;
-    public Transform pausePanel;
     public Vector3 spawnPosition;
 
     //All Lists
@@ -29,11 +28,18 @@ public class GameManager : MonoBehaviour
     public bool gateBroken = false;
 
     private GameResultPanel resultPanel;
+    private PausePanel pausePanel;
+
     private UnityAction nextLevelAction;
     private UnityAction mainMenuAction;
-
-    float waitTime = 5f;
+    private UnityAction resumeAction;
+    
     bool loadingDone = false;
+
+    private GameManager()
+    {
+
+    }
 
     public static GameManager Instance()
     {
@@ -75,8 +81,21 @@ public class GameManager : MonoBehaviour
         generator.OnPercentChange += UpdatePercentValue;
         generator.SetValuesAndGenerate(currentRankProps);
         spawnPosition = generator.spawnPointPosition;
-        resultPanel = GameResultPanel.Instance();
         gateBroken = false;
+
+        //Get referece to all Windows
+        resultPanel = GameResultPanel.Instance();
+        pausePanel = PausePanel.Instance();
+
+        //Set Up all Actions
+        SetAllActions();
+    }
+
+    void SetAllActions()
+    {
+        resumeAction = new UnityAction(OnResumeClicked);
+        nextLevelAction = new UnityAction(StartNextLevel);
+        mainMenuAction = new UnityAction(OpenMainMenu);
     }
 
     public void UpdatePercentValue(int value)
@@ -101,7 +120,7 @@ public class GameManager : MonoBehaviour
         if(gateBroken){
             //Display game Over dialog
             gateBroken = false;
-            GateDestroyed();
+            ShowGameResult();
 
         }
     }
@@ -161,16 +180,13 @@ public class GameManager : MonoBehaviour
 
     public void OnPauseClicked()
     {
-        pausePanel.gameObject.SetActive(true);
         InBattle(false);
-        Time.timeScale = 0f;
+        pausePanel.PauseGame(resumeAction, mainMenuAction);
     }
     
     public void OnResumeClicked()
     {
-        pausePanel.gameObject.SetActive(false);
         InBattle(true);
-        Time.timeScale = 1f;
     }
 
     public void EntityDestoryed(string name)
@@ -187,11 +203,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void GateDestroyed()
+    public void ShowGameResult()
     {
+        InBattle(false);
         Time.timeScale = 0;
-        nextLevelAction = new UnityAction(StartNextLevel);
-        mainMenuAction = new UnityAction(OpenMainMenu);
         int towersXp = towersDead * currentRankProps.towersXp;
         if(towersDead == (currentRankProps.numOfArrowTowers + currentRankProps.numOfBombTowers))
         {

@@ -114,5 +114,6 @@ public class BombTower : Tower
         health = properties.health;
         timeBetweenShoot = properties.timeBetweenShoots;
         initialForce = properties.initialForce;
+        level = Levels.Level2;
     }
 }

@@ -23,10 +23,9 @@ public class GameResultPanel : MonoBehaviour {
         return gameOverPanel;
     }
     
-    public void ShowResult(UnityAction nextMapEvent, UnityAction mainMenuEvent,int towersXp, int barricadesXp, int gateXp)
+    public void ShowResult(UnityAction nextMapAction, UnityAction mainMenuAction,int towersXp, int barricadesXp, int gateXp)
     {
         gameOverPanelObject.SetActive(true);
-        Debug.Log("" + towersXp + " " + barricadesXp + " " + gateXp);
         tower.text = "Towers : " + towersXp.ToString();
         barricades.text = "Barricades : " + barricadesXp.ToString();
         gate.text = "Gate : " + gateXp.ToString();
@@ -35,11 +34,11 @@ public class GameResultPanel : MonoBehaviour {
         StatisticsManager.SM.SetDetails("Player_XP", totalXP.text.ToString());
 
         nextButton.onClick.RemoveAllListeners();
-        nextButton.onClick.AddListener(nextMapEvent);
+        nextButton.onClick.AddListener(nextMapAction);
         nextButton.onClick.AddListener(ClosePanel);
 
         mainMenuButton.onClick.RemoveAllListeners();
-        mainMenuButton.onClick.AddListener(mainMenuEvent);
+        mainMenuButton.onClick.AddListener(mainMenuAction);
         mainMenuButton.onClick.AddListener(ClosePanel);
     }
 

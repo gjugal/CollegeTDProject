@@ -4,9 +4,6 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
     // Use this for initialization
-    //Transform kingTransform;
-    Vector3 cameraPosition;
-    Quaternion cameraRotation;
     public float minimumX;
     public float maximumX;
     public float minimumZ;
@@ -14,8 +11,6 @@ public class CameraController : MonoBehaviour {
 
     //GameObject king;
 	void Start () {
-        cameraPosition = this.transform.position;
-        cameraRotation = this.transform.rotation;
     }
 	
 	// Update is called once per frame

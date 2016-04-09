@@ -116,23 +116,19 @@ public class King : Offense
             Entity defenseEntity = entityLL.Last.Value.GetTransfrom().GetComponent<Entity>();
             defenseEntity.OnDeath += ChangeTarget;
             //targets.AddLast(col.gameObject.transform);
-            if (currentTarget == null && currentState == KingStates.IDLE)
+            if (col.gameObject.transform.parent.tag == "BlockBarricade")
+            {
+                currentTarget = entityLL.Last.Value.GetTransfrom();
+                agent.SetDestination(this.transform.position);
+                currentState = KingStates.ATTACK;
+                attack = true;
+            }
+            else if(currentTarget == null && (currentState == KingStates.IDLE || currentState == KingStates.WALK))
             {
                 currentTarget = entityLL.First.Value.GetTransfrom();
                 currentState = KingStates.ATTACK;
                 attack = true;
-                //Debug.Log("current state is set to attack");
             }
-        }
-        if(col.gameObject.transform.parent.tag == "BlockBarricade")
-        {
-            entityLL.AddLast(new MyTargets(col.transform.parent.transform, true, myFirstName));
-            Entity defenseEntity = entityLL.Last.Value.GetTransfrom().GetComponent<Entity>();
-            defenseEntity.OnDeath += ChangeTarget;
-            currentTarget = entityLL.Last.Value.GetTransfrom();
-            agent.SetDestination(this.transform.position);
-            currentState = KingStates.ATTACK;
-            attack = true;
         }
         
     }
@@ -182,8 +178,6 @@ public class King : Offense
     }
 
     void ChangeTarget(Transform t) {//called when tower dies
-                                    //Debug.Log("changed");
-
         isIdle = true;
         isAttacking = false;
         isWalking = false;
