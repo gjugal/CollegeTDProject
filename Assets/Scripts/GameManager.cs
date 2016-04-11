@@ -52,7 +52,11 @@ public class GameManager : MonoBehaviour
 
         return GM;
     }
-
+    void Awake()
+    {
+        loadingDone = false;
+        loadingBackground.gameObject.SetActive(true);
+    }
     void Start()
     {
         Time.timeScale = 1;
@@ -62,8 +66,6 @@ public class GameManager : MonoBehaviour
         //4. Give the  values to PathGenerator Class
         //5. Activate the interface before battle
         //5. End
-        loadingDone = false;
-        loadingBackground.gameObject.SetActive(true);
 
         //Instantiate MyMap
         myGeneratedMap = Instantiate(myMap, Vector3.zero, Quaternion.identity) as Transform;
