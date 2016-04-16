@@ -23,16 +23,16 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //old code : keyboard input for camera movement
-        //float xMove = Input.GetAxis("Horizontal") * Time.deltaTime * 10;
-        //xMove = xMove + transform.position.x;
-        //xMove = Mathf.Clamp(xMove, minimumX, maximumX);
-        //float zMove = Input.GetAxis("Vertical") * Time.deltaTime * 10;
-        //zMove = zMove + transform.position.z;
-        //zMove = Mathf.Clamp(zMove, minimumZ, maximumZ);
-        //this.transform.position = new Vector3(xMove, transform.position.y, zMove);
+        float xMove = Input.GetAxis("Horizontal") * Time.deltaTime * 10;
+        xMove = xMove + transform.position.x;
+        xMove = Mathf.Clamp(xMove, minimumX, maximumX);
+        float zMove = Input.GetAxis("Vertical") * Time.deltaTime * 10;
+        zMove = zMove + transform.position.z;
+        zMove = Mathf.Clamp(zMove, minimumZ, maximumZ);
+        this.transform.position = new Vector3(xMove, transform.position.y, zMove);
         //old code
 
-        //new code : swipe gestures for camera movement
+        /*new code : swipe gestures for camera movement
         Touch[] touches = Input.touches;
         if(touches.Length > 0)
         {
@@ -62,7 +62,7 @@ public class CameraController : MonoBehaviour {
                 }
             }
         }
-        //new code
+        new code*/
 
 	}
 
