@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour {
         this.transform.position = new Vector3(xMove, transform.position.y, zMove);
         //old code
 
-        /*new code : swipe gestures for camera movement
+        /*//new code : swipe gestures for camera movement
         Touch[] touches = Input.touches;
         if(touches.Length > 0)
         {
@@ -62,7 +62,7 @@ public class CameraController : MonoBehaviour {
                 }
             }
         }
-        new code*/
+        //new code*/
 
 	}
 
