@@ -6,6 +6,7 @@ using System;
 public class StoreManager : MonoBehaviour {
 
     public GameObject[] soldierPanels;
+    public GameObject[] kingPanels;
     public Text gems;
     public Text coins;
 
